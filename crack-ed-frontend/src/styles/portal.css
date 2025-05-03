@@ -1,0 +1,95 @@
+.portal-container{
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%
+}
+
+.portal-form-card{
+    width: 100%;
+    padding: 0px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding-top: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 28px;    
+    border: #000000 solid .1px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+.portal-form-container form{
+    /* width: 90%; */
+    /* padding-right: 40px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    /* padding: 20px; */
+    /* background-color: aqua; */
+}
+
+.portal-form-title{
+    display: flex;
+    margin:35px 0px 35px 65px;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    font-weight:500;
+    color: #6D3078;
+}
+
+
+.portal-btn{
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0px;
+    min-width: 211px;
+    background-color: #EC691F;
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: 'lufga', sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.15);
+}
+
+.otp-container{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    /* align-items: center; */
+    /* gap: 10px; */
+    margin-top: 13px;
+    margin-bottom: 47px;
+}
+.enter-otp-text{
+    font-family: Lufga, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 13px;
+}
+
+.sendOtpButton{
+    font-size: 12px;
+    font-weight: 600;
+    color: #013143;
+    cursor:pointer;
+}
+
+
+.application-cards{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* width: 100%; */
+    padding: 0px 10%;
+    margin-top: 20px;
+}
