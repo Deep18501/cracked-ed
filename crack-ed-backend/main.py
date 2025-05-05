@@ -4,6 +4,9 @@ from flask_cors import CORS
 import random
 import string
 import uuid
+import os
+from werkzeug.utils import secure_filename
+
 
 app = Flask(__name__)
 CORS(app)
@@ -85,6 +88,7 @@ class Application(db.Model):
     resume = db.Column(db.String(255))
 
     # Application status and metadata
+    current_application_step = db.Column(db.Integer, default=0)
     status = db.Column(db.String(100), default="Started")
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
@@ -208,8 +212,232 @@ def logout_user():
         return jsonify({"message": "Logged out successfully"}), 200
     return jsonify({"message": "Invalid token"}), 400
 
+
+def get_application_dict(application):
+    FIELD_META = {
+        # Step 1 - Personal Info
+        "first_name": {"label": "First Name", "input_type": "text", "required": True},
+        "middle_name": {"label": "Middle Name", "input_type": "text", "required": False},
+        "last_name": {"label": "Last Name", "input_type": "text", "required": True},
+        "mobile_number": {"label": "Mobile Number", "input_type": "text", "required": True},
+        "email": {"label": "Email", "input_type": "text", "required": True},
+        "date_of_birth": {"label": "Date of Birth", "input_type": "date", "required": True},
+        "pan_card_number": {"label": "PAN Card Number", "input_type": "text", "required": True},
+        "gender": {"label": "Gender", "input_type": "text", "required": True},
+        "family_income": {"label": "Family Annual Income", "input_type": "number", "required": False},
+        # Address
+        "address": {"label": "Address", "input_type": "text", "required": True},
+        "state": {"label": "State", "input_type": "text", "required": True},
+        "district": {"label": "District", "input_type": "text", "required": True},
+        "city": {"label": "City", "input_type": "text", "required": True},
+        "pincode": {"label": "Pincode", "input_type": "number", "required": True},
+        # UG
+        "ug_university_name": {"label": "UG University Name", "input_type": "text", "required": True},
+        "ug_degree": {"label": "Degree", "input_type": "text", "required": True},
+        "ug_year_graduated": {"label": "Year Graduated", "input_type": "number", "required": True},
+        # PG
+        "pg_university_name": {"label": "PG University Name", "input_type": "text", "required": False},
+        "pg_degree": {"label": "Degree", "input_type": "text", "required": False},
+        "pg_year_graduated": {"label": "Year Graduated", "input_type": "number", "required": False},
+        # Experience
+        "current_job_title": {"label": "Current Job Title", "input_type": "text", "required": False},
+        "company_name": {"label": "Company Name", "input_type": "text", "required": False},
+        "job_type": {"label": "Job Type", "input_type": "text", "required": False},
+        "location": {"label": "Location", "input_type": "text", "required": False},
+        "exp_current_company": {"label": "Experience at Current Company", "input_type": "text", "required": False},
+        "total_experience": {"label": "Total Experience", "input_type": "text", "required": False},
+        # Documents
+        "passport_photo": {"label": "Passport Sized Photo", "input_type": "file", "required": True},
+        "aadhar_front": {"label": "Aadhar Card (Front)", "input_type": "file", "required": True},
+        "aadhar_back": {"label": "Aadhar Card (Back)", "input_type": "file", "required": True},
+        "pan_card": {"label": "PAN Card", "input_type": "file", "required": True},
+        "ug_certificate": {"label": "UG Degree Certificate", "input_type": "file", "required": True},
+        "pg_certificate": {"label": "PG Degree Certificate", "input_type": "file", "required": False},
+        "resume": {"label": "Resume", "input_type": "file", "required": True},
+    }
+
+    def field(key):
+        meta = FIELD_META[key]
+        return {
+            "field_name": key,
+            "label": meta["label"],
+            "value": getattr(application, key, ""),
+            "input_type": meta["input_type"],
+            "required": meta["required"]
+        }
+
+    return {
+        "application_id": application.application_id,
+        "current_application_step": application.current_application_step,
+        "status": application.status,
+        "name":application.first_name + " " + application.last_name,
+        "program": "AURUM Banker Program",
+        "steps": [
+            {
+                "step": 0,
+                "title": "Personal Details",
+                "sections": [
+                    {
+                        "section": "Personal Info",
+                        "fields": [field(k) for k in [
+                            "first_name", "middle_name", "last_name", "mobile_number",
+                            "email", "date_of_birth", "pan_card_number", "gender", "family_income"
+                        ]]
+                    },
+                    {
+                        "section": "Address",
+                        "fields": [field(k) for k in [
+                            "address", "state", "district", "city", "pincode"
+                        ]]
+                    }
+                ]
+            },
+            {
+                "step": 1,
+                "title": "Education & Experience",
+                "sections": [
+                    {
+                        "section": "Undergraduate",
+                        "fields": [field(k) for k in [
+                            "ug_university_name", "ug_degree", "ug_year_graduated"
+                        ]]
+                    },
+                    {
+                        "section": "Postgraduate",
+                        "fields": [field(k) for k in [
+                            "pg_university_name", "pg_degree", "pg_year_graduated"
+                        ]]
+                    },
+                    {
+                        "section": "Job Experience",
+                        "fields": [field(k) for k in [
+                            "current_job_title", "company_name", "job_type",
+                            "location", "exp_current_company", "total_experience"
+                        ]]
+                    }
+                ]
+            },
+            {
+                "step": 2,
+                "title": "Documents",
+                "sections": [
+                    {
+                        "section": "Uploaded Documents",
+                        "fields": [field(k) for k in [
+                            "passport_photo", "aadhar_front", "aadhar_back", "pan_card",
+                            "ug_certificate", "pg_certificate", "resume"
+                        ]]
+                    }
+                ]
+            },
+            {
+                "step": 3,
+                "title": "Preview",
+                "sections": []
+            },
+            {
+                "step": 4,
+                "title": "Payment",
+                "sections": []
+            }
+        ]
+    }
+
 @app.route('/dataset/get-application-data/', methods=['GET'])
 def get_application_data():
+    auth_header = request.headers.get("Authorization")
+
+    if not auth_header or not auth_header.startswith("Bearer "):
+        return jsonify({"error": "Unauthorized"}), 401
+
+    token = auth_header.split(" ")[1]
+    print("Received token:", token)
+    user = User.query.filter_by(token=token).first()
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    # Fetch applications of the user
+    application = Application.query.filter_by(user_id=user.id).first()
+
+    if not application:
+        return jsonify({"error": "Application not found"}), 404
+
+    return jsonify(get_application_dict(application)), 200
+
+
+
+
+# File fields you want to support
+FILE_FIELDS = [
+    "passport_photo", "aadhar_front", "aadhar_back", "pan_card",
+    "ug_certificate", "pg_certificate", "resume"
+]
+
+@app.route('/dataset/update-application-data/', methods=['POST'])
+def update_application_data():
+    auth_header = request.headers.get("Authorization")
+
+    if not auth_header or not auth_header.startswith("Bearer "):
+        return jsonify({"error": "Unauthorized"}), 401
+
+    token = auth_header.split(" ")[1]
+    user = User.query.filter_by(token=token).first()
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    application = Application.query.filter_by(user_id=user.id).first()
+    if not application:
+        return jsonify({"error": "Application not found"}), 404
+
+    try:
+        # Setup fields
+        allowed_fields = [
+            "first_name", "middle_name", "last_name", "mobile_number", "email", "date_of_birth", "pan_card_number",
+            "gender", "family_income", "address", "state", "district", "city", "pincode",
+            "ug_university_name", "ug_degree", "ug_year_graduated",
+            "pg_university_name", "pg_degree", "pg_year_graduated",
+            "current_job_title", "company_name", "job_type", "location", "exp_current_company", "total_experience",
+            "current_application_step", "status"
+        ]
+
+        form_data = request.form  # for text fields
+        file_data = request.files  # for file uploads
+        print("Form data:", form_data)  
+        print("Form data:", file_data)  
+        # 🧠 1. Handle text fields
+        for key in form_data:
+            if key in allowed_fields:
+                setattr(application, key, form_data[key])
+
+        # 🧠 2. Handle file fields
+        upload_base_path = os.path.join('uploads', str(user.id), str(application.application_id))
+        os.makedirs(upload_base_path, exist_ok=True)
+
+        for file_key in file_data:
+            if file_key in FILE_FIELDS:
+                uploaded_file = file_data[file_key]
+                if uploaded_file.filename:
+                    # Safe filename
+                    filename = secure_filename(file_key + os.path.splitext(uploaded_file.filename)[1])
+                    file_path = os.path.join(upload_base_path, filename)
+                    uploaded_file.save(file_path)
+
+                    # Save the relative path to the DB field
+                    setattr(application, file_key, f"uploads/{user.id}/{application.application_id}/{filename}")
+
+        db.session.commit()
+
+        return jsonify(get_application_dict(application)), 200
+
+    except Exception as e:
+        print("Error while updating application:", str(e))
+        return jsonify({"error": "Internal server error"}), 500
+
+
+
+
+@app.route('/dataset/get-basic-application-data/', methods=['GET'])
+def get_basic_application_data():
     auth_header = request.headers.get("Authorization")
 
     if not auth_header or not auth_header.startswith("Bearer "):

@@ -32,6 +32,7 @@ const PortalDashboardPage = () => {
     const handleResume = () => {
             navigate('/portal/application-form');
     }
+    
     useEffect(() => {
         if (!authContext.loading) { 
           if (!authContext.isAuthenticated) {
@@ -60,7 +61,7 @@ const PortalDashboardPage = () => {
     <div className='application-cards'>
       <ApplicationCard
         appNumber={applicationData?applicationData.application_id:"Loading"}
-        candidateName={applicationData?applicationData.first_name+applicationData.last_name:"Deepanshu Kaushik"}
+        candidateName={applicationData?applicationData.name:"Deepanshu Kaushik"}
         program={applicationData?applicationData.program:"AURUM Banker Program"}
         status={applicationData?applicationData.status:"Started"}
         onResume={handleResume}  

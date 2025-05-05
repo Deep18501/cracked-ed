@@ -38,13 +38,6 @@ const PortalApplicationPage = () => {
         }
     }, [authContext.isAuthenticated, authContext.loading]);
 
-    useEffect(() => {
-        getApplicationData();
-    }, []);
-
-    useEffect(() => {
-        console.log("Application Data dash:", applicationData);
-    }, [applicationData]);
 
     return (
         <>

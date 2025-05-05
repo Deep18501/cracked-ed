@@ -22,7 +22,8 @@ const ApplicationCard = ({ appNumber, candidateName, program, status, onResume }
           <div className="value">{status}</div>
         </div>
       </div>
-      <button className="resume-btn" onClick={onResume}>Resume Application</button>
+      {status!="Submitted"?<button className="resume-btn" onClick={onResume}>Resume Application</button>:<button className="resume-btn" onClick={onResume}>View</button>}
+      
     </div>
   );
 };
