@@ -18,7 +18,7 @@ function App() {
 
       <Router>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<Navigate to="/portal" replace />} />
 
           <Route path="/portal" element={<PortalHomePage/>} />
 

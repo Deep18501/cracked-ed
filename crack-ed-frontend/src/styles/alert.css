@@ -11,23 +11,23 @@
   }
   
   .alert-success {
-    background-color: #d1fae5;
-    color: #065f46;
+    background-color: #d1fae5 !important;
+    color: #065f46 !important;
   }
   
   .alert-error {
-    background-color: #fee2e2;
-    color: #991b1b;
+    background-color: #fee2e2 !important;
+    color: #991b1b !important;
   }
   
   .alert-warning {
-    background-color: #fef3c7;
-    color: #92400e;
+    background-color: #fef3c7 !important;
+    color: #92400e !important;
   }
   
   .alert-info {
-    background-color: #e0f2fe;
-    color: #0369a1;
+    background-color: #e0f2fe !important;
+    color: #0369a1 !important;
   }
   
   .close-btn {

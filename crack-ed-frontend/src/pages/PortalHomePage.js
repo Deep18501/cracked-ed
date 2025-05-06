@@ -10,6 +10,7 @@ import Eligibility from '../components/PortalHomePage/Eligibility.js';
 import SelectionProcess from '../components/PortalHomePage/SelectionProcess.js';
 import FAQ from '../components/PortalHomePage/FAQ.js';
 import Footer from '../components/PortalHomePage/Footer.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const PortalHomePage = () => {

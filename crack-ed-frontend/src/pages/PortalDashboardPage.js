@@ -77,7 +77,7 @@ const PortalDashboardPage = () => {
           appNumber={applicationData?applicationData.application_id:"Loading"}
           candidateName={applicationData?applicationData.name:"Deepanshu Kaushik"}
           program={applicationData?applicationData.program:"AURUM Banker Program"}
-          status={applicationData?applicationData.status:"Started"}
+          status={applicationData?applicationData.status=="Apply Now"?"Apply Now":applicationData.status=="Enrolled"?"Enrolled":applicationData.steps[applicationData.current_application_step].title:"Started"}
           onResume={handleResume}  
         />:   <ApplicationCard
         appNumber={applicationData?applicationData.application_id:"NA"}

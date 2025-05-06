@@ -79,7 +79,7 @@ const ApplicationForm = () => {
           }
         }
       }
-      if(applicationData.status=="Submitted"){
+      if(applicationData.status=="Enrolled"){
         setAgreed(true);
       }
       console.log("Current Step Data:", currentStepData);
@@ -142,7 +142,7 @@ const ApplicationForm = () => {
       setDataError({"type":"error","message":"Please confirm the disclaimer"});
       return;
     }
-    if(agreed && applicationData.status!="Submitted"){
+    if(agreed && applicationData.status!="Enrolled"){
       setPaymentPopup(true);
       console.log("tapped ",showPaymentPopup);
     }
@@ -178,7 +178,7 @@ const ApplicationForm = () => {
 
       const updatedStep = 4;
       formData["current_application_step"] = updatedStep;
-      formData["status"] = "Submitted";
+      formData["status"] = "Enrolled";
       const response = await updateApplicationData({
         data: formData,
       });
@@ -273,6 +273,7 @@ const ApplicationForm = () => {
 
       const updatedStep = applicationData.current_application_step + 1;
       formData["current_application_step"] = updatedStep;
+      formData["status"] = currentStepData.title;
       const response = await updateApplicationData({
         data: formData,
       });
@@ -318,7 +319,7 @@ const ApplicationForm = () => {
               className={
                 step.step.toString() == (applicationData.current_application_step).toString()
                   ? "tab-active"
-                  :(applicationData.status=="Submitted"&&step.step<3)?"tab-inactive":"tab"
+                  :(applicationData.status=="Enrolled"&&step.step<3)?"tab-inactive":"tab"
               }
             >
               {step.title}
@@ -364,7 +365,7 @@ const ApplicationForm = () => {
               </button>
 
             <button type="submit" className="submit-button" onClick={handlePayment}>
-            {applicationData.status=="Submitted"?"Payment Confirmed": "Click to Pay"}
+            {applicationData.status=="Enrolled"?"Payment Confirmed": "Click to Pay"}
             </button>
           </div>
 
@@ -414,7 +415,7 @@ const ApplicationForm = () => {
 
           {/* Submit Button */}
           <div className="form-footer">
-            {applicationData?.current_application_step > 0 && !(applicationData?.current_application_step==3 && applicationData.status =="Submitted")? (
+            {applicationData?.current_application_step > 0 && !(applicationData?.current_application_step==3 && applicationData.status =="Enrolled")? (
               <button
                 type="button"
                 className="back-button"

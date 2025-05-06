@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
       return response;
     } catch (error){
       setLoading(false);
-      setAuthError({"type":"error","message":"Error While Sending Otp"}); // Set the error state
+      setAuthError({"type":"error","message":"User not Registered"}); // Set the error state
     }
   };
 
@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }) => {
       return resp;
     }catch(error){
       setLoading(false);
-      setAuthError({"type":"error","message":"Error in register"}); // Set the error state
+      setAuthError({"type":"error","message":"Error in register "}); // Set the error state
 
       console.log("Error in register",error);
     }
@@ -95,9 +95,9 @@ export const AuthProvider = ({ children }) => {
       return resp;
     }catch(error){
       setLoading(false);
-      setAuthError({"type":"error","message":"Error in sending Otp"}); // Set the error state
-
+      setAuthError({"type":"error","message":"You are already registered or Incorrect Mobile No"}); // Set the error state
       console.log("Error in register otp",error);
+
     }
     setLoading(false);
   }; 

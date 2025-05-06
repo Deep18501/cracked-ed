@@ -169,6 +169,7 @@ def send_register_otp():
     if existing_user:
         existing_user.otp = otp
         user = existing_user
+        return jsonify({"message": "Already Registerd please login"}), 400
     else:
         # Create a new user
         user = User(name=data['name'], email=data['email'], mobile=data['mobile'], otp=otp)
@@ -188,7 +189,6 @@ def send_register_otp():
         last_name=last_name,
         mobile_number=data['mobile'],
         email=data['email'],
-        # You can add more fields here as necessary, such as date_of_birth, gender, etc.
         status="Apply Now"  # Default status
     )
     
@@ -208,11 +208,8 @@ def register_user():
     data = request.get_json()
     user=None
     print("Data received:", data)
-    if(data['otp'] == "1234"):
-        print("Custom OTP  verified")
-        user = User.query.filter_by(mobile=data['mobile'],).first()  
-    else:
-        user = User.query.filter_by(mobile=data['mobile']).first()
+   
+    user = User.query.filter_by(mobile=data['mobile']).first()
         
     if not user:
         return jsonify({"message": "Invalid OTP or user not found"}), 400
@@ -259,11 +256,7 @@ def send_login_otp():
 def login_user():
     data = request.get_json()
     user=None
-    if(data['otp'] == "1234"):
-        print("Custom OTP  verified")
-        user = User.query.filter_by(mobile=data['mobile'],).first()  
-    else:
-        user = User.query.filter_by(mobile=data['mobile']).first()
+    user = User.query.filter_by(mobile=data['mobile']).first()
     if not user:
         return jsonify({"message": "Invalid credentials"}), 400
     else: 

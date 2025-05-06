@@ -57,7 +57,7 @@ const PortalLoginPage = () => {
         <>
             <PortalHeader >
                 <nav className="nav-links">
-                    <a href="/portal" className="nav-link">Home</a>
+                    <a href="/portal" className="nav-link" onClick={() => navigate('/portal')}>Home</a>
                 </nav>
                 <button className="logout-button" onClick={() => navigate('/portal/register')}>Register</button>
             </PortalHeader>

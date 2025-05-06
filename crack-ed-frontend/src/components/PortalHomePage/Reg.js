@@ -4,13 +4,24 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from "../../context/AuthContext.js";
 import { LoadingComponent } from '../../components/LoadingComponent.js';
 import OtpInput from '../../utils/otp_input.js';
+import Alert from '../../components/Alert.js';
+
 
 const RegistrationForm = () => {
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
   const authContext = useContext(AuthContext);
-  const { authLoading } = useContext(AuthContext);
+  const { authLoading, authError, setAuthError } = useContext(AuthContext);  // Correctly access getApplicationData from DataContext
+  const [error, setError] = useState(null);
+
+
+   useEffect(() => {
+      if (authError) {
+        setError(authError);
+      }
+      setAuthError(null);
+    }, [authError]);
 
   const handleFieldChange = ({ name, value }) => {
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -25,7 +36,8 @@ const RegistrationForm = () => {
     });
   }
 
-  const handleRegister = () => {
+  const handleRegister = (e) => {
+    e.preventDefault(); 
     authContext.register(formData.name, formData.email, formData.phone, otp).then((response) => {
       console.log("Register successfully:", response);
       navigate('/portal/dashboard');
@@ -36,6 +48,8 @@ const RegistrationForm = () => {
   return (
     <div className="registration-container">
       {/* <h2 className="registration-title">Start your registration process today!</h2> */}
+        {authLoading?<LoadingComponent/>:null}  
+        {error && <Alert error={error} onClose={() => setError(null)} />}
 
       <form className="registration-form">
         <div className="form-group">
@@ -88,7 +102,9 @@ const RegistrationForm = () => {
           Create Account
         </button>
       </form>
+
     </div>
+    
   );
 };
 
