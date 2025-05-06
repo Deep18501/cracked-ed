@@ -7,14 +7,18 @@ import {Link, useNavigate} from 'react-router-dom'
 import { AuthContext } from "../context/AuthContext.js";
 import { DataContext } from "../context/DataContext.js";
 import ApplicationCard from '../components/ApplicationCard.js';
+import { LoadingComponent } from '../components/LoadingComponent.js';
+import Alert from '../components/Alert.js';
 
 
 const PortalDashboardPage = () => {
-    const [loading, setLoading] = useState(false);
+
 
     const authContext = useContext(AuthContext);
     const dataContext = useContext(AuthContext);
-    const { getApplicationData,applicationData } = useContext(DataContext);  // Correctly access getApplicationData from DataContext
+    const { getApplicationData,applicationData,dataLoading } = useContext(DataContext);  // Correctly access getApplicationData from DataContext
+    const { authLoading ,authError,setAuthError} = useContext(AuthContext);  // Correctly access getApplicationData from DataContext
+    const [error, setError] = useState(null);
 
     const navigate = useNavigate();   
         
@@ -22,17 +26,22 @@ const PortalDashboardPage = () => {
 
 
     const handleLogout = () => {
-
-        setLoading(true);
         authContext.logout();
         console.log("Logout successfully");
-            setLoading(false);
-            navigate('/portal/login');
+      navigate('/portal/login');
     }   
     const handleResume = () => {
             navigate('/portal/application-form');
     }
     
+
+    useEffect(() => {
+          if(authError){
+              setError(authError);
+          }
+          setAuthError(null);
+        }, [authError]);
+
     useEffect(() => {
         if (!authContext.loading) { 
           if (!authContext.isAuthenticated) {
@@ -58,14 +67,27 @@ const PortalDashboardPage = () => {
       </nav>
       <button className="logout-button" onClick={handleLogout}>Logout</button>
       </PortalHeader>
+
+      {error && <Alert error={error} onClose={() => setError(null)} />}
+
     <div className='application-cards'>
-      <ApplicationCard
-        appNumber={applicationData?applicationData.application_id:"Loading"}
-        candidateName={applicationData?applicationData.name:"Deepanshu Kaushik"}
+      {dataLoading||authLoading?<LoadingComponent/>:
+        applicationData?
+          <ApplicationCard
+          appNumber={applicationData?applicationData.application_id:"Loading"}
+          candidateName={applicationData?applicationData.name:"Deepanshu Kaushik"}
+          program={applicationData?applicationData.program:"AURUM Banker Program"}
+          status={applicationData?applicationData.status:"Started"}
+          onResume={handleResume}  
+        />:   <ApplicationCard
+        appNumber={applicationData?applicationData.application_id:"NA"}
+        candidateName={applicationData?applicationData.name:"Not found"}
         program={applicationData?applicationData.program:"AURUM Banker Program"}
-        status={applicationData?applicationData.status:"Started"}
-        onResume={handleResume}  
-      />
+        status={applicationData?applicationData.status:"Error"}
+        
+        />
+        }
+  
       </div>
         </>
     );

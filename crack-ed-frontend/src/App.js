@@ -30,7 +30,10 @@ function App() {
               </DataProvider>
               } />
           
-          <Route path="/portal/login" element={<PortalLoginPage />} />
+          <Route path="/portal/login" element={
+            
+            <PortalLoginPage />
+          } />
           <Route path="/portal/register" element={<PortalRegisterPage />} />
         </Routes>
       </Router>

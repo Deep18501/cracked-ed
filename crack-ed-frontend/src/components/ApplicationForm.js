@@ -4,7 +4,8 @@ import { DataContext } from "../context/DataContext";
 import { useNavigate } from "react-router-dom";
 import "../styles/application_form.css"; // Assuming you have a CSS file for styling
 import ConfirmPaymentPopup from "./ConfirmPaymentPopup"
-
+import { LoadingComponent } from "./LoadingComponent";
+import Spinner from 'react-bootstrap/Spinner';
 
 const Input = ({ label, required, inputType, name, value, disabled, readOnly, onChange }) => {
 
@@ -39,7 +40,7 @@ const ApplicationForm = () => {
   const authContext = useContext(AuthContext);
   // const contextData = useContext(DataContext);
   const [loading, setLoading] = useState(true);
-  const { getApplicationData, applicationData, setApplicationData, updateApplicationData } = useContext(DataContext);
+  const { getApplicationData, applicationData, setApplicationData, updateApplicationData ,dataLoading,setDataError} = useContext(DataContext);
   const [currentStepData, setCurrentStepData] = useState(null);
   const [formData, setFormData] = useState({});
   const [agreed, setAgreed] = useState(false);
@@ -106,10 +107,6 @@ const ApplicationForm = () => {
   }, []);
 
 
-  if (!applicationData) {
-    return <div>Loading application data...</div>;
-  }
-
 
   const handleBackStep = async () => {
     try {
@@ -139,7 +136,10 @@ const ApplicationForm = () => {
 
   const handlePayment=async(e)=>{
     e.preventDefault();
-
+    if(!agreed){
+      setDataError({"type":"error","message":"Please confirm the disclaimer"});
+      return;
+    }
     if(agreed && applicationData.status!="Submitted"){
       setPaymentPopup(true);
       console.log("tapped ",showPaymentPopup);
@@ -165,6 +165,7 @@ const ApplicationForm = () => {
           let fieldName = field.field_name;
 
           if (field.required && !formData[fieldName]?.toString().trim()) {
+            setDataError({"type":"error","message":"Please fill "+field.label});
             totalMissingFields++;
           }
         }
@@ -205,6 +206,7 @@ const ApplicationForm = () => {
           let fieldName = field.field_name;
 
           if (field.required && !formData[fieldName]?.toString().trim()) {
+            setDataError({"type":"error","message":"Please fill "+field.label});
             totalMissingFields++;
           }
         }
@@ -229,7 +231,12 @@ const ApplicationForm = () => {
     }
   };
 
+  if (!applicationData) {
+    return <LoadingComponent/>
+  }
+
   return (
+
     <div className="application-form-container">
       {/* Header */}
       <div className="application-header">
@@ -242,6 +249,9 @@ const ApplicationForm = () => {
           {applicationData.application_id}
         </p>
       </div>
+
+      {applicationData && dataLoading? <LoadingComponent/>:null}
+  
 
       {/* Navigation Tabs */}
       <div className="application-tabs">

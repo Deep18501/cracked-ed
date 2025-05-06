@@ -36,6 +36,7 @@
   .resume-btn {
     background-color: #f46b1f;
     color: white;
+    margin: 10px;
     padding: 10px 18px;
     border: none;
     border-radius: 4px;

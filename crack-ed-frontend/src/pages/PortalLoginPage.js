@@ -5,13 +5,16 @@ import CustomTextField from '../utils/custom_textfield.js';
 import OtpInput from '../utils/otp_input.js';
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from "../context/AuthContext";
+import { LoadingComponent } from '../components/LoadingComponent.js';
+import Alert from '../components/Alert.js';
 
 const PortalLoginPage = () => {
-    const [loading, setLoading] = useState(false);
     const [otp, setOtp] = useState("");
     const navigate = useNavigate();
     const [formData, setFormData] = useState({});
     const authContext = useContext(AuthContext);
+    const { authLoading } = useContext(AuthContext);  // Correctly access getApplicationData from DataContext
+    const [error, setError] = useState(null);
 
 
     useEffect(() => {
@@ -21,6 +24,8 @@ const PortalLoginPage = () => {
           }
         }
       }, [authContext.isAuthenticated, authContext.loading]);
+      
+ 
 
       
     const handleFieldChange = (name, value) => {
@@ -30,26 +35,21 @@ const PortalLoginPage = () => {
     };
 
     const sendLoginOtp = () => {
-        setLoading(true);
         authContext.sendLoginOtp(formData.phone).then((response) => {
             console.log("OTP sent successfully:", response);
-            setLoading(false);
 
         }).catch((error) => {
             console.error("Error sending OTP:", error);
-            setLoading(false);
         });
     }
 
     const handleRegister = () => {
-        setLoading(true);
+        
         authContext.login(formData.phone, otp).then((response) => {
             console.log("login successfully:", response);
             navigate('/portal/dashboard');
-            setLoading(false);
         }).catch((error) => {
             console.error("login Failed:", error);
-            setLoading(false);
         });
     }
 
@@ -61,10 +61,11 @@ const PortalLoginPage = () => {
                 </nav>
                 <button className="logout-button" onClick={() => navigate('/portal/register')}>Register</button>
             </PortalHeader>
+            {authLoading?<LoadingComponent/>:null}  
+
             <div className="portal-container">
                 <div className="portal-form-container">
                     <div className='portal-form-title'>
-
                         Login
                     </div>
                     <div className="portal-form-card">

@@ -1,5 +1,5 @@
 .portal-container{
-    position: fixed;
+    position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,6 +21,15 @@
     border: #000000 solid .1px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
+
+.portal-form-container{
+    width: 100%;
+    max-width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    
+}
 .portal-form-container form{
     /* width: 90%; */
     /* padding-right: 40px; */
@@ -34,7 +43,7 @@
 
 .portal-form-title{
     display: flex;
-    margin:35px 0px 35px 65px;
+    margin:35px 0px;
     justify-content: center;
     align-items: center;
     font-size: 32px;
@@ -92,4 +101,29 @@
     /* width: 100%; */
     padding: 0px 10%;
     margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .portal-form-container{
+    width: 100%;
+    
+    max-width: 100%;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    
+    /* background-color: aqua; */
+  }
+.portal-form-card{
+    width: 80%;
+    padding: 32px 16px;
+    margin: 10px;
+}
+.portal-form-container form{
+    width: 100%;
+    padding: 0px;
+    gap: 5px;
+    /* background-color: aqua; */
+}
 }

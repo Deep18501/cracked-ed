@@ -27,6 +27,7 @@
     background-color:transparent;
 }
 
+
 .logo img {
     height: 36px;
 }
@@ -89,3 +90,4 @@
 .dropdown:hover .dropdown-menu {
     display: block;
 }
+

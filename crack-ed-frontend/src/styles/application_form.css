@@ -155,3 +155,41 @@
     line-height: 1.4;
     color: #333;
 }
+
+
+@media (max-width: 768px) {
+    .nav-tabs {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 10 10px;
+    }
+  
+    .nav-tabs {
+      flex-wrap: wrap;
+      border: 1px none transparent;
+      border-radius: 5px;
+      overflow: hidden;
+    } 
+    .tab,
+    .tab-active,
+    .tab-inactive {
+      padding: 10px 20px;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .application-header {
+        flex-direction: column;
+        align-items: flex-start;
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+    .application-header p{
+        margin: 5px;
+    }
+    .application-fee-container{
+        margin: 10px;
+    }
+  }

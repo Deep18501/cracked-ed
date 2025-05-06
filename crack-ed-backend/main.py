@@ -100,6 +100,13 @@ def generate_otp():
 def generate_token():
     return ''.join(random.choices(string.ascii_letters + string.digits, k=30))
 
+import time
+
+@app.before_request
+def add_delay():
+    time.sleep(2)
+    
+    
 @app.route('/auth/registerOtp/', methods=['POST']) 
 def send_register_otp():
     data = request.get_json()

@@ -1,16 +1,41 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import '../styles/portal_header.css';
 import logo from '../assets/logo.webp';
 import asfbank from '../assets/asfbank_icon.png';
 import portalHeader from '../assets/portal_header_icon.png';
-
+import { AuthContext } from "../context/AuthContext";
+import { DataContext } from "../context/DataContext";
+import Alert from './Alert.js';
 
 const PortalHeader = ({children}) => {
   const navigate = useNavigate();
+    const [error, setError] = useState(null);
+    const { authLoading,authError,setAuthError } = useContext(AuthContext);  // Correctly access getApplicationData from DataContext
+    const dataCtx = useContext(DataContext);
+    const dataError =  dataCtx?dataCtx.dataError:null;
+    useEffect(() => {
+        if(authError){
+            setError(authError);
+        }
+        setAuthError(null);
+      }, [authError]);
+
+ useEffect(() => {
+      if(dataCtx){
+        if(dataError){
+            setError(dataError);
+        }
+        dataCtx.setDataError(null);
+      }
+      }, [dataError]);
+
+
+
 
   return (
-    <header className="header-container">
+    <>
+    <div className="header-container">
       <img src={portalHeader} alt="Portal Header" className="header-icon-img" />
     <div className="header-content">
   
@@ -24,7 +49,10 @@ const PortalHeader = ({children}) => {
     </div>
         
     </div>
-  </header>
+  </div>
+  {error && <Alert error={error} onClose={() => setError(null)} />}
+
+  </>
   );
 
 

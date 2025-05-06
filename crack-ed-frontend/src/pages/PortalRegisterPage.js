@@ -5,13 +5,14 @@ import CustomTextField from '../utils/custom_textfield.js';
 import OtpInput from '../utils/otp_input.js';
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from "../context/AuthContext.js";
+import { LoadingComponent } from '../components/LoadingComponent.js';
 
 const PortalRegisterPage = () => {
-    const [loading, setLoading] = useState(false);
     const [otp, setOtp] = useState("");
     const navigate = useNavigate();
     const [formData, setFormData] = useState({});
     const authContext = useContext(AuthContext);
+    const { authLoading } = useContext(AuthContext);  // Correctly access getApplicationData from DataContext
 
 
     useEffect(() => {
@@ -29,25 +30,19 @@ const PortalRegisterPage = () => {
     };
 
     const sendLoginOtp = () => {
-        setLoading(true);
         authContext.sendRegisterOtp(formData.name, formData.email, formData.phone).then((response) => {
             console.log("OTP sent successfully:", response);
-            setLoading(false);
         }).catch((error) => {
             console.error("Error sending OTP:", error);
-            setLoading(false);
         });
     }
 
     const handleRegister = () => {
-        setLoading(true);
         authContext.register(formData.name, formData.email, formData.phone, otp).then((response) => {
             console.log("Register successfully:", response);
-            setLoading(false);
             navigate('/portal/dashboard');
         }).catch((error) => {
             console.error("Register Failed:", error);
-            setLoading(false);
         });
     }
 
@@ -59,6 +54,7 @@ const PortalRegisterPage = () => {
                 </nav>
                 <button className="logout-button" onClick={() => navigate('/portal/login')}>Login</button>
             </PortalHeader>
+             {authLoading?<LoadingComponent/>:null}  
             <div className="portal-container">
                 <div className="portal-form-container">
                     <div className='portal-form-title'>
