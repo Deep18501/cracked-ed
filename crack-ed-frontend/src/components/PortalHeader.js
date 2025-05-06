@@ -16,7 +16,11 @@ const PortalHeader = ({ children }) => {
   const dataCtx = useContext(DataContext);
   const dataError = dataCtx ? dataCtx.dataError : null;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const toggleMenu = () => setIsMenuOpen(prev => !prev);
+  const toggleMenu = () =>{
+    console.log("Menu tapped")
+     setIsMenuOpen(prev => !prev)
+
+    }
 
 
   useEffect(() => {

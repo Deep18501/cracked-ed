@@ -8,6 +8,10 @@ import os
 from werkzeug.utils import secure_filename
 import razorpay
 import threading
+import time
+import hashlib
+import requests
+
 
 app = Flask(__name__)
 CORS(app)
@@ -18,7 +22,23 @@ db = SQLAlchemy(app)
 RAZORPAY_KEY_ID = os.getenv('RAZORPAY_KEY_ID')
 RAZORPAY_KEY_SECRET = os.getenv('RAZORPAY_KEY_SECRET')
 client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
+CUSTOMER_KEY = "362405"
+ORANGE_API_KEY = "RHFLK7kkQN4fGtNwnXOhvpXreO2hJxx1"
+SEND_URL = "https://login.xecurify.com/moas/api/auth/challenge" 
+VALIDATE_URL = "https://login.xecurify.com/moas/api/auth/validate" 
 
+def generate_hash_header():
+    timestamp = str(int(time.time() * 1000))
+    string_to_hash = CUSTOMER_KEY + timestamp + ORANGE_API_KEY
+    hash_value = hashlib.sha512(string_to_hash.encode('utf-8')).hexdigest().lower()
+
+    return {
+    "Customer-Key": CUSTOMER_KEY,
+    "Timestamp": timestamp,
+    "Authorization": hash_value,
+    "Content-Type": "application/json"
+    }
+    
 
 def generate_application_id():
     return str(uuid.uuid4())[:12].replace('-', '').upper()
@@ -30,6 +50,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True)
     mobile = db.Column(db.String(15), unique=True)
     otp = db.Column(db.String(6))
+    otp_txn_id = db.Column(db.String(100))
     verified = db.Column(db.Boolean, default=False)
     token = db.Column(db.String(255))
     applications = db.relationship('Application', backref='user', lazy=True)
@@ -105,7 +126,36 @@ def generate_otp():
 def generate_token():
     return ''.join(random.choices(string.ascii_letters + string.digits, k=30))
 
+def send_otp_api(mobile):
+    header=generate_hash_header()
+    payload = {
+    "customerKey": CUSTOMER_KEY,
+    "phone": "91"+mobile,  # Replace with the mobile number
+    "authType": "SMS", 
+    }
+    
+    try:
+        response = requests.post(SEND_URL, json=payload, headers=header)
+        print("Response from OTP API:", response.json())
+        return response.json()["txId"] 
+    except requests.exceptions.RequestException as e:
+        print("Error sending OTP:", str(e))
+        return jsonify({"error": "Failed to send OTP", "details": str(e)}), 500
 
+def verify_otp_api(otp_txn_id, otp):
+    header=generate_hash_header()
+    payload = {
+    "txId": otp_txn_id,
+	"token": otp
+    }
+    
+    try:
+        response = requests.post(VALIDATE_URL, json=payload, headers=header)
+        print("Response from OTP API:", response.json())
+        return response.json()["status"] 
+    except requests.exceptions.RequestException as e:
+        print("Error sending OTP:", str(e))
+        return jsonify({"error": "Failed to send OTP", "details": str(e)}), 500
     
     
 @app.route('/auth/registerOtp/', methods=['POST']) 
@@ -117,7 +167,6 @@ def send_register_otp():
     existing_user = User.query.filter_by(mobile=data['mobile']).first()
     user=None
     if existing_user:
-        # Update OTP for the existing user
         existing_user.otp = otp
         user = existing_user
     else:
@@ -131,6 +180,7 @@ def send_register_otp():
     last_name = name_parts[-1] if len(name_parts) > 1 else ""  # Last part is the last name, if any
     print("First name:", user.name)
     print("id:", user.id, )
+    
     # Create application details
     application = Application(
         user_id=user.id,  # Link the application to the user
@@ -143,13 +193,14 @@ def send_register_otp():
     )
     
     
+    user.otp_txn_id = send_otp_api(user.mobile)
     db.session.add(application)
     
     # Commit both user and application records
     db.session.commit()
 
     # Return the response
-    return jsonify({"message": "OTP sent", "otp": otp}), 200
+    return jsonify({"message": "OTP sent",}), 200
 
 
 @app.route('/auth/register/', methods=['POST'])
@@ -161,11 +212,16 @@ def register_user():
         print("Custom OTP  verified")
         user = User.query.filter_by(mobile=data['mobile'],).first()  
     else:
-        user = User.query.filter_by(mobile=data['mobile'], otp=data['otp']).first()
+        user = User.query.filter_by(mobile=data['mobile']).first()
+        
     if not user:
         return jsonify({"message": "Invalid OTP or user not found"}), 400
     else:
-        user.verified = True
+        status=verify_otp_api(user.otp_txn_id, data['otp'])
+        if status == "SUCCESS":
+            user.verified = True
+        else:
+            return jsonify({"message": "Invalid OTP"}), 400
     
     user.token = generate_token()
     db.session.commit()
@@ -194,8 +250,10 @@ def send_login_otp():
     if not user:
         return jsonify({"message": "Mobile not registered"}), 400
     user.otp = generate_otp()
+    user.otp_txn_id = send_otp_api(user.mobile)
+    
     db.session.commit()
-    return jsonify({"message": "OTP sent", "otp": user.otp}), 200
+    return jsonify({"message": "OTP sent",}), 200
 
 @app.route('/auth/login/', methods=['POST'])
 def login_user():
@@ -205,9 +263,15 @@ def login_user():
         print("Custom OTP  verified")
         user = User.query.filter_by(mobile=data['mobile'],).first()  
     else:
-        user = User.query.filter_by(mobile=data['mobile'], otp=data['otp']).first()
+        user = User.query.filter_by(mobile=data['mobile']).first()
     if not user:
         return jsonify({"message": "Invalid credentials"}), 400
+    else: 
+        status=verify_otp_api(user.otp_txn_id, data['otp'])
+        if status == "SUCCESS":
+            user.verified = True
+        else:
+            return jsonify({"message": "Invalid OTP"}), 400
     user.token = generate_token()
     db.session.commit()
     return jsonify({"token": user.token, "username": user.name}), 200
