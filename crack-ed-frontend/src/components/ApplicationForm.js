@@ -6,6 +6,8 @@ import "../styles/application_form.css"; // Assuming you have a CSS file for sty
 import ConfirmPaymentPopup from "./ConfirmPaymentPopup"
 import { LoadingComponent } from "./LoadingComponent";
 import Spinner from 'react-bootstrap/Spinner';
+import {get_payment_screen} from '../controllers/dataController';
+
 
 const Input = ({ label, required, inputType, name, value, disabled, readOnly, onChange }) => {
 
@@ -180,8 +182,62 @@ const ApplicationForm = () => {
       const response = await updateApplicationData({
         data: formData,
       });
+      // window.location.href =  process.env.REACT_APP_BASE_URL+`/payment?token=${encodeURIComponent(localStorage.getItem("TOKEN"))}`;
+      //   var options = {
+      //     "key": "{{ razorpay_key }}",
+      //     "amount": "100",
+      //     "currency": "INR",
+      //     "name": "Crack-ED",
+      //     "description": "Registration Payment",
+      //     "image": "../assets/logo.webp",
+      //     "order_id": applicationData.application_id,
+      //     "handler": function (response) {
+      //         // Submit the payment details to your server
+      //         var form = document.createElement('form');
+      //         form.setAttribute('method', 'post');
+      //         form.setAttribute('action', '/payment-success');
+              
+      //         var fields = {
+      //             'razorpay_payment_id': response.razorpay_payment_id,
+      //             'razorpay_order_id': response.razorpay_order_id,
+      //             'razorpay_signature': response.razorpay_signature
+      //         };
+              
+      //         for (var key in fields) {
+      //             var input = document.createElement('input');
+      //             input.setAttribute('type', 'hidden');
+      //             input.setAttribute('name', key);
+      //             input.setAttribute('value', fields[key]);
+      //             form.appendChild(input);
+      //         }
+              
+      //         document.body.appendChild(form);
+      //         form.submit();
+      //     },
+      //     "prefill": {
+      //         "name": "{{ name }}",
+      //         "email": "{{ email }}",
+      //         "contact": "{{ phone }}"
+      //     },
+      //     "theme": {
+      //         "color": "#3399cc"
+      //     }
+      // };
 
-      console.log("Response:", response);
+      // var rzp1 = new Razorpay(options);
+      
+      // document.getElementById('rzp-button').onclick = function(e) {
+      //     rzp1.open();
+      //     e.preventDefault();
+      // };
+
+      // // Auto-open payment modal when page loads
+      // window.onload = function() {
+      //     rzp1.open();
+      //     e.preventDefault();
+      // };
+      // get_payment_screen();
+      // console.log("Response:", response);
       navigate('/portal/dashboard');
       setApplicationData(prev => ({
         ...prev,

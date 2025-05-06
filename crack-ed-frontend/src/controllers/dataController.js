@@ -29,6 +29,18 @@ export const get_application_data_api = async () => {
   }
 };
 
+export const get_payment_screen = async () => {
+  try {
+    console.log("getting data");
+    const response = await axiosInstance.get("/payment");
+    console.log("data received" + response.data);
+    // return response.data;
+  } catch (error) {
+    console.log("error - " + error.response.data.error);
+    throw error.response.data.error || "Not Found";
+  }
+};
+
 
 export const update_application_data_api = async (data) => {
   try {

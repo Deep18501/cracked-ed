@@ -69,6 +69,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try{
       const resp=await registerUser(name,email,mobile,otp);
+      setIsAuthenticated(true); 
       setLoading(false);
       setAuthError({"type":"success","message":"Register Successfully"}); // Set the success state
       return resp;

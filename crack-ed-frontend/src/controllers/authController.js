@@ -41,7 +41,7 @@ export const registerUser = async (name, email, mobile, otp) => {
       "mobile": mobile,
       "otp": otp,
     });
-    // await saveToken(response.data);
+    await saveToken(response.data);
     return response.data;
   } catch (error) {
     throw error.response?.data?.message || "Registration failed";
@@ -55,7 +55,6 @@ export const sendRegisterUserOtp = async (name, email, mobile) => {
       "email": email,
       "mobile": mobile,
     });
-    // await saveToken(response.data);
     return response.data;
   } catch (error) {
     throw error.response?.data?.message || "Registration OTP failed";

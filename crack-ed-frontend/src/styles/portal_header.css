@@ -16,12 +16,22 @@
 .header-left {
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 20px;
+    color: white;
+    font-size: 24px;   
 }
 
 .logo {
     height: 40px;
     object-fit: contain;
+}
+
+.logo-mobile {
+    display: none;
+}
+
+.logo-desktop {
+    display: block;
 }
 
 .header-right {
@@ -63,31 +73,87 @@
     top: 0;
 }
 
+.hamburger-icon {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.hamburger-icon .bar {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    border-radius: 2px;
+}
+
+.mobile-menu {
+    display: none;
+    /* flex-direction: column; */
+    align-items: center;
+    justify-content: end;
+
+    background-color: #6D3078;
+    padding: 10px 20px;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    gap: 30px;
+    width: 100%;
+    z-index: 1;
+    transition: all 0.3s ease-in-out;
+}
+
+.mobile-menu.open {
+    display: flex;
+}
+
 @media (max-width: 768px) {
-    .header-container{
+    .header-container {
         width: 100%;
         overflow: hidden;
-    } 
-    .header-content{
+        background-color: #6D3078;
+    }
+
+    .logo-desktop {
+        display: none;
+      }
+    
+      .logo-mobile {
+        display: block;
+      }
+    .header-content {
         width: 100%;
-      
         padding: 5px;
     }
+
     .header-left {
-        flex-direction: column;
         align-items: flex-start;
         gap: 5px;
+      
     }
-    .header-right{
-        padding-right: 16px;
-        padding-top: 10px;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 10px;
+
+    .logout-button {
+        height: 32px;
+        padding: 0px;
+        min-width: 100px;
     }
-   .logout-button{
-    height: 32px;
-    padding: 0px;
-    min-width: 100px;
-   }
+
+    .header-right {
+        display: none;
+    }
+
+    .hamburger-icon {
+        display: flex;
+    }
+
+    .mobile-menu {
+        display: none;
+        /* Initially hidden */
+    }
+
+    .mobile-menu.open {
+        display: flex;
+    }
 }
