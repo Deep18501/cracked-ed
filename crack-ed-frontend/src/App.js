@@ -10,6 +10,7 @@ import PortalRegisterPage from './pages/PortalRegisterPage';
 import { DataProvider } from './context/DataContext';
 import PortalApplicationPage from './pages/PortalApplicationPage';
 import { Navigate } from "react-router-dom";
+import PortalHomePage from './pages/PortalHomePage';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
 
-          <Route path="/portal" element={<Navigate to="/portal/dashboard" replace />} />
+          <Route path="/portal" element={<PortalHomePage/>} />
 
             <Route path="/portal/dashboard" element={
               <DataProvider>

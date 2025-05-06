@@ -1,0 +1,146 @@
+.bg-purple {
+    background-color: #702F8A;
+}
+
+.bg-orange {
+    background-color: #F26522;
+}
+
+.hover-underline:hover {
+    text-decoration: underline;
+}
+
+.btn {
+    display: inline-block;
+    font-weight: 600;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.375rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+      border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    cursor: pointer;
+}
+
+.btn-sm {
+    padding: 1rem 1.5rem;
+    font-size: 0.75rem;
+    border-radius: 0.25rem;
+}
+
+.bg-orange {
+    background-color: #F26522;
+    color: white;
+}
+
+.bg-orange:hover {
+    background-color: #d35400;
+    color: white;
+}
+
+.btn-submit-login {
+    background-color: #F26522;
+    color: white;
+    font-weight: 600;
+    padding: 1rem 1.5rem;
+    border-radius: 0.375rem;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+    }
+    
+    .btn-submit:hover {
+    background-color: #d35400;
+    }
+
+/* New styles for mobile menu toggle and dropdown */
+
+.menu-toggle {
+    font-size: 28px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: block;
+    padding: 0;
+    line-height: 1;
+}
+
+@media (min-width: 768px) {
+    .menu-toggle {
+        display: none;
+    }
+}
+
+nav {
+    transition: max-height 0.3s ease;
+}
+
+nav.closed {
+    max-height: 0;
+    overflow: hidden;
+    display: none;
+}
+
+nav.open {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 500px; /* enough to show all items */
+    background-color: #702F8A;
+    padding: 1rem 0;
+    position: absolute;
+    top: 64px; /* height of top bar */
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+nav.open a,
+nav.open .btn-submit {
+    color: white;
+    padding-left: 1.5rem;
+    font-size: 1rem;
+}
+
+nav.open .btn-submit {
+    width: 80px;
+    height: 35.6px;
+    align-self: flex-start;
+    padding: 0.25rem 0.5rem;
+}
+
+/* Change hamburger icon to X when menu is open */
+.menu-toggle.open::before {
+    content: "✕";
+}
+
+/* Ensure nav is horizontal on desktop */
+@media (min-width: 768px) {
+    nav {
+        display: flex !important;
+        max-height: none !important;
+        position: static !important;
+        flex-direction: row !important;
+        gap: 1rem !important;
+        background-color: transparent !important;
+        padding: 0 !important;
+    }
+
+    nav a,
+    nav .btn-submit {
+        padding-left: 0 !important;
+        font-size: 0.875rem !important;
+        color: white !important;
+    }
+
+    .btn-submit {
+        width: 45px !important;
+        height: 35.6px !important;
+    }
+}

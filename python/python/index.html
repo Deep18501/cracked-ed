@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/registration.css') }}">
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+
+</head>
+<body>
+    <style>
+        body {
+          background: 
+            /* linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), */
+            url("{{ url_for('static', filename='images/Background.png') }}") no-repeat center center fixed;
+          background-size: cover;
+        }
+    </style>
+    <div class="student-details">
+        <div class="form-container">
+            <div class="form-content">
+                <div class="left-container">
+                    <div class="form-header">
+                        <img class="logo" alt="Logo" src="{{ url_for('static', filename='images/image-1.png') }}">
+                        <p class="form-title">
+                            <span class="highlight">You're almost there! </span>
+                            This form is the final step in your registration for the Post Graduate Program.
+                        </p>
+                        <p class="form-instruction">1. Fill in your details to complete the enrollment process.</p>
+                        <p class="form-instruction">2. Our team will verify the information and confirm your registration.</p>
+                    </div>
+
+                    <img class="divider" alt="Divider" src="{{ url_for('static', filename='images/line-7.svg') }}">
+                </div>
+
+                <!-- Right Container (Form) -->
+                <div class="right-container">
+                    <h1 class="registration-heading">Enrollment Form</h1>
+
+                    <form action="{{ url_for('register') }}" method="POST" enctype="multipart/form-data" class="form-fields" onsubmit="return validateForm()">
+                        
+                        <div class="input-group">
+                            <div class="input-field">
+                                <label for="name"><i class="fas fa-user"></i>Name:</label>
+                                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                            </div>
+                            <div class="input-field">
+                                <label for="phone"><i class="fas fa-phone"></i>Phone Number:</label>
+                                <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-field">
+                                <label for="email"><i class="fas fa-envelope"></i>Email:</label>
+                                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                            </div>
+
+                            <div class="input-field">
+                                <label for="registration_amount"><i class="fas fa-wallet"></i>Paid amount:</label>
+                                <input type="text" id="registration_amount" name="registration_amount" placeholder="Enter paid amount" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-field">
+                              <label for="course"><i class="fas fa-book"></i>Course:</label>
+                              <select id="course" name="course" required>
+                                <option value="">Select Course</option>
+                                <option value="course1">Course 1</option>
+                                <option value="course2">Course 2</option>
+                                <option value="course3">Course 3</option>
+                              </select>
+                            </div>
+                          
+                            <div class="input-field">
+                              <label for="profile"><i class="fa-solid fa-user-tie"></i>Profile:</label>
+                              <select id="profile" name="profile" required>
+                                <option value="">Select Profile</option>
+                                <!-- Options will be populated by JavaScript -->
+                              </select>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-field">
+                                <label for="address"><i class="fas fa-home"></i>Address:</label>
+                                <input type="text" id="address" name="address" placeholder="Enter your address" required>
+                            </div>
+                            <div class="input-field">
+                                <label for="city"><i class="fas fa-city"></i>City:</label>
+                                <input type="text" id="city" name="city" placeholder="Enter your city" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-field">
+                                <label for="state"><i class="fas fa-map-marker-alt"></i>State:</label>
+                                <input type="text" id="state" name="state" placeholder="Enter your state" required>
+                            </div>
+                            <div class="input-field">
+                                <label for="pincode"><i class="fas fa-map-pin"></i>Pin Code:</label>
+                                <input type="text" id="pincode" name="pincode" placeholder="Enter pin code" required>
+                            </div>   
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-field">
+                                <label for="dob"><i class="fas fa-calendar-alt"></i>DOB:</label>
+                                <input type="date" id="dob" name="dob" placeholder="Select your DOB" required>
+                            </div>
+                            <div class="input-field">
+                                <label for="job-location"><i class="fas fa-map-marker-alt"></i>Job Location:</label>
+                                <input type="text" id="job-location" name="job-location" placeholder="Enter Job Location" required>
+                            </div>   
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-field">
+                                <label for="pan"><i class="fas fa-id-card-alt"></i>PAN Number:</label>
+                                <input type="text" id="pan" name="pan" placeholder="Enter PAN number" required>
+                            </div>
+                            <div class="input-field">
+                                <label for="pan_photo"><i class="fas fa-file-upload"></i>PAN:</label>
+                                <input type="file" id="pan_photo" name="pan_photo" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-field-1">
+                                <label for="aadhar"><i class="fas fa-id-card"></i>Aadhar Number:</label>
+                                <input type="text" id="aadhar" name="aadhar" placeholder="Enter Aadhar number" required>
+                            </div>
+                            <div class="input-field aadhar-photo-upload">
+                                <div class="aadhar-photo-group">
+                                    <label for="aadhar_photo_1"><i class="fas fa-file-upload"></i>Aadhar Front:</label>
+                                    <input type="file" id="aadhar_photo_1" name="aadhar_photo_1" required>
+                                </div>
+                                <div class="aadhar-photo-group">
+                                    <label for="aadhar_photo_2"><i class="fas fa-file-upload"></i>Aadhar Back:</label>
+                                    <input type="file" id="aadhar_photo_2" name="aadhar_photo_2" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-button">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Profile options for each course
+        const profileOptions = {
+            course1: ["Profile 1A", "Profile 1B", "Profile 1C"],
+            course2: ["Profile 2A", "Profile 2B", "Profile 2C", "Profile 2D"],
+            course3: ["Profile 3A", "Profile 3B"]
+        };
+    
+        // Initialize course-profile relationship
+        document.addEventListener('DOMContentLoaded', function() {
+            const courseSelect = document.getElementById('course');
+            const profileSelect = document.getElementById('profile');
+            
+            courseSelect.addEventListener('change', function() {
+                profileSelect.innerHTML = '<option value="">Select Profile</option>';
+                const selectedCourse = this.value;
+                
+                if (selectedCourse && profileOptions[selectedCourse]) {
+                    profileOptions[selectedCourse].forEach(function(profile) {
+                        const option = document.createElement('option');
+                        option.value = profile.toLowerCase().replace(/\s+/g, '-');
+                        option.textContent = profile;
+                        profileSelect.appendChild(option);
+                    });
+                }
+            });
+        });
+    
+        // Single validateForm function
+        function validateForm() {
+            // Get all field values
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const registrationAmount = document.getElementById('registration_amount').value;
+            const pincode = document.getElementById('pincode').value;
+            const aadhar = document.getElementById('aadhar').value;
+            const course = document.getElementById('course').value;
+            const profile = document.getElementById('profile').value;
+    
+            // Mobile number validation (10 digits)
+            const phoneRegex = /^\d{10}$/;
+            if (!phoneRegex.test(phone)) {
+                alert("Please enter a valid 10-digit phone number.");
+                return false;
+            }
+    
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+    
+            // Paid amount validation (numeric and positive)
+            if (isNaN(registrationAmount) || parseFloat(registrationAmount) <= 0) {
+                alert("Please enter a valid amount.");
+                return false;
+            }
+    
+            // Pincode validation (6 digits)
+            const pincodeRegex = /^\d{6}$/;
+            if (!pincodeRegex.test(pincode)) {
+                alert("Please enter a valid 6-digit pincode.");
+                return false;
+            }
+    
+            // Aadhar number validation (12 digits)
+            const aadharRegex = /^\d{12}$/;
+            if (!aadharRegex.test(aadhar)) {
+                alert("Please enter a valid 12-digit Aadhar number.");
+                return false;
+            }
+    
+            // Course selection validation
+            if (!course) {
+                alert("Please select a course.");
+                return false;
+            }
+    
+            // Profile selection validation
+            if (!profile) {
+                alert("Please select a profile.");
+                return false;
+            }
+    
+            return true; // Form will submit if all validations pass
+        }
+    </script>
+
+</body>
+</html>

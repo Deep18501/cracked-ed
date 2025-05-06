@@ -1,0 +1,114 @@
+/* Hero Section Styles */
+.hero-section {
+    min-height: 100vh;
+    height: auto;
+    padding: 3rem 1rem 6rem 1rem; /* add bottom padding for bottom bar */
+    background: url('hero-bg.png') center center / cover no-repeat;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+/* Color Classes */
+.bg-purple {
+    background-color: #702F8A;
+}
+
+.bg-orange {
+    background-color: #F26522;
+}
+
+.bg-yellow {
+    background-color: #F7941D;
+}
+
+.text-orange {
+    color: #F26522;
+}
+
+.icon-size {
+    width: 16px;
+    height: 16px;
+}
+
+/* Bottom Bar Styles */
+.bottom-bar {
+    left: 0;
+    right: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+/* Top Info Cards */
+.top-info-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* Responsive Styles */
+@media(max-width: 768px) {
+    .hero-section {
+        padding: 2rem 1rem 8rem 1rem; /* increase bottom padding for bottom bar */
+        height: auto;
+        text-align: center;
+    }
+
+    .badge-box {
+        flex-direction: column;
+        align-items: center;
+        padding: 0.5rem;
+        font-size: 0.875rem;
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    /* Stack left and right columns vertically */
+    .row.align-items-center {
+        flex-direction: column;
+    }
+
+    .col-12.col-md-10.col-lg-7,
+    .col-lg-5 {
+        max-width: 100%;
+        flex: 1 1 100%;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Adjust bottom bar for mobile */
+    .bottom-bar {
+        position: relative;
+        bottom: auto;
+        width: 100%;
+        margin-top: 2rem;
+        z-index: 10;
+    }
+
+    .bottom-bar .container .row.row-cols-4 {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .bottom-bar .container .row.row-cols-4 > div {
+        flex: 1 1 45%;
+        max-width: 45%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Hide top-info-cards on mobile devices */
+@media (max-width: 767px) {
+    .top-info-cards {
+        display: none !important;
+    }
+}

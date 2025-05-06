@@ -1,0 +1,22 @@
+.bg-orange {
+    background-color: #F26A1B;
+  }
+  
+  .text-orange {
+    color: #F26A1B;
+  }
+  
+  .faq-item {
+    background-color: #FFF4F0;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .faq-item:hover {
+    background-color: #ffeae1;
+  }
+  
+  .border-orange {
+    border-color: #F26A1B !important;
+  }
+  

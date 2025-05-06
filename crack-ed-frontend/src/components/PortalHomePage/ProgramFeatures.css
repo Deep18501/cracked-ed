@@ -1,0 +1,25 @@
+.feature-header {
+  background-color: #EC691F !important;
+  color: white !important;
+  font-weight: 600;
+}
+
+.card-body.bg-light {
+  background-color: #FFF1EF !important;
+  color: #000 !important;
+  font-size: 0.875rem;
+}
+
+.custom-feature-col {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .about-img {
+    width: 288px;
+    height: 288px;
+    object-fit: cover;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

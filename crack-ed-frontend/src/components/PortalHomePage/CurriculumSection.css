@@ -1,0 +1,94 @@
+.bg-orange {
+  background-color: #F15A24;
+  }
+  
+  .bg-light-orange {
+  background-color: #FFF5F2;
+  }
+  
+  .curriculum-icon {
+  color: #F15A24;
+  width: 24px;
+  height: 24px;
+  }
+  
+  /* Card styling */
+  .card {
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 4px 8px rgba(241, 90, 36, 0.15);
+  border-radius: 8px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: transform 0.3s ease;
+  }
+  
+  .card:hover {
+  transform: translateY(-5px);
+  }
+  
+  /* Icon wrapper styling /
+  .icon-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(241, 90, 36, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  background-color: #F15A24; / Orange background */
+  
+  
+  /* Title styling */
+  .bg-orange {
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.5rem 0;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  }
+  
+  /* Description styling */
+  .bg-light-orange.text-secondary {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  padding: 1rem;
+  text-align: left;
+  flex-grow: 1;
+  }
+  
+  /* Section padding and text alignment */
+  section.py-5 {
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+  text-align: center;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 767.98px) {
+  .curriculum-icon {
+  width: 20px;
+  height: 20px;
+  }
+  
+  .icon-wrapper {
+  width: 48px;
+  height: 48px;
+  }
+  
+  .bg-orange {
+  font-size: 0.9rem;
+  }
+  
+  .bg-light-orange.text-secondary {
+  font-size: 0.8rem;
+  padding: 0.75rem;
+  }
+  
+  .card {
+  margin-bottom: 1.5rem;
+  }
+  }

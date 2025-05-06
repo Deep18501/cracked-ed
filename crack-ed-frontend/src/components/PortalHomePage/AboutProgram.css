@@ -1,0 +1,27 @@
+.text-purple {
+  color: #702F8A;
+}
+
+.about-img {
+  width: 288px; /* equivalent to w-72 in Tailwind */
+  height: 288px;
+  object-fit: cover;
+}
+
+.about-img.desktop-img {
+  display: block;
+}
+
+.about-img.mobile-img1 {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .about-img.desktop-img {
+    display: none;
+  }
+
+  .about-img.mobile-img1 {
+    display: block;
+  }
+}

@@ -25,7 +25,6 @@ const PortalRegisterPage = () => {
 
     const handleFieldChange = (name, value) => {
         setFormData(prev => ({ ...prev, [name]: value }));
-
         console.log("Form Data:", formData);
     };
 
