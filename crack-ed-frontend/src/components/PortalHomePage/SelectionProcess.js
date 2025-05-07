@@ -33,9 +33,9 @@ const steps = [
 
 const SelectionProcess = () => {
   return (
-    <section className="py-5 bg-white px-3">
-      <div className="container text-center">
-        <h2 className="h4 fw-semibold mb-4 text-dark">Selection Process</h2>
+    <section className="selection-process-section bg-white ">
+      <div className="container">
+        <h2 className="portal-section-title">Selection Process</h2>
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-4">
           {steps.map((step, index) => (
             <div

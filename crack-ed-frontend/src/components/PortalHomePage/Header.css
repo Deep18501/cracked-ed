@@ -1,66 +1,59 @@
+/* === Base colors and typography === */
 .bg-purple {
-    background-color: #702F8A;
-}
-
-.bg-orange {
-    background-color: #F26522;
-}
-
-.hover-underline:hover {
+    background-color: #702f8a;
+    }
+  
+  .bg-orange {
+    background-color: #f26522;
+    color: white;
+  }
+  
+  .hover-underline:hover {
     text-decoration: underline;
-}
+  }
+  
+  .header-portal-main {
+    width: 100%;
+    font-family: sans-serif;
+  }
+  
+  /* === Logo Styles === */
+  .header-portal-main .logo {
+    height: 65px;
+    margin-right: 10px;
+  }
+  .container-bar{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
 
-.btn {
-    display: inline-block;
-    font-weight: 600;
-    text-align: center;
-    vertical-align: middle;
-    user-select: none;
-    border: 1px solid transparent;
-    padding: 1rem 1.5rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    border-radius: 0.375rem;
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-      border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    cursor: pointer;
-}
-
-.btn-sm {
-    padding: 1rem 1.5rem;
-    font-size: 0.75rem;
-    border-radius: 0.25rem;
-}
-
-.bg-orange {
-    background-color: #F26522;
-    color: white;
-}
-
-.bg-orange:hover {
-    background-color: #d35400;
-    color: white;
-}
-
-.btn-submit-login {
-    background-color: #F26522;
-    color: white;
-    font-weight: 600;
-    padding: 1rem 1.5rem;
-    border-radius: 0.375rem;
-    border: none;
-    cursor: pointer;
-    display: inline-block;
-    transition: background-color 0.3s ease;
-    }
-    
-    .btn-submit:hover {
-    background-color: #d35400;
-    }
-
-/* New styles for mobile menu toggle and dropdown */
-
-.menu-toggle {
+  }
+  /* === Top bar layout === */
+  .header-portal-main .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 10%;
+  }
+  
+  .logo-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .bottom-bar .title{
+    font-size: 32px;
+    font-weight: bold;
+  }
+  .vertical-line {
+    border-left: 1px solid white;
+    height: 45px;
+    margin: 0 10px;
+  }
+  
+  /* === Hamburger menu button === */
+  .menu-toggle {
     font-size: 28px;
     background: none;
     border: none;
@@ -68,79 +61,118 @@
     cursor: pointer;
     display: block;
     padding: 0;
+    z-index: 20;
     line-height: 1;
-}
-
-@media (min-width: 768px) {
+  }
+  
+  /* Hide toggle on larger screens */
+  @media (min-width: 768px) {
     .menu-toggle {
-        display: none;
+      display: none;
     }
-}
-
-nav {
+  }
+  
+  /* === Navigation styles === */
+  nav {
+    display: flex;
+    flex-direction: row;
+    gap: 35px;
     transition: max-height 0.3s ease;
-}
-
-nav.closed {
-    max-height: 0;
+    align-items: center;
+  }
+  
+  .header-portal-main .closed {
+    max-height: 0px;
+    width: 0px;
     overflow: hidden;
     display: none;
-}
-
-nav.open {
+  }
+  
+  /* Menu open state for mobile */
+  nav.open {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    max-height: 500px; /* enough to show all items */
-    background-color: #702F8A;
-    padding: 1rem 0;
+    gap: 20px;
+    max-height: 500px;
+    background-color: #702f8a;
+    padding: 1rem 1.5rem;
     position: absolute;
-    top: 64px; /* height of top bar */
+    top: 45px;
     left: 0;
     right: 0;
     z-index: 1000;
-}
-
-nav.open a,
-nav.open .btn-submit {
+  }
+  .header-portal-main .nav-links{
+    display: flex;
+    z-index: 2;
+    gap: 35px;
+    }
+  nav.open a,
+  nav.open .btn-submit-login {
     color: white;
-    padding-left: 1.5rem;
     font-size: 1rem;
-}
-
-nav.open .btn-submit {
-    width: 80px;
-    height: 35.6px;
-    align-self: flex-start;
-    padding: 0.25rem 0.5rem;
-}
-
-/* Change hamburger icon to X when menu is open */
-.menu-toggle.open::before {
-    content: "✕";
-}
-
-/* Ensure nav is horizontal on desktop */
-@media (min-width: 768px) {
+    text-decoration: none;
+    padding-left: 0.5rem;
+  }
+  
+  /* Turn hamburger into ✕ icon */
+ 
+  
+  /* === Button styles === */
+  .btn-submit-login {
+    background-color: #f26522;
+    color: white;
+    font-weight: 600;
+    padding: 5px 30px;
+    border-radius: 0.375rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-submit-login:hover {
+    background-color: #d35400;
+  }
+  
+  /* === Announcement bar === */
+  .announcement-bar {
+    background-color: #f26522;
+    color: white;
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  /* === Mobile styles === */
+  @media (max-width: 768px) {
     nav {
-        display: flex !important;
-        max-height: none !important;
-        position: static !important;
-        flex-direction: row !important;
-        gap: 1rem !important;
-        background-color: transparent !important;
-        padding: 0 !important;
+      display: none;
     }
-
-    nav a,
-    nav .btn-submit {
-        padding-left: 0 !important;
-        font-size: 0.875rem !important;
-        color: white !important;
+  
+    .header-portal-main .top-bar{
+        padding: 0.5rem 15px;
     }
-
-    .btn-submit {
-        width: 45px !important;
-        height: 35.6px !important;
+    .header-portal-main .logo {
+      height: 30px;
     }
-}
+  
+    nav.open {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    nav.open a,
+    nav.open .btn-submit-login {
+      padding: 0.25rem 1rem;
+      font-size: 0.875rem;
+    }
+    .header-portal-main .nav-links{
+        display: none;
+    }
+    .btn-submit-login {
+      width: 100px;
+      padding: 0.4rem 1rem;
+      font-size: 0.9rem;
+    }
+  }
+  

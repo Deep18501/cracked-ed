@@ -209,7 +209,7 @@
 width: 50%;
 }
 
-.otp-container{
+.banker-program .otp-container{
     display: flex;
     width: 100%;
     flex-direction: column;

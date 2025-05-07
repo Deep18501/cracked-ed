@@ -18,24 +18,27 @@ const features = [
       "Earn a recognized Post Graduate Certificate from IMT Ghaziabad’s CDL upon successful completion of the program.",
   },
 ];
+const JobCard = ({title,description}) => {
+  return (
+    <div className="assured-job-card">
+      <div className="assured-card-header">
+        {title}
+      </div>
+      <div className="assured-card-body">
+        {description}
+      </div>
+    </div>
+  );
+};
 
 const ProgramFeatures = () => {
   return (
-    <section className="py-5 px-3 bg-white">
+    <section className="program-section bg-white">
       <div className="container">
-        <h2 className="h4 fw-semibold text-dark mb-4">Program Features</h2>
-        <div className="row">
+        <h2 className="portal-section-title text-start">Program Features</h2>
+        <div className="portal-section-cards">
           {features.map((feature, index) => (
-            <div key={index} className="col-md-4 mb-4 custom-feature-col">
-              <div className="card feature-card h-100">
-                <div className="card-header feature-header text-white fw-semibold">
-                  {feature.title}
-                </div>
-                <div className="card-body bg-light text-dark small">
-                  {feature.description}
-                </div>
-              </div>
-            </div>
+            <JobCard title={feature.title} description={feature.description} key={index} />
           ))}
         </div>
       </div>

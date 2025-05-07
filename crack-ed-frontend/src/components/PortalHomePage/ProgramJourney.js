@@ -5,6 +5,25 @@ import utthaanImg from './path-to-utthaan.png';
 import aarohanImg from './path-to-aarohan.png';
 import shikharImg from './path-to-shikhar.png';
 
+
+const BankAbsorptionCard = ({details,children}) => {
+  return (
+    <div className="bank-card">
+      <div className="bank-icon-wrapper">
+        <div className="bank-icon">
+          {children}
+        </div>
+      </div>
+      <p className="bank-text">
+      {details}
+      </p>
+    </div>
+
+  );
+};
+
+
+
 const ProgramJourney = () => {
   const journeyData = [
     {
@@ -55,8 +74,9 @@ const ProgramJourney = () => {
   };
 
   return (
-    <section className="bg-white py-5 px-3">
+    <section className="program-journey-section bg-white">
       <div className="container">
+      <h2 className="portal-section-title text-start">Your Program Journey</h2>
 
         {/* Classroom Training Header */}
         <div className="journey-header mb-4 text-center text-white py-3 rounded fw-semibold">
@@ -68,9 +88,9 @@ const ProgramJourney = () => {
           <div className="accordion" id="programJourneyAccordion">
             {journeyData.map((item, index) => (
               <div className="accordion-item" key={index}>
-                <h2 className="accordion-header" id={`heading${index}`}>
+                <h2 className="accordion-header " id={`heading${index}`}>
                   <button
-                    className={`accordion-button ${activeIndex === index ? '' : 'collapsed'}`}
+                    className={`accordion-button program-journey-card ${activeIndex === index ? '' : 'collapsed'}`}
                     type="button"
                     onClick={() => toggleDropdown(index)}
                     aria-expanded={activeIndex === index}
@@ -101,7 +121,7 @@ const ProgramJourney = () => {
           <div className="row g-4">
             {journeyData.map((item, index) => (
               <div key={index} className="col-md-4">
-                <div className="card h-100 border border-light shadow-sm">
+                <div className="program-journey-card h-100 border border-light shadow-sm">
                   <img src={item.img} alt={item.title} className="card-img-top" />
                   <div className="card-body">
                     <h5 className="card-title text-purple fw-semibold">{item.title}</h5>
@@ -128,23 +148,9 @@ const ProgramJourney = () => {
         </div>
 
         {/* Outcomes */}
-        <div className="row g-4 mt-4">
-          <div className="col-md-6">
-            <div className="bg-light-pink p-3 rounded d-flex gap-3 align-items-start">
-              <Briefcase className="text-purple mt-1" />
-              <p className="small text-secondary mb-0">
-                Upon successful completion of the initial 3-month period, the candidate will be absorbed into AU Small Finance Bank as a Bank Officer.
-              </p>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="bg-light-pink p-3 rounded d-flex gap-3 align-items-start">
-              <GraduationCap className="text-purple mt-1" />
-              <p className="small text-secondary mb-0">
-                After successfully completing the program, the candidate receives a Post Graduate Certificate from IMT Ghaziabad (CDL).
-              </p>
-            </div>
-          </div>
+        <div className="BankAbsorptionCard">
+          <BankAbsorptionCard details="Upon successful completion of the initial 3-month period, the candidate will be absorbed into AU Small Finance Bank as a Bank Officer." children={<Briefcase className="text-purple" />}/>
+          <BankAbsorptionCard details="After successfully completing the program, the candidate receives a Post Graduate Certificate from IMT Ghaziabad (CDL)." children={<GraduationCap className="text-purple" />}/>
         </div>
 
       </div>

@@ -21,9 +21,9 @@ const PortalHomePage = () => {
       <AboutProgram />
       <ProgramFeatures />
       <ProgramJourney />
+      <SelectionProcess />
       <Curriculum />
       <Eligibility />
-      <SelectionProcess />
       <FAQ />
       <Footer />
         </>

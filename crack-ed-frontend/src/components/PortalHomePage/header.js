@@ -15,41 +15,42 @@ const Header = () => {
   };
 
   return (
-    <header className="w-100">
+    <header className="header-portal-main bg-purple">
       {/* Top Bar */}
-      <div className="bg-purple text-white py-2 px-3">
-        <div className="container d-flex justify-content-between align-items-center">
+      <div className="top-bar">
+        <div className="container-bar">
           {/* Logos */}
-          <div className="d-flex align-items-center gap-3">
-            {/* AU Logo + Divider */}
-            <div className="d-flex align-items-center gap-2">
-              <img src={auLogo} alt="AU Small Finance Bank" style={{ height: '64px' }} />
-              <span className="vr text-white"></span>
+          <div className="logo-section">
+            <div className="logo-group">
+              <img className='logo' src={auLogo} alt="AU Small Finance Bank" />
+              <span className="vertical-line"></span>
             </div>
-
-            {/* CRACKED Logo */}
-            <img src={crackedLogo} alt="Cracked" style={{ height: '48px' }} />
+            <img className='logo' src={crackedLogo} alt="Cracked" />
           </div>
 
           {/* Hamburger Menu Button */}
-          <button className="menu-toggle d-md-none" onClick={toggleMenu} aria-label="Toggle menu">
+          <div className={`menu-toggle ${menuOpen ? 'open' : ''}`} onClick={toggleMenu} aria-label="Toggle menu">
             &#9776;
-          </button>
+          </div>
 
           {/* Navigation */}
-          <nav className={`d-flex align-items-center gap-4 ${menuOpen ? 'open' : 'closed'}`}>
-            <a href="#about" className="text-white small text-decoration-none hover-underline">About</a>
-            <a href="#eligibility" className="text-white small text-decoration-none hover-underline">
-              Eligibility & Selection Process
-            </a>
-            <a href="#why" className="text-white small text-decoration-none hover-underline">Why ABP?</a>
+          <nav className={`${menuOpen ? 'open' : 'closed'}`}>
+            <a href="#about" className="nav-link">About</a>
+            <a href="#eligibility" className="nav-link">Eligibility & Selection Process</a>
+            <a href="#why" className="nav-link">Why ABP?</a>
+            <button className="btn-submit-login" onClick={handleLoginClick}>LogIn</button>
+          </nav>      
+          <nav className={`nav-links`}>
+            <a href="#about" className="nav-link">About</a>
+            <a href="#eligibility" className="nav-link">Eligibility & Selection Process</a>
+            <a href="#why" className="nav-link">Why ABP?</a>
             <button className="btn-submit-login" onClick={handleLoginClick}>LogIn</button>
           </nav>
         </div>
       </div>
 
       {/* Announcement Bar */}
-      <div className="bg-orange text-white text-center small py-1 px-3">
+      <div className="announcement-bar">
         Applications are now open for the new batch starting in May 2025. Don’t miss out – seats are filling up quickly!
       </div>
     </header>

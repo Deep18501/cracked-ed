@@ -4,17 +4,79 @@
   font-weight: 600;
 }
 
+.program-section{
+  padding: 0px 10%;
+}
 .card-body.bg-light {
   background-color: #FFF1EF !important;
   color: #000 !important;
   font-size: 0.875rem;
 }
 
+.portal-section-cards{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 20px 0px;
+}
 .custom-feature-col {
   margin-bottom: 1rem;
 }
+.assured-job-card {
+  display: flex;
+  flex:1;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: 'Segoe UI', sans-serif;
+  transition: transform 0.3s ease; 
+}
+.assured-job-card:hover {
+  transform: translateY(-5px); /* Moves upward by 5px */
+}
+.assured-job-card .assured-card-header {
+  color: #FFF;
+  height: 100px;
+  font-family: "Gotham Rounded";
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 350;
+  border-radius: 10px;
+  padding: 15px 30px;
+  background: #EC691F;
+  overflow: hidden;
+  width: 100%;
+  line-height: 41.6px; /* 148.571% */
+}
+
+.assured-card-body {
+  margin-top: 23px;
+  overflow: hidden;
+  height: 134px;
+  padding: 25px 30px 45px 30px;
+  border-radius: 10px;
+  background: #FFF1EF;
+}
+
+
+@media (max-width: 1250px) {
+
+  .assured-job-card .assured-card-header{
+    font-size: 24px;  
+  }
+  .assured-card-body {
+    height: 170px;
+
+  }
+}
 
 @media (max-width: 768px) {
+  .portal-section-cards{
+    flex-direction: column;
+    align-items: center;
+  }
   .about-img {
     width: 288px;
     height: 288px;
@@ -23,3 +85,4 @@
     margin-right: auto;
   }
 }
+

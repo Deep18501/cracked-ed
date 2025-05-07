@@ -60,7 +60,7 @@ const faqs = [
     answer: "While we strive to provide the best opportunities, job placement depends on various factors including your performance and market conditions."
   },
   {
-    question: "Do I need to pay the full ₹1.5 lakh fee upfront?",
+    question: "Do I need to pay the full ₹2 lakh fee upfront?",
     answer: "No, we offer flexible payment plans to help you manage the course fee comfortably."
   },
   {

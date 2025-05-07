@@ -70,7 +70,7 @@
     box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.15);
 }
 
-.otp-container{
+.portal-container .otp-container{
     display: flex;
     width: 100%;
     flex-direction: column;

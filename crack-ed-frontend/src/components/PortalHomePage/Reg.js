@@ -6,7 +6,6 @@ import { LoadingComponent } from '../../components/LoadingComponent.js';
 import OtpInput from '../../utils/otp_input.js';
 import Alert from '../../components/Alert.js';
 
-
 const RegistrationForm = () => {
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();

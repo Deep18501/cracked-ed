@@ -43,7 +43,7 @@ def generate_hash_header():
 def generate_application_id():
     return str(uuid.uuid4())[:12].replace('-', '').upper()
 
-# Database model
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     name = db.Column(db.String(120))

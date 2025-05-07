@@ -1,6 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import './HeroSection.css'; // Custom styles for overlay, colors, sizes
 import RegistrationForm from './Reg';
+import ServiceIcon1 from '../../assets/service_icon1.png';
+import ServiceIcon2 from '../../assets/service_icon2.png';
+import ServiceIcon3 from '../../assets/service_icon3.png';
+
+
+
+const ServiceTag = ({ text = "100% assured job", icon }) => {
+  return (
+    <div className="job-tag-container">
+      <div className="job-tag-icon">
+        <img src={icon} alt="Service Icon" className="service-icon" />
+      </div>
+      <span className="job-tag-text">{text}</span>
+    </div>
+  );
+};
+
 
 const HeroSection = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -21,27 +38,21 @@ const HeroSection = () => {
       {/* Overlay */}
       <div className="overlay position-absolute top-0 start-0 w-100 h-100"></div>
 
-      <div className="container position-relative z-2">
+      <div className="container hero-section-container position-relative z-2">
         <div className="row align-items-center">
           {/* Left Side Content */}
           <div className="col-12 col-md-10 col-lg-7 mb-4">
             {!isMobile && (
-              <div className="bg-purple p-4 rounded mb-4 d-inline-block">
+              <div className="aurum-program-hero-title mr-5 bg-purple mb-4 d-inline-block">
                 <h1 className="h3 fw-bold">AURUM Bankers Program</h1>
               </div>
             )}
 
             {!isMobile && (
-              <div className="top-info-cards d-flex flex-wrap gap-2">
-                <div className="badge-box bg-orange d-flex align-items-center gap-2 px-3 py-2 rounded text-white">
-                  <span className="small fw-semibold">100% assured job</span>
-                </div>
-                <div className="badge-box bg-orange d-flex align-items-center gap-2 px-3 py-2 rounded text-white">
-                  <span className="small fw-semibold">PG Certification</span>
-                </div>
-                <div className="badge-box bg-yellow d-flex align-items-center gap-2 px-3 py-2 rounded text-white">
-                  <span className="small fw-semibold">Earn while you learn</span>
-                </div>
+              <div className="top-info-cards d-flex justify-content-center flex-wrap">
+                <ServiceTag text='100% assured job' icon={ServiceIcon1}></ServiceTag>
+                <ServiceTag text='PG Certification' icon={ServiceIcon2}></ServiceTag>
+                <ServiceTag text='Earn while you learn' icon={ServiceIcon3}></ServiceTag>
               </div>
             )}
           </div>
@@ -49,9 +60,9 @@ const HeroSection = () => {
           {/* Right Side Registration Box */}
           <div className={isMobile ? "col-12" : "col-lg-5"}>
             <div className={isMobile ? "bg-white text-dark p-4 rounded shadow-sm w-100 form-box form-box-mobile" : "bg-white text-dark p-4 rounded shadow-sm w-100 form-box"}>
-              <h2 className="h6 fw-semibold mb-3">
+              <div className="heading-registration-home-page">
                 Start your registration process today!
-              </h2>
+              </div>
               <RegistrationForm />
             </div>
           </div>
@@ -59,26 +70,54 @@ const HeroSection = () => {
       </div>
 
       {/* Bottom Info Bar */}
-      <div className="bottom-bar bg-purple text-white text-center py-2 mt-auto w-100 position-absolute bottom-0">
+      <div className="bottom-bar bg-purple text-white text-center mt-auto w-100 position-absolute bottom-0 mt-4">
         <div className="container">
-          <div className="row row-cols-4">
-            <div>
-              <div className="fw-bold fs-5">2nd May</div>
-              <div className="small">Start Date</div>
-            </div>
-            <div>
-              <div className="fw-bold fs-5">6 Months</div>
-              <div className="small">Duration</div>
-            </div>
-            <div>
-              <div className="fw-bold fs-5">Graduates</div>
-              <div className="small">Eligibility</div>
-            </div>
-            <div>
-              <div className="fw-bold fs-5">Rs 2,00,000</div>
-              <div className="small">Fees</div>
-            </div>
+          {!isMobile ?
+           <div className="d-flex justify-content-around align-items-center px-3">
+           <div>
+             <div className="title">2nd May</div>
+             <div className="small">Start Date</div>
+           </div>
+           {!isMobile ? <div className='vertical-line'></div> : null}
+
+           <div>
+             <div className="title">6 Months</div>
+             <div className="small">Duration</div>
+           </div>
+           {!isMobile ? <div className='vertical-line'></div> : null}
+           <div>
+             <div className="title">Graduates</div>
+             <div className="small">Eligibility</div>
+           </div>
+           {!isMobile ? <div className='vertical-line'></div> : null}
+           <div>
+             <div className="title">Rs 2,00,000</div>
+             <div className="small">Fees</div>
+           </div>
+         </div>
+
+          :  
+          <div class="program-info bg-purple">
+          <div class="info-box">
+            <h2>2nd May</h2>
+            <p>Start Date</p>
           </div>
+          <div class="info-box">
+            <h2>6 Months</h2>
+            <p>Duration</p>
+          </div>
+          <div class="info-box">
+            <h2>Graduates</h2>
+            <p>Eligibility</p>
+          </div>
+          <div class="info-box">
+            <h2>Rs 2,00,000</h2>
+            <p>Fees</p>
+          </div>
+        </div>
+          }
+         
+        
         </div>
       </div>
     </section>

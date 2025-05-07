@@ -1,9 +1,28 @@
 .text-purple {
-  color: #702F8A;
+  color: #6D3078;
+}
+.title-text-purple {
+  padding: 30px 0px;
+  color: #6D3078;
+  font-family: "Gotham Rounded", sans-serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
 }
 
+
+.portal-section-title {
+  color: #3D3D3D;
+  font-family: "Gotham Rounded", sans-serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 550;
+}
+.portal-about{
+  padding: 110px 10%;
+}
 .about-img {
-  width: 288px; /* equivalent to w-72 in Tailwind */
+  width: 80%; /* equivalent to w-72 in Tailwind */
   height: 288px;
   object-fit: cover;
 }
@@ -14,6 +33,11 @@
 
 .about-img.mobile-img1 {
   display: none;
+}
+.portal-about .image-container{
+  flex:4;
+}.portal-about .text-container{
+  flex:6;
 }
 
 @media (max-width: 767px) {
