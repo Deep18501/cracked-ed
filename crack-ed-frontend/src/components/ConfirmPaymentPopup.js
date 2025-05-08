@@ -10,16 +10,16 @@ const ConfirmPaymentPopup = ({ onClose, onConfirm }) => {
         <div className="modal-icon">
           <img className="icon-circle" src={warning_icon}/>
         </div>
-        <div className="modal-title">Ready to Proceed?</div>
+        <div className="modal-title">Ready to Submit?</div>
         <p className="modal-description">
-          Once you move to the payment section, you won’t be able to edit your details. Please double-check everything before continuing.
+          Once you submit details you cannot change them later.
         </p>
         <div className="modal-actions">
           <button className="btn-outline" onClick={onClose}>
             Edit Details
           </button>
           <button className="btn-filled" onClick={onConfirm}>
-            Continue to Payment
+            Submit
           </button>
         </div>
       </div>

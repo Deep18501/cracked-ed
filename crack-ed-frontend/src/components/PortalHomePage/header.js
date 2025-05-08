@@ -44,7 +44,7 @@ const Header = () => {
             <a href="#about" className="nav-link">About</a>
             <a href="#eligibility" className="nav-link">Eligibility & Selection Process</a>
             <a href="#why" className="nav-link">Why ABP?</a>
-            <button className="btn-submit-login" onClick={handleLoginClick}>LogIn</button>
+            <button className="btn-submit-login" onClick={handleLoginClick}>Log In</button>
           </nav>
         </div>
       </div>

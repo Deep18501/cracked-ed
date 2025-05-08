@@ -5,7 +5,7 @@ import replaceForMobileImg from './replaceformobile.png';
 
 const AboutProgram = () => {
   return (
-    <section className="portal-about bg-white">
+    <section className="portal-about bg-white" id='about'>
       <div className="container d-flex flex-column flex-md-row align-items-center gap-4 gap-md-5">
         {/* Circular Images */}
         <div className="image-container flex-shrink-0 mb-3 mb-md-0">

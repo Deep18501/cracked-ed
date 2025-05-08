@@ -33,7 +33,7 @@ const steps = [
 
 const SelectionProcess = () => {
   return (
-    <section className="selection-process-section bg-white ">
+    <section className="selection-process-section bg-white " id='eligibility'>
       <div className="container">
         <h2 className="portal-section-title">Selection Process</h2>
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-4">

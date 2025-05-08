@@ -47,7 +47,7 @@ def generate_application_id():
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     name = db.Column(db.String(120))
-    email = db.Column(db.String(120), unique=True)
+    email = db.Column(db.String(120),)
     mobile = db.Column(db.String(15), unique=True)
     otp = db.Column(db.String(6))
     otp_txn_id = db.Column(db.String(100))
@@ -162,26 +162,37 @@ def verify_otp_api(otp_txn_id, otp):
 def send_register_otp():
     data = request.get_json()
     otp = generate_otp()
-    print("Data received:", data)
+      # Split name into first name and last name (handle single-word name)
+    name_parts = data['name'].split()
+    first_name = name_parts[0]  # First part is always the first name
+    last_name = name_parts[-1] if len(name_parts) > 1 else ""  # Last part is the last name, if any
+ 
+    
     # Check if the user already exists
     existing_user = User.query.filter_by(mobile=data['mobile']).first()
     user=None
     if existing_user:
         existing_user.otp = otp
         user = existing_user
-        return jsonify({"message": "Already Registerd please login"}), 400
+        if(user.verified):
+            return jsonify({"message": "Already Registerd please login"}), 400
+        else:
+            user.name=data['name']
+            user.email=data['email']
+            application = Application.query.filter_by(user_id=existing_user.id).first()
+            application.first_name=first_name
+            application.last_name=last_name
+            application.email=data['email']
+    
+        
     else:
         # Create a new user
         user = User(name=data['name'], email=data['email'], mobile=data['mobile'], otp=otp)
         db.session.add(user)
     db.session.commit()
-    # Split name into first name and last name (handle single-word name)
-    name_parts = data['name'].split()
-    first_name = name_parts[0]  # First part is always the first name
-    last_name = name_parts[-1] if len(name_parts) > 1 else ""  # Last part is the last name, if any
-    print("First name:", user.name)
-    print("id:", user.id, )
     
+    print("First name:", user.name)
+    print("Data received:", user.name)
     # Create application details
     application = Application(
         user_id=user.id,  # Link the application to the user
@@ -244,7 +255,7 @@ def send_login_otp():
     data = request.get_json()
     print("Data received:", data)
     user = User.query.filter_by(mobile=data['mobile']).first()
-    if not user:
+    if not user or not user.verified:
         return jsonify({"message": "Mobile not registered"}), 400
     user.otp = generate_otp()
     user.otp_txn_id = send_otp_api(user.mobile)
@@ -404,7 +415,7 @@ def get_application_dict(application):
             },
             {
                 "step": 4,
-                "title": "Payment",
+                "title": "Thank You",
                 "sections": []
             }
         ]

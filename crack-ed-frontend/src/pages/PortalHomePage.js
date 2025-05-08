@@ -7,6 +7,7 @@ import ProgramFeatures from '../components/PortalHomePage/ProgramFeatures.js';
 import ProgramJourney from '../components/PortalHomePage/ProgramJourney.js';
 import Curriculum from '../components/PortalHomePage/Curriculum.js';
 import Eligibility from '../components/PortalHomePage/Eligibility.js';
+import WhyChooseUS from '../components/PortalHomePage/WhyChooseUs.js';
 import SelectionProcess from '../components/PortalHomePage/SelectionProcess.js';
 import FAQ from '../components/PortalHomePage/FAQ.js';
 import Footer from '../components/PortalHomePage/Footer.js';
@@ -22,8 +23,9 @@ const PortalHomePage = () => {
       <ProgramFeatures />
       <ProgramJourney />
       <SelectionProcess />
-      <Curriculum />
       <Eligibility />
+      <Curriculum />
+      <WhyChooseUS/>
       <FAQ />
       <Footer />
         </>

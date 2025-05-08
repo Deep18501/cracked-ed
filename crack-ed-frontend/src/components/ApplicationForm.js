@@ -7,7 +7,7 @@ import ConfirmPaymentPopup from "./ConfirmPaymentPopup"
 import { LoadingComponent } from "./LoadingComponent";
 import Spinner from 'react-bootstrap/Spinner';
 import {get_payment_screen} from '../controllers/dataController';
-
+import RegistrationFormThankYou from "./RegistrationFormThankYou";
 
 const Input = ({ label, required, inputType, name, value, disabled, readOnly, onChange }) => {
 
@@ -17,7 +17,7 @@ const Input = ({ label, required, inputType, name, value, disabled, readOnly, on
     value = null;
   }
   return (
-    <div className="input-group">
+    <div className="custom-input-group">
       <label className="input-label">
         {label} {required && <span className="required">*</span>}
       </label>
@@ -155,27 +155,8 @@ const ApplicationForm = () => {
     e.preventDefault();
 
     try {
-      let totalMissingFields = 0;
-      
-      for(let k =0;k<applicationData.steps.length;k++){
-
-        for (let i = 0; i < applicationData.steps[k].length; i++) {
-        let section = applicationData.steps[k].sections[i];
-        for (let j = 0; j < section.fields.length; j++) {
-
-          let field = section.fields[j];
-          let fieldName = field.field_name;
-
-          if (field.required && !formData[fieldName]?.toString().trim()) {
-            setDataError({"type":"error","message":"Please fill "+field.label});
-            totalMissingFields++;
-          }
-        }
-      }}
-      if (totalMissingFields > 0) {
-        return;
-      }
-
+   
+      setPaymentPopup(false);
       const updatedStep = 4;
       formData["current_application_step"] = updatedStep;
       formData["status"] = "Enrolled";
@@ -238,7 +219,7 @@ const ApplicationForm = () => {
       // };
       // get_payment_screen();
       // console.log("Response:", response);
-      navigate('/portal/dashboard');
+      // navigate('/portal/dashboard');
       setApplicationData(prev => ({
         ...prev,
         current_application_step: updatedStep,
@@ -254,6 +235,38 @@ const ApplicationForm = () => {
 
     try {
       let totalMissingFields = 0;
+      if(applicationData.status=="Enrolled"){
+        const updatedStep = applicationData.current_application_step + 1;
+
+        setApplicationData(prev => ({
+          ...prev,
+          current_application_step: updatedStep,
+        }));
+        return;
+      }
+      if(applicationData.current_application_step==3){
+        for(let k =0;k<applicationData.steps.length;k++){
+
+          for (let i = 0; i < applicationData.steps[k].length; i++) {
+          let section = applicationData.steps[k].sections[i];
+          for (let j = 0; j < section.fields.length; j++) {
+  
+            let field = section.fields[j];
+            let fieldName = field.field_name;
+  
+            if (field.required && !formData[fieldName]?.toString().trim()) {
+              setDataError({"type":"error","message":"Please fill "+field.label});
+              totalMissingFields++;
+            }
+          }
+        }}
+        if (totalMissingFields > 0) {
+          return;
+        }
+        setPaymentPopup(true);
+        return;
+      }
+
       for (let i = 0; i < currentStepData.sections.length; i++) {
         let section = currentStepData.sections[i];
         for (let j = 0; j < section.fields.length; j++) {
@@ -270,7 +283,6 @@ const ApplicationForm = () => {
       if (totalMissingFields > 0) {
         return;
       }
-
       const updatedStep = applicationData.current_application_step + 1;
       formData["current_application_step"] = updatedStep;
       formData["status"] = currentStepData.title;
@@ -330,46 +342,19 @@ const ApplicationForm = () => {
 
       {/* Form Sections */}
       {applicationData.current_application_step === 4 ?
-        <form className="form-section">
-          <div className="section-box" key={applicationData.current_application_step}>
-            <div className="section-title">Payment</div>
-            <div className="application-fee-container">
-              <div className="fee-row">
-                <div className="fee-label">Application Fee</div>
-                <div className="fee-amount">Rs 100</div>
-              </div>
-
-              <div className="disclaimer-row">
-                <input
-                  type="checkbox"
-                  id="confirmation"
-                  checked={agreed}
-                  onChange={(e) => setAgreed(e.target.checked)}
-                />
-                <label htmlFor="confirmation" className="disclaimer-text">
-                  I confirm that the information provided by me is true in all respects and if any information is
-                  found to be false, I understand that my application / candidature will stand cancelled and
-                  no refund of fee will be claimed
-                </label>
-              </div>
-            </div>
-          </div>
-          {/* Submit Button */}
-          <div className="form-footer">
-            <button
+      <>
+      <RegistrationFormThankYou/>
+      <div className="form-footer">
+      <button
                 type="button"
                 className="back-button"
                 onClick={handleBackStep}
               >
-                Back
+                Preview
               </button>
-
-            <button type="submit" className="submit-button" onClick={handlePayment}>
-            {applicationData.status=="Enrolled"?"Payment Confirmed": "Click to Pay"}
-            </button>
-          </div>
-
-        </form>
+              </div>
+      </>
+      
         :
         <form className="form-section">
           {currentStepData?.sections?.map((section, idx) => (
@@ -426,14 +411,14 @@ const ApplicationForm = () => {
             ):null}
 
             <button type="submit" className="submit-button" onClick={handleOnNext}>
-              {(applicationData.current_application_step === 3 )? "Proceed to Payment" : "Next"}
+              {(applicationData.current_application_step === 3 &&applicationData.status!="Enrolled" )? "Submit Application" : "Next"}
             </button>
           </div>
 
         </form>
       }
 
-      {showPaymentPopup &&( applicationData.current_application_step===4)? (
+      {showPaymentPopup &&( applicationData.current_application_step===3)? (
         <ConfirmPaymentPopup
           onClose={() => setPaymentPopup(false)}
           onConfirm={handleOnPayment}

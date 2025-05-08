@@ -78,7 +78,7 @@
     gap: 1rem;
 }
 
-.input-group {
+.custom-input-group {
     display: flex;
     flex-direction: column;
 }
