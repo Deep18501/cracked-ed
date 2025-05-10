@@ -119,13 +119,13 @@ section.py-5 {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background-color: #f3d9fa;
+  background-color: #FFF1EF;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 
 .curriculum-icon-box {
-  background-color: #f3d9fa;
+  background-color: #FFF1EF;
   border-radius: 50%;
   display: flex;
   align-items: center;

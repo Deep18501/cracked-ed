@@ -15,6 +15,7 @@ const PortalLoginPage = () => {
     const authContext = useContext(AuthContext);
     const { authLoading } = useContext(AuthContext);  // Correctly access getApplicationData from DataContext
     const [error, setError] = useState(null);
+    const [showOtp, setShowOtp] = useState(false);
 
 
     useEffect(() => {
@@ -35,19 +36,57 @@ const PortalLoginPage = () => {
     };
 
     const sendLoginOtp = () => {
-        authContext.sendLoginOtp(formData.phone).then((response) => {
-            console.log("OTP sent successfully:", response);
+        const { phone } = formData;
+        let errors=[];
+        if( !phone){
+            authContext.setAuthError({"type":"error","message":"All Fields are Required."});
+          return;
+        }
+          
+        if (!phone.trim()) errors.push({"type":"error","message":"Phone Number is required."});
+        else if (!/^\d{10}$/.test(phone)) errors.push({"type":"error","message":"Phone must be 10 digits."});
+      
+        if (errors.length > 0) {
+          console.log("Errors ",errors);
+          authContext.setAuthError(errors[0]);
+          return;
+        }
 
+        authContext.sendLoginOtp(formData.phone).then((response) => {
+            if(response){
+                console.log("OTP sent successfully:", response);
+                setShowOtp(true);
+            }
         }).catch((error) => {
             console.error("Error sending OTP:", error);
         });
     }
 
     const handleRegister = () => {
+        const { phone } = formData;
+        let errors=[];
+        if( !phone){
+            authContext.setAuthError({"type":"error","message":"All Fields are Required."});
+          return;
+        }
+          
+        if (!phone.trim()) errors.push({"type":"error","message":"Phone Number is required."});
+        else if (!/^\d{10}$/.test(phone)) errors.push({"type":"error","message":"Phone must be 10 digits."});
         
+        if (!otp.trim()) errors.push({"type":"error","message":"OTP is required. Click on send OTP."});
+        else if (otp.trim().length !== 4 || !/^\d{4}$/.test(otp.trim()))  errors.push({"type":"error","message":"OTP must be 4 digits."});
+      
+        if (errors.length > 0) {
+          console.log("Errors ",errors);
+          authContext.setAuthError(errors[0]);
+          return;
+        }
         authContext.login(formData.phone, otp).then((response) => {
-            console.log("login successfully:", response);
-            navigate('/portal/dashboard');
+            if(response){
+                console.log("login successfully:", response);
+                setShowOtp(false);
+                navigate('/portal/dashboard');
+            }
         }).catch((error) => {
             console.error("login Failed:", error);
         });
@@ -75,14 +114,16 @@ const PortalLoginPage = () => {
                                 name="phone" type="text"
                                 onChange={handleFieldChange}
                                 tail={true}
+                                readOnly={showOtp}
                                 tailContent={<div className='sendOtpButton' onClick={sendLoginOtp}>GET OTP</div>}>
                             </CustomTextField>
-                            <div className='otp-container'>
+                           
+                            { showOtp && <div className='otp-container'>
                                 <div className='enter-otp-text'>Enter OTP sent to your mobile number</div>
-
                                 <OtpInput length={4} onChange={(val) => setOtp(val)} />
-
                             </div>
+                            }
+
                             <div className='portal-btn' onClick={handleRegister} >Login</div>
                         </form>
 

@@ -1,10 +1,19 @@
 /* Hero Section Styles */
 .hero-section {
-    min-height: 100vh;
+    min-height: 110vh;
     height: auto;
-    padding: 3rem 1rem 6rem 1rem;
+    padding: 0rem 1rem 6rem 1rem;
     /* add bottom padding for bottom bar */
     background: url('hero-bg.png') center center / cover no-repeat;
+}
+
+.hero-section-bg {
+    position: absolute;
+    height: 100%;
+   width: 100%;
+    padding: 0px;
+    
+    /* add bottom padding for bottom bar */
 }
 
 .hero-section-container {
@@ -16,9 +25,12 @@
 }
 
 .aurum-program-hero-title {
-    width: 80%;
-    padding: 20px 135px;
+    width: 90%;
+    padding: 20px 95px;
     text-align: center;
+    font-size: 54px;
+    font-weight: 700;
+    text-align: start;
 }
 
 .heading-registration-home-page {
@@ -68,7 +80,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 34px;
-    width: 80%;
+    width: 100%;
 }
 
 .job-tag-container {
@@ -103,7 +115,14 @@
     font-size: 1rem;
     font-weight: 500;
 }
-
+/* Responsive Styles */
+@media(max-width: 1400px) {
+    .aurum-program-hero-title {
+        padding: 2rem 1rem 1rem 0rem;
+        text-align: center;
+        background-size: cover;
+    }
+}
 
 /* Responsive Styles */
 @media(max-width: 768px) {
@@ -112,6 +131,7 @@
         padding: 2rem 1rem 8rem 1rem;
         /* increase bottom padding for bottom bar */
         text-align: center;
+        background-size: cover;
     }
 
     .hero-section-container{

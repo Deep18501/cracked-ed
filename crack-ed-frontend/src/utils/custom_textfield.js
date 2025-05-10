@@ -3,7 +3,7 @@ import React from 'react';
 import '../styles/customtextfield.css';
 import { useState } from 'react';
 
-const CustomTextField = ({ label, type, name, onChange ,tail,tailContent }) => {
+const CustomTextField = ({ label, type,readOnly=false, name, onChange ,tail,tailContent }) => {
 
     const [value, setValue] = useState('');
 
@@ -19,6 +19,8 @@ const CustomTextField = ({ label, type, name, onChange ,tail,tailContent }) => {
         <div className="custom-text-field">
             <input type={type} name={name}
                 value={value}
+                readOnly={readOnly==null?true:readOnly}
+
                 onChange={handleChange}
                 required />
             <span className={`placeholder ${value ? 'filled' : ''}`}>

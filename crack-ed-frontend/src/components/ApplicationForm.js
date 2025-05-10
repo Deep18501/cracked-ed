@@ -6,34 +6,10 @@ import "../styles/application_form.css"; // Assuming you have a CSS file for sty
 import ConfirmPaymentPopup from "./ConfirmPaymentPopup"
 import { LoadingComponent } from "./LoadingComponent";
 import Spinner from 'react-bootstrap/Spinner';
-import {get_payment_screen} from '../controllers/dataController';
+import { get_payment_screen } from '../controllers/dataController';
 import RegistrationFormThankYou from "./RegistrationFormThankYou";
-
-const Input = ({ label, required, inputType, name, value, disabled, readOnly, onChange }) => {
-
-  if (inputType === "file" && value !== "" && value !== undefined) {
-    required = false;
-    label += " - Uploaded";
-    value = null;
-  }
-  return (
-    <div className="custom-input-group">
-      <label className="input-label">
-        {label} {required && <span className="required">*</span>}
-      </label>
-      <input
-        type={inputType}
-        name={name}
-        className="input-field"
-        defaultValue={value || ""}
-        required={required}
-        disabled={disabled}
-        readOnly={readOnly}
-        onChange={onChange}
-      />
-    </div>
-  );
-}
+import { CustomFormInput } from "./CustomFormInput";
+import {ImagePreviewComponent} from "./ImagePreviewComponent";
 
 
 const ApplicationForm = () => {
@@ -42,8 +18,9 @@ const ApplicationForm = () => {
   const authContext = useContext(AuthContext);
   // const contextData = useContext(DataContext);
   const [loading, setLoading] = useState(true);
-  const { getApplicationData, applicationData, setApplicationData, updateApplicationData ,dataLoading,setDataError} = useContext(DataContext);
+  const { getApplicationData, applicationData, setApplicationData, updateApplicationData, dataLoading, setDataError } = useContext(DataContext);
   const [currentStepData, setCurrentStepData] = useState(null);
+  const [currentStep, setCurrentStep] = useState(null);
   const [formData, setFormData] = useState({});
   const [agreed, setAgreed] = useState(false);
   const [showPaymentPopup, setPaymentPopup] = useState(false);
@@ -79,7 +56,7 @@ const ApplicationForm = () => {
           }
         }
       }
-      if(applicationData.status=="Enrolled"){
+      if (applicationData.status == "Completed") {
         setAgreed(true);
       }
       console.log("Current Step Data:", currentStepData);
@@ -127,6 +104,7 @@ const ApplicationForm = () => {
       // if (!response.ok) throw new Error("Failed to update step");
 
       // Update local state or context
+      setCurrentStep(updatedStep);
       setApplicationData(prev => ({
         ...prev,
         current_application_step: updatedStep,
@@ -136,94 +114,33 @@ const ApplicationForm = () => {
     }
   };
 
-  const handlePayment=async(e)=>{
+  const handlePayment = async (e) => {
     e.preventDefault();
-    if(!agreed){
-      setDataError({"type":"error","message":"Please confirm the disclaimer"});
+    if (!agreed) {
+      setDataError({ "type": "error", "message": "Please confirm the disclaimer" });
       return;
     }
-    if(agreed && applicationData.status!="Enrolled"){
+    if (agreed && applicationData.status != "Completed") {
       setPaymentPopup(true);
-      console.log("tapped ",showPaymentPopup);
+      console.log("tapped ", showPaymentPopup);
     }
-      
+
   }
 
 
-  
+
   const handleOnPayment = async (e) => {
     e.preventDefault();
 
     try {
-   
+
       setPaymentPopup(false);
-      const updatedStep = 4;
-      formData["current_application_step"] = updatedStep;
-      formData["status"] = "Enrolled";
+      formData["status"] = "Completed";
       const response = await updateApplicationData({
         data: formData,
       });
-      // window.location.href =  process.env.REACT_APP_BASE_URL+`/payment?token=${encodeURIComponent(localStorage.getItem("TOKEN"))}`;
-      //   var options = {
-      //     "key": "{{ razorpay_key }}",
-      //     "amount": "100",
-      //     "currency": "INR",
-      //     "name": "Crack-ED",
-      //     "description": "Registration Payment",
-      //     "image": "../assets/logo.webp",
-      //     "order_id": applicationData.application_id,
-      //     "handler": function (response) {
-      //         // Submit the payment details to your server
-      //         var form = document.createElement('form');
-      //         form.setAttribute('method', 'post');
-      //         form.setAttribute('action', '/payment-success');
-              
-      //         var fields = {
-      //             'razorpay_payment_id': response.razorpay_payment_id,
-      //             'razorpay_order_id': response.razorpay_order_id,
-      //             'razorpay_signature': response.razorpay_signature
-      //         };
-              
-      //         for (var key in fields) {
-      //             var input = document.createElement('input');
-      //             input.setAttribute('type', 'hidden');
-      //             input.setAttribute('name', key);
-      //             input.setAttribute('value', fields[key]);
-      //             form.appendChild(input);
-      //         }
-              
-      //         document.body.appendChild(form);
-      //         form.submit();
-      //     },
-      //     "prefill": {
-      //         "name": "{{ name }}",
-      //         "email": "{{ email }}",
-      //         "contact": "{{ phone }}"
-      //     },
-      //     "theme": {
-      //         "color": "#3399cc"
-      //     }
-      // };
 
-      // var rzp1 = new Razorpay(options);
-      
-      // document.getElementById('rzp-button').onclick = function(e) {
-      //     rzp1.open();
-      //     e.preventDefault();
-      // };
-
-      // // Auto-open payment modal when page loads
-      // window.onload = function() {
-      //     rzp1.open();
-      //     e.preventDefault();
-      // };
-      // get_payment_screen();
-      // console.log("Response:", response);
-      // navigate('/portal/dashboard');
-      setApplicationData(prev => ({
-        ...prev,
-        current_application_step: updatedStep,
-      }));
+      navigate("/portal/application-success")
     } catch (error) {
       console.error("Error while going to next step:", error);
     }
@@ -235,31 +152,31 @@ const ApplicationForm = () => {
 
     try {
       let totalMissingFields = 0;
-      if(applicationData.status=="Enrolled"){
+      if (applicationData.status == "Completed") {
         const updatedStep = applicationData.current_application_step + 1;
-
+        setCurrentStep(updatedStep);
         setApplicationData(prev => ({
           ...prev,
           current_application_step: updatedStep,
         }));
         return;
       }
-      if(applicationData.current_application_step==3){
-        for(let k =0;k<applicationData.steps.length;k++){
-
+      if (applicationData.current_application_step == 3) {
+        for (let k = 0; k < applicationData.steps.length; k++) {
           for (let i = 0; i < applicationData.steps[k].length; i++) {
-          let section = applicationData.steps[k].sections[i];
-          for (let j = 0; j < section.fields.length; j++) {
-  
-            let field = section.fields[j];
-            let fieldName = field.field_name;
-  
-            if (field.required && !formData[fieldName]?.toString().trim()) {
-              setDataError({"type":"error","message":"Please fill "+field.label});
-              totalMissingFields++;
+            let section = applicationData.steps[k].sections[i];
+            for (let j = 0; j < section.fields.length; j++) {
+
+              let field = section.fields[j];
+              let fieldName = field.field_name;
+
+              if (field.required && !formData[fieldName]?.toString().trim()) {
+                setDataError({ "type": "error", "message": "Please fill " + field.label });
+                totalMissingFields++;
+              }
             }
           }
-        }}
+        }
         if (totalMissingFields > 0) {
           return;
         }
@@ -273,10 +190,27 @@ const ApplicationForm = () => {
 
           let field = section.fields[j];
           let fieldName = field.field_name;
-
-          if (field.required && !formData[fieldName]?.toString().trim()) {
-            setDataError({"type":"error","message":"Please fill "+field.label});
+          const value=formData[fieldName]
+          if (field.required && !value) {
+            setDataError({ type: "error", message: "Please fill " + field.label });
             totalMissingFields++;
+            continue;
+          }
+          if (value && field.pattern) {
+            let regex = new RegExp(field.pattern);
+            if (!regex.test(value)) {
+              let message = field.error_message || `Invalid format for ${field.label}`;
+              setDataError({ type: "error", message });
+              totalMissingFields++;
+            }
+          }
+
+          console.log("value ",field.input_type,"-",value);
+          if(value && field.input_type == "year"){
+            if(value<field.min_value||value>field.max_value){
+              setDataError({ type: "error", "message":"Enter a valid year"});
+              totalMissingFields++;
+            }
           }
         }
       }
@@ -284,8 +218,9 @@ const ApplicationForm = () => {
         return;
       }
       const updatedStep = applicationData.current_application_step + 1;
+      setCurrentStep(updatedStep);
       formData["current_application_step"] = updatedStep;
-      formData["status"] = currentStepData.title;
+      formData["status"] ="In Progress";
       const response = await updateApplicationData({
         data: formData,
       });
@@ -301,9 +236,9 @@ const ApplicationForm = () => {
   };
 
   if (!applicationData) {
-    return <LoadingComponent/>
+    return <LoadingComponent />
   }
-
+console.log("Current Step :",applicationData.current_application_step);
   return (
 
     <div className="application-form-container">
@@ -319,8 +254,8 @@ const ApplicationForm = () => {
         </p>
       </div>
 
-      {applicationData && dataLoading? <LoadingComponent/>:null}
-  
+      {applicationData && dataLoading ? <LoadingComponent /> : null}
+
 
       {/* Navigation Tabs */}
       <div className="application-tabs">
@@ -331,7 +266,7 @@ const ApplicationForm = () => {
               className={
                 step.step.toString() == (applicationData.current_application_step).toString()
                   ? "tab-active"
-                  :(applicationData.status=="Enrolled"&&step.step<3)?"tab-inactive":"tab"
+                  : (applicationData.status == "Completed" && step.step < 3) ? "tab-inactive" : "tab"
               }
             >
               {step.title}
@@ -341,89 +276,57 @@ const ApplicationForm = () => {
       </div>
 
       {/* Form Sections */}
-      {applicationData.current_application_step === 4 ?
-      <>
-      <RegistrationFormThankYou/>
-      <div className="form-footer">
-      <button
-                type="button"
-                className="back-button"
-                onClick={handleBackStep}
-              >
-                Preview
-              </button>
-              </div>
-      </>
-      
-        :
-        <form className="form-section">
-          {currentStepData?.sections?.map((section, idx) => (
-            <div className="section-box" key={idx}>
-              <div className="section-title">{section.section}</div>
-              <div className="grid-container">
-                {section.fields.map((field, fieldIdx) => (
-                  <Input
-                    key={field.field_name}
-                    label={field.label}
-                    required={field.required}
-                    inputType={field.input_type}
-                    name={field.field_name}
-                    value={formData[field.field_name] || ""}
-                    disabled={applicationData.current_application_step === 3 ? true : false}
-                    readOnly={applicationData.current_application_step === 3 ? true : false}
-                    onChange={(e) => {
-                      const field_name = field.field_name;
-
-                      if (field.input_type === "file") {
-                        const file = e.target.files?.[0];
-                        console.log("Selected File for:", field_name, file);
-                        if (file) {
-                          setFormData((prev) => ({
-                            ...prev,
-                            [field_name]: file,
-                          }));
-                        }
-                      } else {
-                        console.log("Editing Field Name:", field_name, "Value:", e.target.value);
-                        setFormData((prev) => ({
-                          ...prev,
-                          [field_name]: e.target.value,
-                        }));
-                      }
-                    }}
-
-                  />
-                ))}
-              </div>
+ 
+      <form className="form-section">
+        {currentStepData?.sections?.map((section, idx) => (
+          <div className="section-box" key={idx}>
+            <div className="section-title">{section.section}</div>
+            <div className="grid-container">
+              {section.fields.map((field, fieldIdx) => (
+                applicationData.current_application_step==3 && field.input_type =="file" && field.value!=null?<ImagePreviewComponent
+                  field={field}
+                  formData={formData}
+                  setFormData={setFormData}
+                />:
+                <CustomFormInput
+                  field={field}
+                  formData={formData}
+                  setFormData={setFormData}
+                  currentStep={currentStep}
+                />
+              ))}
             </div>
-          ))}
-
-          {/* Submit Button */}
-          <div className="form-footer">
-            {applicationData?.current_application_step > 0 && !(applicationData?.current_application_step==3 && applicationData.status =="Enrolled")? (
-              <button
-                type="button"
-                className="back-button"
-                onClick={handleBackStep}
-              >
-                Back
-              </button>
-            ):null}
-
-            <button type="submit" className="submit-button" onClick={handleOnNext}>
-              {(applicationData.current_application_step === 3 &&applicationData.status!="Enrolled" )? "Submit Application" : "Next"}
-            </button>
           </div>
+        ))}
 
-        </form>
-      }
+        {/* Submit Button */}
 
-      {showPaymentPopup &&( applicationData.current_application_step===3)? (
+       { applicationData.status == "Completed" ?null
+            : <div className="form-footer">
+          {applicationData?.current_application_step > 0? (
+            <button
+              type="button"
+              className="back-button"
+              onClick={handleBackStep}
+            >
+              Back
+            </button>
+          ) : null}
+
+          <button type="submit" className="submit-button" onClick={handleOnNext}>
+            {(applicationData.current_application_step === 3 && applicationData.status != "Completed") ? "Submit Application" : "Next"}
+          </button>
+        </div>}
+
+      </form>
+      
+
+      {showPaymentPopup && (applicationData.current_application_step === 3) ? (
         <ConfirmPaymentPopup
           onClose={() => setPaymentPopup(false)}
           onConfirm={handleOnPayment}
         />
-      ):null}
+      ) : null}
     </div>
   );
 };

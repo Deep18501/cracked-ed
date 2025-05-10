@@ -36,10 +36,16 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true); 
       setLoading(false);
       setAuthError({"type":"success","message":"Login Successfully"}); // Set the success state
-      return response;
+      return true;
     } catch (error){
       setLoading(false);
-      setAuthError({"type":"error","message":"Error While Login"}); // Set the error state
+      if(error){
+        setAuthError({"type":"error","message":error}); // Set the error state
+      }else{
+        setAuthError({"type":"error","message":"Error While Login"}); // Set the error state
+      }
+      console.log("Error in login",error);
+      return false;
     }
   };
   const sendLoginOtp = async (phone) => {
@@ -48,10 +54,16 @@ export const AuthProvider = ({ children }) => {
       const response = await sendLoginUserOtp(phone); 
       setLoading(false);
       setAuthError({"type":"success","message":"Otp Sent Successfully"}); // Set the success state
-      return response;
+      return true;
     } catch (error){
       setLoading(false);
-      setAuthError({"type":"error","message":"User not Registered"}); // Set the error state
+      if(error){
+        setAuthError({"type":"error","message":error}); // Set the error state
+      }else{
+        setAuthError({"type":"error","message":"Error Sending OTP"}); // Set the error state
+      }
+      console.log("Error in login otp",error);
+      return false;
     }
   };
 
@@ -72,16 +84,17 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true); 
       setLoading(false);
       setAuthError({"type":"success","message":"Register Successfully"}); // Set the success state
-      return resp;
+      return true;
     }catch(error){
       setLoading(false);
-      setAuthError({"type":"error","message":"Error in register "}); // Set the error state
-
+      if(error){
+        setAuthError({"type":"error","message":error}); // Set the error state
+      }else{
+        setAuthError({"type":"error","message":"Error in register "}); // Set the error state
+      }
       console.log("Error in register",error);
+      return false;
     }
-    setLoading(false);
-
-    
   }; 
   
   const sendRegisterOtp = async (name,email,mobile) => {
@@ -90,13 +103,17 @@ export const AuthProvider = ({ children }) => {
     try{
       const resp=await sendRegisterUserOtp(name,email,mobile);
       setLoading(false);
-      setAuthError({"type":"success","message":"OTP Sent Successfully"}); // Set the success state
-
-      return resp;
+      setAuthError({"type":"success","message":"OTP Sent Successfully"}); 
+      return true;
     }catch(error){
       setLoading(false);
-      setAuthError({"type":"error","message":"You are already registered or Incorrect Mobile No"}); // Set the error state
+      if(error){
+        setAuthError({"type":"error","message":error}); // Set the error state
+      }else{
+        setAuthError({"type":"error","message":"Error sending OTP!!"}); // Set the error state
+      }
       console.log("Error in register otp",error);
+      return false;
 
     }
     setLoading(false);

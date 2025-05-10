@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PortalHeader from "../components/PortalHeader.js";
 import '../styles/portal.css';
 import CustomTextField from '../utils/custom_textfield.js';
@@ -13,15 +13,16 @@ const PortalRegisterPage = () => {
     const [formData, setFormData] = useState({});
     const authContext = useContext(AuthContext);
     const { authLoading } = useContext(AuthContext);  // Correctly access getApplicationData from DataContext
+    const [showOtp, setShowOtp] = useState(false);
 
 
     useEffect(() => {
-        if (!authContext.loading) { 
-          if (authContext.isAuthenticated) {
-            navigate("/portal/dashboard");
-          }
+        if (!authContext.loading) {
+            if (authContext.isAuthenticated) {
+                navigate("/portal/dashboard");
+            }
         }
-      }, [authContext.isAuthenticated, authContext.loading]);
+    }, [authContext.isAuthenticated, authContext.loading]);
 
     const handleFieldChange = (name, value) => {
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -29,17 +30,68 @@ const PortalRegisterPage = () => {
     };
 
     const sendLoginOtp = () => {
+        const { name, email, phone } = formData;
+        let errors=[];
+        if(!name||!email || !phone){
+          authContext.setAuthError({"type":"error","message":"All Fields are Required."});
+          return;
+        }
+        if (!name.trim()) errors.push({"type":"error","message":"Name is required."});
+        if (!email.trim()) errors.push({"type":"error","message":"Email is required."});
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push({"type":"error","message":"Invalid email format."});
+      
+        if (!phone.trim()) errors.push({"type":"error","message":"Phone Number is required."});
+        else if (!/^\d{10}$/.test(phone)) errors.push({"type":"error","message":"Phone must be 10 digits."});
+      
+        if (errors.length > 0) {
+          console.log("Errors ",errors);
+          authContext.setAuthError(errors[0]);
+          return;
+        }
+        
         authContext.sendRegisterOtp(formData.name, formData.email, formData.phone).then((response) => {
-            console.log("OTP sent successfully:", response);
+            if(response){
+                console.log("OTP successfully:",);
+                setShowOtp(true);
+              }
         }).catch((error) => {
             console.error("Error sending OTP:", error);
         });
     }
 
     const handleRegister = () => {
+
+
+        const { name, email, phone } = formData;
+        if (!name || !email || !phone) {
+            authContext.setAuthError({ "type": "error", "message": "All Fields are Required." });
+            return;
+        }
+
+        let errors = [];
+
+        if (!name.trim()) errors.push({ "type": "error", "message": "Name is required." });
+        if (!email.trim()) errors.push({ "type": "error", "message": "Email is required." });
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push({ "type": "error", "message": "Invalid email format." });
+
+        if (!phone.trim()) errors.push({ "type": "error", "message": "Phone Number is required." });
+        else if (!/^\d{10}$/.test(phone)) errors.push({ "type": "error", "message": "Phone must be 10 digits." });
+
+        if (!otp.trim()) errors.push({ "type": "error", "message": "OTP is required." });
+        else if (otp.trim().length !== 4 || !/^\d{4}$/.test(otp.trim())) errors.push({ "type": "error", "message": "OTP must be 4 digits." });
+
+        if (errors.length > 0) {
+            console.log("Errors ", errors);
+            authContext.setAuthError(errors[0]);
+            return;
+        }
+
         authContext.register(formData.name, formData.email, formData.phone, otp).then((response) => {
-            console.log("Register successfully:", response);
-            navigate('/portal/dashboard');
+            if(response){
+                console.log("Register successfully:");
+                setShowOtp(false);
+                navigate('/portal/dashboard');
+              }
         }).catch((error) => {
             console.error("Register Failed:", error);
         });
@@ -53,7 +105,7 @@ const PortalRegisterPage = () => {
                 </nav>
                 <button className="logout-button" onClick={() => navigate('/portal/login')}>Login</button>
             </PortalHeader>
-             {authLoading?<LoadingComponent/>:null}  
+            {authLoading ? <LoadingComponent /> : null}
             <div className="portal-container">
                 <div className="portal-form-container">
                     <div className='portal-form-title'>
@@ -61,21 +113,23 @@ const PortalRegisterPage = () => {
                     </div>
                     <div className="portal-form-card">
                         <form>
-                            <CustomTextField label="Full Name" name="name" type="text" onChange={handleFieldChange} />
-                            <CustomTextField label="Email" name="email" type="email" onChange={handleFieldChange} />
+                            <CustomTextField label="Full Name" name="name" type="text" onChange={handleFieldChange} readOnly={showOtp}/>
+                            <CustomTextField label="Email" name="email" type="email" onChange={handleFieldChange} readOnly={showOtp}/>
                             <CustomTextField
                                 label="Mobile Number"
                                 name="phone" type="text"
                                 onChange={handleFieldChange}
                                 tail={true}
+                                readOnly={showOtp}
                                 tailContent={<div className='sendOtpButton' onClick={sendLoginOtp}>GET OTP</div>}>
                             </CustomTextField>
-                            <div className='otp-container'>
+
+                           {showOtp && <div className='otp-container'>
                                 <div className='enter-otp-text'>Enter OTP sent to your mobile number</div>
 
                                 <OtpInput length={4} onChange={(val) => setOtp(val)} />
 
-                            </div>
+                            </div>}
                             <div className='portal-btn' onClick={handleRegister} >Register</div>
                         </form>
 

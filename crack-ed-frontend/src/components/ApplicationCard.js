@@ -22,7 +22,7 @@ const ApplicationCard = ({ appNumber, candidateName, program, status, onResume }
           <div className="value">{status}</div>
         </div>
       </div>
-      {status!="Enrolled"?<button className="resume-btn" onClick={onResume}>Resume Application</button>:<button className="resume-btn" onClick={onResume}>View</button>}
+      {status!="Completed"?<button className="resume-btn" onClick={onResume}>Resume Application</button>:<button className="resume-btn" onClick={onResume}>View</button>}
       
     </div>
   );

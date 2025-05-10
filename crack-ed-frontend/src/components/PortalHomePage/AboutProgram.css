@@ -19,7 +19,7 @@
   font-weight: 550;
 }
 .portal-about{
-  padding: 110px 10%;
+  padding: 9% 10%;
 }
 .about-img {
   width: 80%; /* equivalent to w-72 in Tailwind */
@@ -43,6 +43,12 @@
 @media (max-width: 767px) {
   .about-img.desktop-img {
     display: none;
+  }
+.about-img {
+width: 100%;
+}
+  .portal-about{
+    padding: 9% 0%;
   }
 
   .about-img.mobile-img1 {

@@ -76,7 +76,7 @@ export const loginUser = async (phone, otp) => {
     await saveToken(response.data);
     return response.data; // Return the response data to the component
   } catch (error) {
-    throw error.response.data || "Login failed";
+    throw error.response.data?.message || "Login failed";
   }
 };
 
@@ -87,7 +87,7 @@ export const sendLoginUserOtp = async (phone) => {
     });
     return response.data; // Return the response data to the component
   } catch (error) {
-    throw error.response.data || "Login Otp failed";
+    throw error.response.data?.message || "Login Otp failed";
   }
 };
 
@@ -111,6 +111,6 @@ export const logoutUser = async () => {
   try {
     localStorage.clear();
   } catch (error) {
-    throw error.response?.data || "Logout failed";
+    throw error.response?.data?.message || "Logout failed";
   }
 };

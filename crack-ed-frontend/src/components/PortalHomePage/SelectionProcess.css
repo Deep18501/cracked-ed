@@ -1,7 +1,9 @@
 .icon-wrapper {
+  flex-shrink: 0;
     width: 140px;
     height: 140px;
-    background-color: #FCEEFB;
+    border-radius: 50%;
+    background-color: #FFF1EF;
   }
   
   .text-purple {
@@ -10,9 +12,8 @@
   
   .icon-size {
     width: 50px;
-    min-width: 50px;
     height: 150px;
-    object-fit: contain;
+    object-fit: cover;
   }
   
 .selection-process-section .portal-section-title{
@@ -26,7 +27,13 @@
 
     .selection-process-section .icon-wrapper {
       padding: 10px;
-      background-color: #FCEEFB;
+      height: 80px;
+      width: 80px;
+    }
+    .icon-selection-process{
+      width: 32px;
+      height: 32px;
+      overflow: hidden;
     }
     .selection-process-section .icon-size {
       width: 32px;

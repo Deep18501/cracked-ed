@@ -11,6 +11,7 @@ import { DataProvider } from './context/DataContext';
 import PortalApplicationPage from './pages/PortalApplicationPage';
 import { Navigate } from "react-router-dom";
 import PortalHomePage from './pages/PortalHomePage';
+import PageSuccess from './pages/PageSuccess';
 
 function App() {
   return (
@@ -20,22 +21,26 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/portal" replace />} />
 
-          <Route path="/portal" element={<PortalHomePage/>} />
+          <Route path="/portal" element={<PortalHomePage />} />
 
-            <Route path="/portal/dashboard" element={
-              <DataProvider>
-                <PortalDashboardPage />
-              </DataProvider>
-              } />   
-              
-              <Route path="/portal/application-form" element={
-              <DataProvider>
-                <PortalApplicationPage />
-              </DataProvider>
-              } />
+          <Route path="/portal/dashboard" element={
+            <DataProvider>
+              <PortalDashboardPage />
+            </DataProvider>
+          } />
+
+          <Route path="/portal/application-form" element={
+            <DataProvider>
+              <PortalApplicationPage />
+            </DataProvider>
+          } />  
           
+          <Route path="/portal/application-success" element={
+            <PageSuccess></PageSuccess>
+          } />
+
           <Route path="/portal/login" element={
-              <PortalLoginPage />
+            <PortalLoginPage />
           } />
           <Route path="/portal/register" element={<PortalRegisterPage />} />
         </Routes>

@@ -41,6 +41,31 @@ export const get_payment_screen = async () => {
   }
 };
 
+export const get_all_district_data = async () => {
+  try {
+    console.log("getting data get_all_district_data");
+    const response = await axiosInstance.get("/districts");
+    return response.data;
+
+  } catch (error) {
+    console.log("error - " + error.response.data.error);
+    throw error.response.data.error || "Not Found";
+  }
+};
+
+export const get_all_university_data = async () => {
+  try {
+    console.log("getting data get_all_university_data");
+    const response = await axiosInstance.get("/universities");
+    return response.data;
+    
+  } catch (error) {
+    console.log("error - " + error.response.data.error);
+    throw error.response.data.error || "Not Found";
+  }
+};
+
+
 
 export const update_application_data_api = async (data) => {
   try {

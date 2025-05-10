@@ -31,7 +31,7 @@ const AboutProgram = () => {
             <span className="fw-semibold text-purple">AURUM Bankers Program</span>. This program blends classroom learning with real-world experience, equipping you with the skills needed to succeed in today’s dynamic banking landscape—whether you’re starting out or making a career shift into BFSI.
           </p>
           <p className="text-secondary small">
-            For any inquiries, please call: <a href="tel:+910123456789" className="text-purple fw-semibold">+91 0123456789</a>
+            For any inquiries, please call: <a href="tel:+918864932909" className="text-purple fw-semibold">+91 8864932909</a>
           </p>
         </div>
       </div>

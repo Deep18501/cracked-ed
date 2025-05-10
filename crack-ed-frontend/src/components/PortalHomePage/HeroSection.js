@@ -4,6 +4,7 @@ import RegistrationForm from './Reg';
 import ServiceIcon1 from '../../assets/service_icon1.png';
 import ServiceIcon2 from '../../assets/service_icon2.png';
 import ServiceIcon3 from '../../assets/service_icon3.png';
+import HeroBg from '../../assets/hero-section_bg.png';
 
 
 
@@ -36,6 +37,7 @@ const HeroSection = () => {
   return (
     <section className="hero-section d-flex align-items-center position-relative text-white">
       {/* Overlay */}
+  
       <div className="overlay position-absolute top-0 start-0 w-100 h-100"></div>
 
       <div className="container hero-section-container position-relative z-2">
@@ -43,8 +45,8 @@ const HeroSection = () => {
           {/* Left Side Content */}
           <div className="col-12 col-md-10 col-lg-7 mb-4">
             {!isMobile && (
-              <div className="aurum-program-hero-title mr-5 bg-purple mb-4 d-inline-block">
-                <h1 className="h3 fw-bold">AURUM Bankers Program</h1>
+              <div className="aurum-program-hero-title mr-5 mb-4 d-inline-block">
+                  AURUM Bankers Program
               </div>
             )}
 
@@ -70,7 +72,7 @@ const HeroSection = () => {
       </div>
 
       {/* Bottom Info Bar */}
-      <div className="bottom-bar bg-purple text-white text-center mt-auto w-100 position-absolute bottom-0 mt-4">
+      <div className="bottom-bar bg-purple text-white text-center mt-auto w-100 position-absolute bottom-0">
         <div className="container">
           {!isMobile ?
            <div className="d-flex justify-content-around align-items-center px-3">

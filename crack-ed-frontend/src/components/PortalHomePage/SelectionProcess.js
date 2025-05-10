@@ -40,10 +40,13 @@ const SelectionProcess = () => {
           {steps.map((step, index) => (
             <div
               key={index}
-              className="d-flex flex-row flex-md-column align-items-center text-center text-md-start gap-3 px-2"
+              className="d-flex flex-row flex-grow-1 flex-md-column align-items-center text-center text-md-start gap-3 px-2"
             >
-              <div className="icon-wrapper d-flex justify-content-center align-items-center rounded-circle">
+              <div className="icon-wrapper d-flex justify-content-center align-items-center">
+                <div className='icon-selection-process'>
                 {step.icon}
+                </div>
+
               </div>
               <p className="small text-secondary mb-0 flex-grow-1">{step.text}</p>
             </div>
