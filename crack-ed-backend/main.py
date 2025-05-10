@@ -5,7 +5,6 @@ import random
 import string
 import os
 from werkzeug.utils import secure_filename
-import razorpay
 import threading
 import time
 import hashlib
@@ -22,10 +21,6 @@ CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-
-RAZORPAY_KEY_ID = os.getenv('RAZORPAY_KEY_ID')
-RAZORPAY_KEY_SECRET = os.getenv('RAZORPAY_KEY_SECRET')
-client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
 CUSTOMER_KEY = "362405"
 ORANGE_API_KEY = "RHFLK7kkQN4fGtNwnXOhvpXreO2hJxx1"
 SEND_URL = "https://login.xecurify.com/moas/api/auth/challenge" 
@@ -574,175 +569,6 @@ def get_basic_application_data():
         print("Exception:", e)
         return jsonify({"error": "Something went wrong"}), 500
     
-    
-    
-    
-@app.route('/payment')
-def payment_page():
-    print("Payment page accessed  ",request.args.get("token"))
-    token = request.args.get("token")
-    print("Received token:", token)
-    user = User.query.filter_by(token=token).first()
-    if not user:
-        return jsonify({"error": "User not found"}), 404
-    application = Application.query.filter_by(user_id=user.id).first()
-    print("Application ID:", application.application_id)
-    return render_template('Payment.html',
-                         order_id=application.application_id,
-                         razorpay_key=RAZORPAY_KEY_ID,
-                         amount="100",
-                         name=application.first_name + " " + application.last_name,
-                         email=application.email,
-                         phone=application.mobile_number,
-                         registration_number=application.application_id)
-
-@app.route('/payment-success', methods=['POST'])
-def payment_success():
-    # Verify payment signature
-    razorpay_payment_id = request.form.get('razorpay_payment_id')
-    razorpay_order_id = request.form.get('razorpay_order_id')
-    razorpay_signature = request.form.get('razorpay_signature')
-    
-    params_dict = {
-        'razorpay_order_id': razorpay_order_id,
-        'razorpay_payment_id': razorpay_payment_id,
-        'razorpay_signature': razorpay_signature
-    }
-    
-    try:
-        client.utility.verify_payment_signature(params_dict)
-        
-        # Get order details to ensure we have the registration number
-        order = client.order.fetch(razorpay_order_id)
-        registration_number = order.get('notes', {}).get('registration_number')
-        
-        if not registration_number:
-            registration_number = session.get('registration_number')
-            if not registration_number:
-                return redirect(url_for('index'))
-        
-        # Store payment details in session temporarily
-        session['payment_id'] = razorpay_payment_id
-        session['order_id'] = razorpay_order_id
-        
-        # Redirect to processing page
-        return redirect(url_for('payment_processing', reg_num=registration_number))
-        
-    except razorpay.errors.SignatureVerificationError:
-        flash('Payment verification failed', 'danger')
-        return redirect(url_for('index'))
-
-
-@app.route('/check_payment_status')
-def check_payment_status():
-    registration_number = request.args.get('registration_number')
-    
-    if not registration_number:
-        return jsonify({'error': 'Registration number missing'}), 400
-    
-    try:
-        # First check if we have payment data in session (for immediate feedback)
-        if session.get('payment_id'):
-            return jsonify({
-                'status': 'completed',
-                'registration_number': registration_number
-            })
-        
-      
-        
-        return jsonify({
-                'status': 'completed',
-                'registration_number': registration_number
-            })
-            
-
-            
-    except Exception as e:
-        app.logger.error(f"Error checking payment status: {str(e)}")
-        return jsonify({'error': str(e)}), 500
-
-@app.route('/payment_processing')
-def payment_processing():
-    
-    registration_number = request.args.get('reg_num')
-    if not registration_number:
-        return redirect(url_for('index'))
-    return render_template('/processing.html', registration_number=registration_number)
-
-@app.route('/webhook', methods=['POST'])
-def webhook():
-    # Verify webhook signature
-    webhook_secret = os.getenv('WEBHOOK_SECRET')
-    if not webhook_secret:
-        return jsonify({'status': 'error', 'message': 'Webhook secret not configured'}), 500
-        
-    received_signature = request.headers.get('X-Razorpay-Signature')
-    
-    try:
-        client.utility.verify_webhook_signature(
-            request.get_data().decode('utf-8'),
-            received_signature,
-            webhook_secret
-        )
-    except razorpay.errors.SignatureVerificationError:
-        app.logger.error("Webhook signature verification failed")
-        return jsonify({'status': 'error', 'message': 'Invalid signature'}), 400
-    except Exception as e:
-        app.logger.error(f"Webhook verification error: {str(e)}")
-        return jsonify({'status': 'error', 'message': 'Verification error'}), 400
-    
-    payload = request.get_json()
-    event = payload.get('event', '')
-    
-    if event == 'payment.captured':
-        try:
-            payment_data = payload['payload']['payment']['entity']
-            order_id = payment_data['order_id']
-            
-            # Get order details
-            order = client.order.fetch(order_id)
-            registration_number = order.get('notes', {}).get('registration_number')
-            
-            if not registration_number:
-                app.logger.error("No registration number in order notes")
-                return jsonify({'status': 'error', 'message': 'Missing registration number'}), 400
-            
-            # Update Google Sheets
-            try:
-                # Find the row with this registration number
-                records = sheet.get_all_records()
-                row_index = None
-                for i, row in enumerate(records, start=2):  # start=2 because header is row 1
-                    if row.get('Registration Number') == registration_number:
-                        row_index = i
-                        break
-                
-                if row_index:
-                    # Update payment details
-                    updates = [
-                        (20, payment_data['id']),  # Payment ID
-                        (21, 'captured'),          # Payment Status
-                        (22, payment_data['amount'] / 100),  # Amount
-                        (23, payment_data['method']),  # Method
-                        (24, datetime.fromtimestamp(payment_data['created_at']).strftime('%Y-%m-%d %H:%M:%S'))  # Timestamp
-                    ]
-                    
-                    for col, value in updates:
-                        sheet.update_cell(row_index, col, value)
-                    
-                    app.logger.info(f"Updated payment details for {registration_number}")
-                else:
-                    app.logger.error(f"Registration number {registration_number} not found in sheet")
-                
-            except Exception as e:
-                app.logger.error(f"Google Sheets update error: {str(e)}")
-                return jsonify({'status': 'error', 'message': 'Sheet update failed'}), 500
-            
-        except Exception as e:
-            app.logger.error(f"Payment processing error: {str(e)}")
-            return jsonify({'status': 'error', 'message': 'Payment processing failed'}), 500
-    
-    return jsonify({'status': 'success'}), 200
 
 @app.route('/uploads/<string:user_id>/<string:application_id>/<string:filename>')
 def view_image(user_id,application_id, filename):
