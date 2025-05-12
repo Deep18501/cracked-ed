@@ -213,6 +213,9 @@ export const CustomFormInput = ({ field, formData, setFormData,currentStep }) =>
 
             <div className="custom-input-group">
                 <label className="input-label">
+                  { showPreviewBtn && !field.value &&(<div className='image-preview-blank'>
+                            |
+                            </div>)}
                     {label} {required && <span className="required">*</span>}
                     {showPreviewBtn && field.value && (
                         isImageFile(field.value) ? (
