@@ -93,8 +93,8 @@ const FAQ = () => {
   };
 
   return (
-    <section className="py-5 bg-white px-3">
-      <div className="container" style={{ maxWidth: '800px' }}>
+    <section className="faq-container-section bg-white">
+      <div className="faq-container-section-container">
         <div className="text-white text-center py-3 rounded-top bg-orange fw-semibold">
           Frequently Asked Questions
         </div>

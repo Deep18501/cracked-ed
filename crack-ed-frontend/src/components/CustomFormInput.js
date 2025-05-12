@@ -180,9 +180,9 @@ export const CustomFormInput = ({ field, formData, setFormData,currentStep }) =>
 
     // If file already uploaded, show uploaded status
     if (showPreviewBtn) {
-        console.log("Show preview Button",);
+        console.log("Show preview Button",field.value);
 
-        console.log(field.value !== "", field.value !== undefined);
+        console.log(field.value !== "", field.value !== null);
         required = false;
 
         value = null;
@@ -213,7 +213,7 @@ export const CustomFormInput = ({ field, formData, setFormData,currentStep }) =>
 
             <div className="custom-input-group">
                 <label className="input-label">
-                  { showPreviewBtn && !field.value &&(<div className='image-preview-blank'>
+                  { inputType=="file" && (!showPreviewBtn) &&(<div className='image-preview-blank'>
                             |
                             </div>)}
                     {label} {required && <span className="required">*</span>}
