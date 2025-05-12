@@ -22,7 +22,7 @@ const WhyChooseUS = () => {
         </div>
 
         {/* Text Content */}
-        <div className="text-container text-start">
+        <div className="text-container text-start px-3">
           <div className="title-text-purple">
           Why Choose This Program?
           </div>

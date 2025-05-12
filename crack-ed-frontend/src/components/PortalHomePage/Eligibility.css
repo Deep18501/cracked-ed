@@ -6,3 +6,17 @@
     color: #F26A1B;
   }
   
+  .heading-left-elegibility{
+    font-size: 32px;
+    text-align: start;
+  }
+  .heading-right-elegibility{
+    font-size: 18px;
+    text-align: start;
+  }
+  
+  .breakline-elegibility{
+    height: 1px;
+    margin: 25px 5px 25px 5px;
+    background-color:rgba(1, 49, 67, 0.13)
+  }

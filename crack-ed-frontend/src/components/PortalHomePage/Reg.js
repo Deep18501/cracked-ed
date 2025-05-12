@@ -126,6 +126,7 @@ const RegistrationForm = () => {
           <input
             type="email"
             placeholder="Email"
+            
             className="form-control"
             name="email"
             readOnly={showOtp}

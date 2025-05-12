@@ -26,7 +26,7 @@ const curriculum = [
   },
 ];
 
-const JobCard = ({title,description,icon}) => {
+const JobCard = ({title,description,icon,index}) => {
   return (
     <div className="curriculum-job-card">
       <div className="curriculum-icon-holder">
@@ -53,7 +53,7 @@ const CurriculumSection = () => {
       <div className="container">
         <div className="curriculum-section-items">
           {curriculum.map((item, index) => (
-            <JobCard icon={item.icon} title={item.title} description={item.description} key={index} />
+            <JobCard icon={item.icon} title={item.title} description={item.description} key={index} index={index}/>
           ))}
         </div>
       </div>

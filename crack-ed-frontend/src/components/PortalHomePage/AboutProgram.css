@@ -53,5 +53,6 @@ width: 100%;
 
   .about-img.mobile-img1 {
     display: block;
+    width: 100%;
   }
 }

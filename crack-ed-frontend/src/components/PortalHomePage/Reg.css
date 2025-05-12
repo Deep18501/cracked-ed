@@ -70,6 +70,15 @@
   margin-top: 16px;
 }
 
+
+.registration-form .form-control::-webkit-input-placeholder {
+font-weight: 300;
+}
+.registration-form .form-control:-moz-placeholder  {
+font-weight: 300;
+}
+
+
 .registration-container .btn-submit:hover {
   background-color: #e05a1a;
 }

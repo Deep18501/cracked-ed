@@ -2,7 +2,7 @@
 .hero-section {
     min-height: 110vh;
     height: auto;
-    padding: 0rem 1rem 6rem 1rem;
+    position: relative;
     /* add bottom padding for bottom bar */
     background: url('hero-bg.png') center center / cover no-repeat;
 }
@@ -10,27 +10,47 @@
 .hero-section-bg {
     position: absolute;
     height: 100%;
-   width: 100%;
+    width: 100%;
     padding: 0px;
-    
+    display: flex;
     /* add bottom padding for bottom bar */
+}
+
+.aurum-program-row {
+    width: 100%;
+    padding: 50px 20px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .hero-section-container {
     height: 100%;
+    display: flex;
 }
+
 .overlay {
-    background-color: rgba(0, 0, 0, 0.3);
+    /* background-color: rgba(0, 0, 0, 0.3); */
     z-index: 1;
 }
 
+.aurum-program-left-holder {
+    padding-left: 15%;
+}
+
+.aurum-program-right-holder {
+    /* margin: 0px 10% 0px 0%; */
+    width: 35%;
+    flex-shrink: 0;
+}
+
 .aurum-program-hero-title {
-    width: 90%;
-    padding: 20px 95px;
+    padding: 20px 0px;
     text-align: center;
     font-size: 54px;
     font-weight: 700;
     text-align: start;
+    color: white;
+    line-height: 0.4;
 }
 
 .heading-registration-home-page {
@@ -72,9 +92,10 @@
     z-index: 10;
 }
 
-.bottom-bar{
+.bottom-bar {
     padding: 32px;
 }
+
 /* Top Info Cards */
 .top-info-cards {
     display: flex;
@@ -89,12 +110,12 @@
     background-color: #EC691F;
     /* orange */
     color: white;
-    min-width: 250px;
+    min-width: 300px;
     padding: 0.8rem 1.2rem;
     border: 1px solid #007b8a33;
     /* subtle border for separation */
-    border-radius: 4px;
-    font-family: 'Segoe UI', sans-serif;
+    border-radius: 10px;
+    font-family: 'Gotham', sans-serif;
     width: fit-content;
 }
 
@@ -112,9 +133,10 @@
 }
 
 .job-tag-text {
-    font-size: 1rem;
+    font-size: 18px;
     font-weight: 500;
 }
+
 /* Responsive Styles */
 @media(max-width: 1400px) {
     .aurum-program-hero-title {
@@ -132,11 +154,17 @@
         /* increase bottom padding for bottom bar */
         text-align: center;
         background-size: cover;
+        background: url('hero-section_mobile.png')  center center / cover no-repeat;;
     }
 
-    .hero-section-container{
-    margin-bottom: 200px;
+    .aurum-program-row {
+        padding: 0px;
     }
+
+    .hero-section-container {
+        margin-bottom: 200px;
+    }
+
     .badge-box {
         flex-direction: column;
         align-items: center;
@@ -194,15 +222,15 @@
     border-collapse: collapse;
     border-radius: 5px;
     overflow: hidden;
-  }
+}
 
-  .info-box {
+.info-box {
     padding: 24px 16px;
     text-align: center;
     position: relative;
-  }
+}
 
-  .info-box:not(:nth-child(2)):not(:nth-child(4))::after {
+.info-box:not(:nth-child(2)):not(:nth-child(4))::after {
     content: '';
     position: absolute;
     right: 0;
@@ -210,24 +238,24 @@
     bottom: 0%;
     width: 1px;
     background-color: rgba(255, 255, 255, 0.3);
-  }
+}
 
-  .info-box:nth-child(1),
-  .info-box:nth-child(2) {
+.info-box:nth-child(1),
+.info-box:nth-child(2) {
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  }
+}
 
-  .info-box h2 {
+.info-box h2 {
     margin: 0;
     font-size: 1.4rem;
     font-weight: 600;
-  }
+}
 
-  .info-box p {
+.info-box p {
     margin-top: 4px;
     font-size: 0.9rem;
     color: #e0d4e6;
-  }
+}
 
 /* Hide top-info-cards on mobile devices */
 @media (max-width: 767px) {

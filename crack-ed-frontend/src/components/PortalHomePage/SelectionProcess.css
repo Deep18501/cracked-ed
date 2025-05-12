@@ -12,8 +12,12 @@
   
   .icon-size {
     width: 50px;
-    height: 150px;
+    height: 50px;
     object-fit: cover;
+  }
+  .icon-selection-items{
+    max-width: 190px;
+    text-align: justify;
   }
   
 .selection-process-section .portal-section-title{
@@ -30,6 +34,13 @@
       height: 80px;
       width: 80px;
     }
+
+     .icon-selection-items{
+    max-width: 100%;
+    text-align: start;
+  }
+  
+  
     .icon-selection-process{
       width: 32px;
       height: 32px;

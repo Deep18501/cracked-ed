@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: 'Gotham';
 }
 
 .App-logo {
@@ -35,4 +36,38 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+@font-face {
+  font-family: 'Gotham';
+  src: url(./font/Gotham/Gotham-Medium.otf) format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url(./font/Gotham/Gotham-Medium.otf) format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+/* @font-face {
+  font-family: 'Gotham';
+  src: url(./font/Gotham/GOTHAM-BLACK.TTF) format('truetype');
+  font-weight: 700;
+  font-style: normal;
+} */
+@font-face {
+  font-family: 'Gotham';
+  src: url(./font/Gotham/Gotham-Light.otf) format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gotham Rounded';
+  src: url(./font/Gotham/gotham-rounded-medium.otf) format('opentype');
+  font-weight: normal;
+  font-style: normal;
 }

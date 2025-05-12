@@ -76,7 +76,7 @@
 }
 .consent-label{
     display: flex;
-    font-family: Lufga, sans-serif;
+    font-family: 'Gotham', sans-serif;
     font-size: 14px;
     align-items: flex-start;
     font-weight: 500;
@@ -140,7 +140,7 @@
     /* box-shadow: 0px 0px 0px #D9D9D9; */
 }
 .feature-card-text{
-    font-family: Lufga, sans-serif;
+    font-family: 'Gotham', sans-serif;
     font-size: 14px;
     font-weight: 500;
 }
@@ -196,14 +196,14 @@
 
 .registration-title{
     font-size: 18px;
-    font-family: 'Lufga', sans-serif;
+    font-family: 'Gotham', sans-serif;
     font-weight: 500;
     margin-bottom: 27px;
 }
 
 .callback-title{
     font-size: 18px;
-    font-family: 'Lufga', sans-serif;
+    font-family: 'Gotham', sans-serif;
     font-weight: 500;
     margin-bottom: 27px;
 width: 50%;
@@ -220,7 +220,7 @@ width: 50%;
 }
 
 .enter-otp-text{
-    font-family: Lufga, sans-serif;
+    font-family: 'Gotham', sans-serif;
     font-size: 14px;
     font-weight: 500;
     margin-bottom: 13px;
@@ -237,7 +237,7 @@ width: 50%;
     color: rgb(255, 255, 255);
     border-radius: 5px;
     font-size: 14px;
-    font-family: 'lufga', sans-serif;
+    font-family: 'Gotham', sans-serif;
     font-weight: 500;
     text-decoration: none;
     cursor: pointer;

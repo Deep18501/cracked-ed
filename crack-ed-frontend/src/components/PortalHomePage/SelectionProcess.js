@@ -1,4 +1,10 @@
 import React from 'react';
+import SelectionIcon1 from '../../assets/selection_icon1.png'
+import SelectionIcon2 from '../../assets/selection_icon2.png'
+import SelectionIcon3 from '../../assets/selection_icon3.png'
+import SelectionIcon4 from '../../assets/selection_icon4.png'
+import SelectionIcon5 from '../../assets/selection_icon5.png'
+
 import {
   Laptop,
   MonitorSmartphone,
@@ -10,24 +16,24 @@ import './SelectionProcess.css'; // for .icon-wrapper and .text-purple
 
 const steps = [
   {
-    icon: <Laptop className="icon-size text-purple" />,
+    icon: <img className="icon-size text-purple"  src={SelectionIcon1}/>,
     text: "Submit your online application to get started",
   },
   {
-    icon: <MonitorSmartphone className="icon-size text-purple" />,
+    icon: <img className="icon-size text-purple"  src={SelectionIcon2}/>,
     text: "Attend the Pre-Placement Talk to learn more about the program",
   },
   {
-    icon: <Users className="icon-size text-purple" />,
-    text: "Participate in the first round of personal interviews",
+    icon: <img className="icon-size text-purple"  src={SelectionIcon3}/>,
+    text: "Take a quick interview to help us understand your potential.",
   },
   {
-    icon: <Handshake className="icon-size text-purple" />,
-    text: "Attend the second round of interviews for further evaluation",
+    icon: <img className="icon-size text-purple"  src={SelectionIcon4}/>,
+    text: "Secure your spot by completing enrollment and payment.",
   },
   {
-    icon: <Briefcase className="icon-size text-purple" />,
-    text: "Receive your offer letter and take the next step in your career journey",
+    icon: <img className="icon-size text-purple"  src={SelectionIcon5}/>,
+    text: "Start your training and get ready to launch your career with confidence.",
   },
 ];
 
@@ -40,7 +46,7 @@ const SelectionProcess = () => {
           {steps.map((step, index) => (
             <div
               key={index}
-              className="d-flex flex-row flex-grow-1 flex-md-column align-items-center text-center text-md-start gap-3 px-2"
+              className="d-flex  flex-row flex-grow-1 flex-md-column align-items-center text-center text-md-start gap-3 px-2"
             >
               <div className="icon-wrapper d-flex justify-content-center align-items-center">
                 <div className='icon-selection-process'>
@@ -48,7 +54,7 @@ const SelectionProcess = () => {
                 </div>
 
               </div>
-              <p className="small text-secondary mb-0 flex-grow-1">{step.text}</p>
+              <p className="small icon-selection-items text-secondary mb-0 flex-grow-1">{step.text}</p>
             </div>
           ))}
         </div>

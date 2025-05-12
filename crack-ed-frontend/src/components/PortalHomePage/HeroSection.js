@@ -35,32 +35,34 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="hero-section d-flex align-items-center position-relative text-white">
+    <section className="hero-section">
       {/* Overlay */}
   
       <div className="overlay position-absolute top-0 start-0 w-100 h-100"></div>
 
-      <div className="container hero-section-container position-relative z-2">
-        <div className="row align-items-center">
+      <div className="hero-section-container position-relative z-2">
+        <div className="aurum-program-row">
           {/* Left Side Content */}
-          <div className="col-12 col-md-10 col-lg-7 mb-4">
             {!isMobile && (
-              <div className="aurum-program-hero-title mr-5 mb-4 d-inline-block">
-                  AURUM Bankers Program
+          <div className="aurum-program-left-holder col-12 col-md-10 col-lg-7 mb-4 ">
+              <div className='d-flex flex-column'>
+              <div className="aurum-program-hero-title d-inline-block">
+                  AURUM Bankers
+              </div> 
+              <div className="aurum-program-hero-title mb-5 d-inline-block">
+                  Program
               </div>
-            )}
-
-            {!isMobile && (
-              <div className="top-info-cards d-flex justify-content-center flex-wrap">
-                <ServiceTag text='100% assured job' icon={ServiceIcon1}></ServiceTag>
+              </div>
+              <div className="top-info-cards d-flex justify-content-start flex-wrap">
+                <ServiceTag text='Become job ready' icon={ServiceIcon1}></ServiceTag>
                 <ServiceTag text='PG Certification' icon={ServiceIcon2}></ServiceTag>
                 <ServiceTag text='Earn while you learn' icon={ServiceIcon3}></ServiceTag>
               </div>
-            )}
           </div>
+            )}
 
           {/* Right Side Registration Box */}
-          <div className={isMobile ? "col-12" : "col-lg-5"}>
+          <div className={isMobile ? "col-12" : "aurum-program-right-holder"}>
             <div className={isMobile ? "bg-white text-dark p-4 rounded shadow-sm w-100 form-box form-box-mobile" : "bg-white text-dark p-4 rounded shadow-sm w-100 form-box"}>
               <div className="heading-registration-home-page">
                 Start your registration process today!

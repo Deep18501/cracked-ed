@@ -122,12 +122,13 @@
 .image-preview{
     color:blue;
     cursor: pointer;
+    text-decoration: none;
 }
 
 
 .application-fee-container {
     margin: 20px 10px;
-    font-family: Arial, sans-serif;
+    font-family: 'Gotham', sans-serif;
     font-size: 14px;
 }
 

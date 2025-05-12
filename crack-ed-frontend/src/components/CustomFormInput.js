@@ -159,8 +159,7 @@ export const CustomFormInput = ({ field, formData, setFormData,currentStep }) =>
             }
         }
 
-
-
+        
         if (inputType === "file") {
             const file = e.target.files?.[0];
             console.log("Selected File for:", name, file);
@@ -217,19 +216,21 @@ export const CustomFormInput = ({ field, formData, setFormData,currentStep }) =>
                     {label} {required && <span className="required">*</span>}
                     {showPreviewBtn && field.value && (
                         isImageFile(field.value) ? (
-                            <span className='image-preview' onClick={() => setShowPreview(true)}>
-                                Preview Image
-                            </span>
+                            <div className='image-preview' onClick={() => setShowPreview(true)}>
+                               Preview - {field.value?.split('/').at(-1) || ''}
+                            </div>
                         ) : (
-                            <a
+                           <div> <a
+
                                 href={`${process.env.REACT_APP_BASE_URL}/${field.value}?token=${localStorage.getItem("TOKEN")}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className='image-preview'
                                 download
                             >
-                                Download File
+                                Download - {field.value?.split('/').at(-1) || ''}
                             </a>
+                            </div>
                         )
                     )}
                 </label>

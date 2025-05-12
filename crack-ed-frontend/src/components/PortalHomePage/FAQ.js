@@ -98,23 +98,23 @@ const FAQ = () => {
         <div className="text-white text-center py-3 rounded-top bg-orange fw-semibold">
           Frequently Asked Questions
         </div>
-        <div className="accordion border border-top-0 border-orange rounded-bottom">
+        <div className="accordion faq-accordion rounded-bottom">
           {faqs.map(({ question, answer }, index) => (
-            <div key={index} className="faq-item border-top">
+            <div key={index} className="faq-item border order-top">
               <div
-                className="faq-question d-flex justify-content-between align-items-center px-3 py-3"
+                className="faq-question d-flex justify-content-between gap-2 align-items-center"
                 onClick={() => toggle(index)}
                 role="button"
               >
-                <span className="small text-dark">{`${index + 1}. ${question}`}</span>
+                <span className="text-dark">{`${index + 1}. ${question}`}</span>
                 {openIndex === index ? (
-                  <ChevronUp size={16} className="text-orange" />
+                  <ChevronUp size={20} className="" />
                 ) : (
-                  <ChevronDown size={16} className="text-orange" />
+                  <ChevronDown size={20} className="" />
                 )}
               </div>
               {openIndex === index && (
-                <div className="faq-answer px-3 pb-3 text-muted">
+                <div className="faq-answer text-muted">
                   {answer}
                 </div>
               )}
