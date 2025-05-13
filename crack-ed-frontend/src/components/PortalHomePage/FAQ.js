@@ -53,7 +53,8 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import './FAQ.css'; // For custom styles
-
+import dropDownIcon from './dropdown_icon.png'
+import dropUpIcon from './dropup_icon.png'
 const faqs = [
   {
     question: "Is job placement truly guaranteed after joining the AURUM program?",
@@ -108,9 +109,9 @@ const FAQ = () => {
               >
                 <span className="text-dark">{`${index + 1}. ${question}`}</span>
                 {openIndex === index ? (
-                  <ChevronUp size={20} className="" />
+                  <img className='faq-dropdown-icon' src={dropUpIcon} ></img>
                 ) : (
-                  <ChevronDown size={20} className="" />
+                  <img className='faq-dropdown-icon' src={dropDownIcon} ></img>
                 )}
               </div>
               {openIndex === index && (

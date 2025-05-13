@@ -44,10 +44,25 @@
   padding: 9% 10%;
 }
 
+.faq-dropdown-icon {
+  height: 35px;
+  width: 35px;
+}
+
 @media (max-width: 768px) {
   .faq-container-section {
+
     padding: 30px;
   }
 
+  .faq-answer {
+    font-weight: 300;
+  }
 
+  .faq-dropdown-icon {
+    height: 25px;
+
+    width: 25px;
+    margin-left: 5px;
+  }
 }

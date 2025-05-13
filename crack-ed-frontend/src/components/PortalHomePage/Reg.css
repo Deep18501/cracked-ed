@@ -6,6 +6,7 @@
   margin: 0 auto;
   padding: 0rem;
   width: 100%;
+  z-index: 11;
   box-sizing: border-box;
 }
 

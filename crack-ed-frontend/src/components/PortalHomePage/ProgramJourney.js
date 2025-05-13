@@ -79,7 +79,7 @@ const ProgramJourney = () => {
       <h2 className="portal-section-title text-start">Your Program Journey</h2>
 
         {/* Classroom Training Header */}
-        <div className="journey-header mb-4 text-center text-white py-3 rounded fw-semibold">
+        <div className="journey-header mb-4 text-white px-3 py-3 rounded fw-semibold">
           3 Months of Classroom Training
         </div>
 
@@ -138,12 +138,12 @@ const ProgramJourney = () => {
         )}
 
         {/* On-the-Job Training Header */}
-        <div className="journey-header my-5 text-center text-white py-3 rounded fw-semibold">
+        <div className="journey-header my-5 text-center text-white px-3 py-3 rounded fw-semibold">
           3 Months of Paid On-The-Job Training
         </div>
 
         {/* Paragraph */}
-        <div className="bg-light-pink p-4 rounded text-secondary small">
+        <div className="bg-light-pink p-4 rounded journey-header-desc">
           Transition smoothly into the professional world with OJT, where you’ll work on live projects, interact with customers, and get a firsthand exploration of the roles and responsibilities that await you post-graduation. Participants will receive a stipend of Rs 10,000, further supporting their transition into the professional environment while allowing them to apply their learning to real-world projects.
         </div>
 

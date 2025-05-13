@@ -1,6 +1,6 @@
 /* Hero Section Styles */
 .hero-section {
-    min-height: 110vh;
+    min-height: 100%;
     height: auto;
     position: relative;
     /* add bottom padding for bottom bar */
@@ -45,7 +45,7 @@
 
 .aurum-program-hero-title {
     padding: 20px 0px;
-    text-align: center;
+    text-align: start;
     font-size: 54px;
     font-weight: 700;
     text-align: start;
@@ -57,7 +57,8 @@
     margin: 30px 35px;
     font-size: 18px;
     font-weight: 600;
-    font-family: "Gotham Rounded", sans-serif;
+    font-family: "Gotham", sans-serif;
+   
 }
 
 /* Color Classes */
@@ -86,7 +87,7 @@
 .bottom-bar {
     left: 0;
     right: 0;
-    position: absolute;
+    /* position: absolute; */
     bottom: 0;
     width: 100%;
     z-index: 10;
@@ -109,14 +110,15 @@
     align-items: center;
     background-color: #EC691F;
     /* orange */
+    padding:10px 0px ;
     color: white;
-    min-width: 300px;
+    width: 100%;
+    max-width: 45%;
     padding: 0.8rem 1.2rem;
     border: 1px solid #007b8a33;
     /* subtle border for separation */
     border-radius: 10px;
     font-family: 'Gotham', sans-serif;
-    width: fit-content;
 }
 
 .job-tag-icon {
@@ -150,8 +152,10 @@
 @media(max-width: 768px) {
 
     .hero-section {
-        padding: 2rem 1rem 8rem 1rem;
+        padding: 2rem 1rem 1rem 1rem;
         /* increase bottom padding for bottom bar */
+        height: auto;
+        min-height: min-content;
         text-align: center;
         background-size: cover;
         background: url('hero-section_mobile.png')  center center / cover no-repeat;;
@@ -162,7 +166,7 @@
     }
 
     .hero-section-container {
-        margin-bottom: 200px;
+        /* margin-bottom: 200px; */
     }
 
     .badge-box {
@@ -193,6 +197,7 @@
     /* Adjust bottom bar for mobile */
     .bottom-bar {
         position: relative;
+        /* position: absolute; */
         bottom: auto;
         width: 100%;
         margin-top: 2rem;

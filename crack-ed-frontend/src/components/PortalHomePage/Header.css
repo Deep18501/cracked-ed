@@ -1,178 +1,186 @@
 /* === Base colors and typography === */
 .bg-purple {
-    background-color: #702f8a;
-    }
-  
-  .bg-orange {
-    background-color: #f26522;
-    color: white;
-  }
-  
-  .hover-underline:hover {
-    text-decoration: underline;
-  }
-  
-  .header-portal-main {
-    width: 100%;
-    font-family: 'Gotham';
-  }
-  
-  /* === Logo Styles === */
-  .header-portal-main .logo {
-    height: 65px;
-    margin-right: 10px;
-  }
-  .container-bar{
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
+  background-color: #702f8a;
+}
 
-  }
-  /* === Top bar layout === */
-  .header-portal-main .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.75rem 10%;
-  }
-  
-  .logo-section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .bottom-bar .title{
-    font-size: 32px;
-    font-weight: bold;
-  }
-  .vertical-line {
-    border-left: 1px solid white;
-    height: 45px;
-    margin: 0 10px;
-  }
-  
-  /* === Hamburger menu button === */
+.bg-orange {
+  background-color: #f26522;
+  color: white;
+}
+
+.hover-underline:hover {
+  text-decoration: underline;
+}
+
+.header-portal-main {
+  width: 100%;
+  font-family: 'Gotham';
+}
+
+/* === Logo Styles === */
+.header-portal-main .logo {
+  height: 65px;
+  margin-right: 10px;
+}
+
+.container-bar {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+/* === Top bar layout === */
+.header-portal-main .top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 10%;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bottom-bar .title {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.vertical-line {
+  border-left: 1px solid white;
+  height: 45px;
+  margin: 0 10px;
+}
+
+/* === Hamburger menu button === */
+.menu-toggle {
+  font-size: 28px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: block;
+  padding: 0;
+  z-index: 20;
+  line-height: 1;
+}
+
+/* Hide toggle on larger screens */
+@media (min-width: 768px) {
   .menu-toggle {
-    font-size: 28px;
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    display: block;
-    padding: 0;
-    z-index: 20;
-    line-height: 1;
-  }
-  
-  /* Hide toggle on larger screens */
-  @media (min-width: 768px) {
-    .menu-toggle {
-      display: none;
-    }
-  }
-  
-  /* === Navigation styles === */
-  nav {
-    display: flex;
-    flex-direction: row;
-    gap: 35px;
-    transition: max-height 0.3s ease;
-    align-items: center;
-  }
-  
-  .header-portal-main .closed {
-    max-height: 0px;
-    width: 0px;
-    overflow: hidden;
     display: none;
   }
-  
-  /* Menu open state for mobile */
+}
+
+/* === Navigation styles === */
+nav {
+  display: flex;
+  flex-direction: row;
+  gap: 35px;
+  transition: max-height 0.3s ease;
+  align-items: center;
+}
+
+.header-portal-main .closed {
+  max-height: 0px;
+  width: 0px;
+  overflow: hidden;
+  display: none;
+}
+
+/* Menu open state for mobile */
+nav.open {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: 500px;
+  background-color: #702f8a;
+  padding: 1rem 1.5rem;
+  position: absolute;
+  top: 45px;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.header-portal-main .nav-links {
+  display: flex;
+  z-index: 2;
+  gap: 35px;
+}
+
+nav.open a,
+nav.open .btn-submit-login {
+  color: white;
+  font-size: 1rem;
+  text-decoration: none;
+  padding-left: 0.5rem;
+}
+
+/* Turn hamburger into ✕ icon */
+
+
+/* === Button styles === */
+.btn-submit-login {
+  background-color: #f26522;
+  color: white;
+  font-weight: 600;
+  padding: 5px 30px;
+  border-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-submit-login:hover {
+  background-color: #d35400;
+}
+
+/* === Announcement bar === */
+.announcement-bar {
+  background-color: #f26522;
+  color: white;
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+
+/* === Mobile styles === */
+@media (max-width: 768px) {
+  nav {
+    display: none;
+  }
+
+  .header-portal-main .top-bar {
+    padding: 0.5rem 15px;
+  }
+
+  .header-portal-main .logo {
+    height: 30px;
+  }
+
   nav.open {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    max-height: 500px;
-    background-color: #702f8a;
-    padding: 1rem 1.5rem;
-    position: absolute;
-    top: 45px;
-    left: 0;
-    right: 0;
-    z-index: 1000;
   }
-  .header-portal-main .nav-links{
-    display: flex;
-    z-index: 2;
-    gap: 35px;
-    }
+
   nav.open a,
   nav.open .btn-submit-login {
-    color: white;
-    font-size: 1rem;
-    text-decoration: none;
-    padding-left: 0.5rem;
+    padding: 0.25rem 1rem;
+    font-size: 0.875rem;
   }
-  
-  /* Turn hamburger into ✕ icon */
- 
-  
-  /* === Button styles === */
+
+  .header-portal-main .nav-links {
+    display: none;
+  }
+
   .btn-submit-login {
-    background-color: #f26522;
-    color: white;
-    font-weight: 600;
-    padding: 5px 30px;
-    border-radius: 0.375rem;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-submit-login:hover {
-    background-color: #d35400;
-  }
-  
-  /* === Announcement bar === */
-  .announcement-bar {
-    background-color: #f26522;
-    color: white;
-    text-align: center;
+    width: 100px;
+    padding: 0.4rem 1rem;
     font-size: 0.9rem;
-    padding: 0.5rem 1rem;
   }
-  
-  /* === Mobile styles === */
-  @media (max-width: 768px) {
-    nav {
-      display: none;
-    }
-  
-    .header-portal-main .top-bar{
-        padding: 0.5rem 15px;
-    }
-    .header-portal-main .logo {
-      height: 30px;
-    }
-  
-    nav.open {
-      display: flex;
-      flex-direction: column;
-    }
-  
-    nav.open a,
-    nav.open .btn-submit-login {
-      padding: 0.25rem 1rem;
-      font-size: 0.875rem;
-    }
-    .header-portal-main .nav-links{
-        display: none;
-    }
-    .btn-submit-login {
-      width: 100px;
-      padding: 0.4rem 1rem;
-      font-size: 0.9rem;
-    }
-  }
-  
+}

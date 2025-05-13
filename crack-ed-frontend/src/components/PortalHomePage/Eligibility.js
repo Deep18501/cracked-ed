@@ -1,7 +1,7 @@
 import React from 'react';
 import { CheckCircle } from 'lucide-react';
 import './Eligibility.css'; // For custom colors
-
+import reqICon from './requirement_tick.png'
 const Eligibility = () => {
   return (
     <section className="py-5 bg-light px-3">
@@ -19,15 +19,15 @@ const Eligibility = () => {
           <h6 className="heading-right-elegibility mb-4">Requirements</h6>
           <ul className="list-unstyled small text-secondary">
             <li className="d-flex align-items-start gap-2 ">
-              <CheckCircle className="icon-orange mt-1" size={18} />
-              <span>
+              <img className='elegibility-requirement-icon' src={reqICon} ></img>
+              <span className='text-start'>
                 Graduate in any discipline with a minimum aggregate score of 50% from a recognized university.
               </span>
             </li>
             <div className='breakline-elegibility'/>
             <li className="d-flex align-items-start gap-2">
-              <CheckCircle className="icon-orange mt-1" size={18} />
-              <span>
+              <img className='elegibility-requirement-icon' src={reqICon} ></img>
+              <span className='text-start'>
                 Open to fresh graduates and professionals with up to 3 years of experience.
               </span>
             </li>
