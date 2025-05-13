@@ -34,7 +34,7 @@ const JobCard = ({title,description}) => {
 const ProgramFeatures = () => {
   return (
     <section className="program-section bg-white">
-      <div className="container">
+      <div className="">
         <h2 className="portal-section-title text-start">Program Features</h2>
         <div className="portal-section-cards">
           {features.map((feature, index) => (

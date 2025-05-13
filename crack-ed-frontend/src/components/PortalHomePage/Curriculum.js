@@ -50,7 +50,7 @@ const CurriculumSection = () => {
     <section className="curriculum-section bg-white">
       <h2 className="portal-section-title text-center">Become An Expert In Banking</h2>
 
-      <div className="container">
+      <div className="">
         <div className="curriculum-section-items">
           {curriculum.map((item, index) => (
             <JobCard icon={item.icon} title={item.title} description={item.description} key={index} index={index}/>
