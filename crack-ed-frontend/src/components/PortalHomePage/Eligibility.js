@@ -18,16 +18,16 @@ const Eligibility = () => {
         <div>
           <h6 className="heading-right-elegibility mb-4">Requirements</h6>
           <ul className="list-unstyled small text-secondary">
-            <li className="d-flex align-items-start gap-2 ">
+            <li className="d-flex align-items-center gap-2 ">
               <img className='elegibility-requirement-icon' src={reqICon} ></img>
-              <span className='text-start'>
+              <span className='text-start about-text-secondary'>
                 Graduate in any discipline with a minimum aggregate score of 50% from a recognized university.
               </span>
             </li>
             <div className='breakline-elegibility'/>
-            <li className="d-flex align-items-start gap-2">
+            <li className="d-flex align-items-center gap-2">
               <img className='elegibility-requirement-icon' src={reqICon} ></img>
-              <span className='text-start'>
+              <span className='text-start about-text-secondary'>
                 Open to fresh graduates and professionals with up to 3 years of experience.
               </span>
             </li>

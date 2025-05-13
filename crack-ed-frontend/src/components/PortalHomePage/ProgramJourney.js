@@ -14,7 +14,7 @@ const BankAbsorptionCard = ({details,children}) => {
           {children}
         </div>
       </div>
-      <p className="bank-text">
+      <p className="bank-text about-text-secondary">
       {details}
       </p>
     </div>
@@ -125,7 +125,7 @@ const ProgramJourney = () => {
                   <img src={item.img} alt={item.title} className="card-img-top" />
                   <div className="card-body">
                     <h5 className="card-title text-purple fw-semibold">{item.title}</h5>
-                    <ul className="card-text small ps-3">
+                    <ul className="card-text about-text-secondary ps-3">
                       {item.points.map((point, i) => (
                         <li key={i}>{point}</li>
                       ))}

@@ -24,7 +24,7 @@ const JobCard = ({title,description}) => {
       <div className="assured-card-header">
         {title}
       </div>
-      <div className="assured-card-body">
+      <div className="assured-card-body about-text-secondary">
         {description}
       </div>
     </div>

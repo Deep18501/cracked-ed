@@ -115,7 +115,7 @@ const FAQ = () => {
                 )}
               </div>
               {openIndex === index && (
-                <div className="faq-answer text-muted">
+                <div className="faq-answer  text-muted">
                   {answer}
                 </div>
               )}

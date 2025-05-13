@@ -26,15 +26,15 @@ const WhyChooseUS = () => {
           <div className="title-text-purple">
           Why Choose This Program?
           </div>
-          <p className="text-secondary mb-3 lh-relaxed">
+          <p className="about-text-secondary mb-3 lh-relaxed">
           The Aurum Bankers Program is a 6-month course that offers a stipend of Rs 10,000 during your learning journey.
           </p>
-          <p className="text-secondary small">
+          <p className="about-text-secondary">
           With a focus on real-world experience, the program combines practical lessons and hands-on learning to help you grow.          
           </p> 
-          <p className="text-secondary small">
+          <p className="about-text-secondary">
           On successfully completing the program, you'll have the chance to get job placement opportunities at Aurum Bank with a CTC of Rs 3.5 LPA.          </p> 
-          <p className="text-secondary small">
+          <p className="about-text-secondary">
           The Aurum Bankers Program provides you with the skills and knowledge you need to make a smooth transition into the corporate world.          </p>
         </div>
       </div>

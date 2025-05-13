@@ -11,6 +11,11 @@
 }
 
 
+.about-text-secondary{
+  font-size: 14px;
+  font-weight: 300;
+}
+
 .portal-section-title {
   color: #3D3D3D;
   font-family: "Gotham Rounded", sans-serif;
@@ -55,4 +60,10 @@ width: 100%;
     display: block;
     width: 100%;
   }
+  
+
+.about-text-secondary{
+  font-size: 12px;
+}
+
 }

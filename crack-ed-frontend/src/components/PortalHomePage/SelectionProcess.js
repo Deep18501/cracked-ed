@@ -54,7 +54,7 @@ const SelectionProcess = () => {
                 </div>
 
               </div>
-              <p className="small icon-selection-items text-secondary mb-0 flex-grow-1">{step.text}</p>
+              <p className="small icon-selection-items about-text-secondary mb-0 flex-grow-1">{step.text}</p>
             </div>
           ))}
         </div>

@@ -26,11 +26,11 @@ const AboutProgram = () => {
           <div className="title-text-purple">
             About the Program
           </div>
-          <p className="text-secondary mb-3 lh-relaxed">
+          <p className=" about-text-secondary mb-3 lh-relaxed">
             The BFSI sector is rapidly evolving, driven by digital banking, fintech, and a strong customer focus. AU Bank, with a 23% annual growth over the past five years, is leading this transformation. To build on this momentum, AU Bank has partnered with Crack-ED, the upskilling arm of the Cardekho Group, to launch the{' '}
             <span className="fw-semibold text-purple">AURUM Bankers Program</span>. This program blends classroom learning with real-world experience, equipping you with the skills needed to succeed in today’s dynamic banking landscape—whether you’re starting out or making a career shift into BFSI.
           </p>
-          <p className="text-secondary small">
+          <p className="about-text-secondary">
             For any inquiries, please call: <a href="tel:+918864932909" className="text-purple fw-semibold">+91 8864932909</a>
           </p>
         </div>

@@ -21,7 +21,8 @@
   margin: 25px 5px 25px 5px;
   background-color: rgba(1, 49, 67, 0.13)
 }
-.elegibility-requirement-icon{
+
+.elegibility-requirement-icon {
   height: 35px;
   width: 35px;
 }
@@ -31,11 +32,13 @@
   .heading-left-elegibility {
     display: none;
   }
-    .heading-right-elegibility {
+
+  .heading-right-elegibility {
     font-size: 24px;
   }
-  .elegibility-requirement-icon{
-  height: 25px;
-  width: 25px;
-}
+
+  .elegibility-requirement-icon {
+    height: 25px;
+    width: 25px;
+  }
 }

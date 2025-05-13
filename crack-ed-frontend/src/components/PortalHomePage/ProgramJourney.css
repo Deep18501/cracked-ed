@@ -95,6 +95,7 @@
 
 .journey-header-desc{
     font-size: 14px;
+    font-weight: 300;
   }
 /* Responsive adjustments */
 @media (max-width: 767.98px) {
