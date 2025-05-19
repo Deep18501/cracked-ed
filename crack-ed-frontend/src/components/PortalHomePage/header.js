@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
-import './Header.css'; // For custom colors and tweaks
+import React, { useState, useContext } from 'react';
+import './Header.css';
 import auLogo from './au-logo.png';
 import crackedLogo from './cracked-logo.png';
+import { AuthContext } from '../../context/AuthContext'; // adjust path if needed
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { isAuthenticated, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    window.location.href = "/portal/login"; 
+    navigate("/portal/login");
   };
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   return (
@@ -28,23 +37,51 @@ const Header = () => {
             <img className='logo' src={crackedLogo} alt="Cracked" />
           </div>
 
-          {/* Hamburger Menu Button */}
+          {/* Hamburger Menu */}
           <div className={`menu-toggle ${menuOpen ? 'open' : ''}`} onClick={toggleMenu} aria-label="Toggle menu">
             &#9776;
           </div>
 
-          {/* Navigation */}
+          {/* Responsive Navigation */}
           <nav className={`${menuOpen ? 'open' : 'closed'}`}>
             <a href="#about" className="nav-link">About</a>
             <a href="#eligibility" className="nav-link">Eligibility & Selection Process</a>
             <a href="#why" className="nav-link">Why ABP?</a>
-            <button className="btn-submit-login" onClick={handleLoginClick}>LogIn</button>
-          </nav>      
-          <nav className={`nav-links`}>
+            <div className="nav-auth-buttons">
+              {isAuthenticated ? (
+                <>
+                  <button className="nav-auth-btn" onClick={() => navigate('/portal/dashboard')}>
+                    View Application
+                  </button>
+                  <button className="nav-auth-btn logout" onClick={handleLogout}>
+                    Log Out
+                  </button>
+                </>
+              ) : (
+                <button className="nav-auth-btn" onClick={handleLoginClick}>Log In</button>
+              )}
+            </div>
+          </nav>
+
+          {/* Desktop Navigation */}
+          <nav className="nav-links">
             <a href="#about" className="nav-link">About</a>
             <a href="#eligibility" className="nav-link">Eligibility & Selection Process</a>
             <a href="#why" className="nav-link">Why ABP?</a>
-            <button className="btn-submit-login" onClick={handleLoginClick}>Log In</button>
+            <div className="nav-auth-buttons">
+              {isAuthenticated ? (
+                <>
+                  <button className="nav-auth-btn" onClick={() => navigate('/portal/dashboard')}>
+                    View Application
+                  </button>
+                  <button className="nav-auth-btn logout" onClick={handleLogout}>
+                    Log Out
+                  </button>
+                </>
+              ) : (
+                <button className="nav-auth-btn" onClick={handleLoginClick}>Log In</button>
+              )}
+            </div>
           </nav>
         </div>
       </div>

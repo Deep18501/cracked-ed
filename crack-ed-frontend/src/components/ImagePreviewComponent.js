@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useContext } from 'react';
 import { DataContext } from '../context/DataContext';
 import DatePicker from "react-datepicker";
@@ -63,22 +62,25 @@ export const ImagePreviewComponent = ({ field, formData, setFormData }) => {
                 <label className="input-label">
                     {label} {required && <span className="required">*</span>}
                 </label>
-                {field.value && (isImageFile(field.value) ?
+                {field.value && (isImageFile(field.value) ? (
                     <img
-                        src={process.env.REACT_APP_BASE_URL + "/" + field.value + "?token=" + localStorage.getItem("TOKEN")}
+                        src={`${process.env.REACT_APP_BASE_URL}/${field.value}?token=${localStorage.getItem("TOKEN")}`}
                         alt="Document image"
                         className='image-field-image'
                         onClick={() => setShowPreview(true)}
-                    ></img> : <a
+                    />
+                ) : (
+                    <a
                         href={`${process.env.REACT_APP_BASE_URL}/${field.value}?token=${localStorage.getItem("TOKEN")}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className='image-preview'
                         download
                     >
-                        Download File
-                    </a>)
-                }
+                        Preview File
+                    </a>
+                ))}
+
                 {error && <span className="error-text">{error}</span>}
             </div>
         </>

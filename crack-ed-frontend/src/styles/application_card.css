@@ -20,10 +20,10 @@
     flex-direction: column;
   }
   
-  .label {
+  .application-card .label {
     font-size: 14px;
     color: purple;
-    font-weight: 500;
+    font-weight: 700;
   }
   
   .value {

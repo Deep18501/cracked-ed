@@ -1,123 +1,77 @@
 /* Hero Section Styles */
 .hero-section {
-    min-height: 100%;
+    width: 100%;
     height: auto;
     position: relative;
-    /* add bottom padding for bottom bar */
-    background: url('hero-bg.png') center center / cover no-repeat;
-}
-
-.hero-section-bg {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    padding: 0px;
-    display: flex;
-    /* add bottom padding for bottom bar */
-}
-
-.aurum-program-row {
-    width: 100%;
-    padding: 50px 20px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.hero-section-container {
-    height: 100%;
-    display: flex;
+    background: url('New_Hero.png') center center / cover no-repeat;
+    padding-bottom: 3rem;
+    box-sizing: border-box;
 }
 
 .overlay {
-    /* background-color: rgba(0, 0, 0, 0.3); */
     z-index: 1;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.hero-section-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.aurum-program-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 4rem 2rem;
+    align-items: center;
 }
 
 .aurum-program-left-holder {
-    padding-left: 15%;
+    padding-left: 5%;
+    flex: 1;
+    max-width: 60%;
 }
 
 .aurum-program-right-holder {
-    /* margin: 0px 10% 0px 0%; */
     width: 35%;
     flex-shrink: 0;
 }
 
 .aurum-program-hero-title {
-    padding: 20px 0px;
-    text-align: start;
-    font-size: 54px;
+    font-size: 3.25rem;
     font-weight: 700;
-    text-align: start;
     color: white;
-    line-height: 0.4;
+    line-height: 1;
+    margin-bottom: 1rem;
 }
 
 .heading-registration-home-page {
-    margin: 30px 35px;
-    font-size: 18px;
+    margin-bottom: 1.5rem;
+    font-size: 1.125rem;
     font-weight: 600;
     font-family: "Gotham", sans-serif;
-   
 }
 
-/* Color Classes */
 .bg-purple {
     background-color: #702F8A;
 }
 
-.bg-orange {
-    background-color: #F26522;
-}
-
-.bg-yellow {
-    background-color: #F7941D;
-}
-
-.text-orange {
-    color: #F26522;
-}
-
-.icon-size {
-    width: 16px;
-    height: 16px;
-}
-
-/* Bottom Bar Styles */
-.bottom-bar {
-    left: 0;
-    right: 0;
-    /* position: absolute; */
-    bottom: 0;
-    width: 100%;
-    z-index: 10;
-}
-
-.bottom-bar {
-    padding: 32px;
-}
-
-/* Top Info Cards */
-.top-info-cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 34px;
-    width: 100%;
+.text-white {
+    color: white;
 }
 
 .job-tag-container {
     display: flex;
     align-items: center;
     background-color: #EC691F;
-    /* orange */
-    padding:10px 0px ;
-    color: white;
-    width: 100%;
-    max-width: 45%;
     padding: 0.8rem 1.2rem;
-    border: 1px solid #007b8a33;
-    /* subtle border for separation */
     border-radius: 10px;
+    color: white;
+    max-width: 45%;
     font-family: 'Gotham', sans-serif;
 }
 
@@ -125,112 +79,74 @@
     width: 40px;
     height: 40px;
     background-color: white;
-    color: #EC691F;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.2rem;
     margin-right: 0.8rem;
 }
 
+.job-tag-icon img {
+    width: 20px;
+    height: 20px;
+}
+
 .job-tag-text {
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 500;
 }
 
-/* Responsive Styles */
-@media(max-width: 1400px) {
-    .aurum-program-hero-title {
-        padding: 2rem 1rem 1rem 0rem;
-        text-align: center;
-        background-size: cover;
-    }
+.top-info-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 34px;
+    width: 100%;
+}
+.job-tag-container {
+    display: flex;
+    align-items: center;
+    background-color: #EC691F;
+    /* orange */
+    color: white;
+    min-width: 300px;
+    padding: 0.8rem 1.2rem;
+    border: 1px solid #007b8a33;
+    /* subtle border for separation */
+    border-radius: 10px;
+    font-family: 'Gotham', sans-serif;
+    width: fit-content;
 }
 
-/* Responsive Styles */
-@media(max-width: 768px) {
-
-    .hero-section {
-        padding: 2rem 1rem 1rem 1rem;
-        /* increase bottom padding for bottom bar */
-        height: auto;
-        min-height: min-content;
-        text-align: center;
-        background-size: cover;
-        background: url('hero-section_mobile.png')  center center / cover no-repeat;;
-    }
-
-    .aurum-program-row {
-        padding: 0px;
-    }
-
-    .hero-section-container {
-        /* margin-bottom: 200px; */
-    }
-
-    .badge-box {
-        flex-direction: column;
-        align-items: center;
-        padding: 0.5rem;
-        font-size: 0.875rem;
-        flex: 1 1 100%;
-        max-width: 100%;
-    }
-
-    h1 {
-        font-size: 1.5rem;
-    }
-
-    /* Stack left and right columns vertically */
-    .row.align-items-center {
-        flex-direction: column;
-    }
-
-    .col-12.col-md-10.col-lg-7,
-    .col-lg-5 {
-        max-width: 100%;
-        flex: 1 1 100%;
-        margin-bottom: 1.5rem;
-    }
-
-    /* Adjust bottom bar for mobile */
-    .bottom-bar {
-        position: relative;
-        /* position: absolute; */
-        bottom: auto;
-        width: 100%;
-        margin-top: 2rem;
-        z-index: 10;
-    }
-
-    .bottom-bar .container .row.row-cols-4 {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1rem;
-    }
-
-    .bottom-bar .container .row.row-cols-4>div {
-        flex: 1 1 45%;
-        max-width: 45%;
-        margin-bottom: 0.5rem;
-    }
+.bottom-bar {
+    padding: 2rem;
 }
 
+.vertical-line {
+    width: 1px;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.small {
+    font-size: 0.9rem;
+    /* color: #e0d4e6; */
+}
 
 .program-info {
-    color: white;
-    max-width: 600px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    border-collapse: collapse;
-    border-radius: 5px;
-    overflow: hidden;
+    max-width: 600px;
+    margin: 0 auto;
+    color: white;
 }
 
 .info-box {
-    padding: 24px 16px;
+    padding: 1.5rem 1rem;
     text-align: center;
     position: relative;
 }
@@ -239,8 +155,8 @@
     content: '';
     position: absolute;
     right: 0;
-    top: 0%;
-    bottom: 0%;
+    top: 0;
+    bottom: 0;
     width: 1px;
     background-color: rgba(255, 255, 255, 0.3);
 }
@@ -252,19 +168,86 @@
 
 .info-box h2 {
     margin: 0;
-    font-size: 1.4rem;
+    font-size: 1.25rem;
     font-weight: 600;
 }
 
 .info-box p {
-    margin-top: 4px;
-    font-size: 0.9rem;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
     color: #e0d4e6;
 }
 
-/* Hide top-info-cards on mobile devices */
-@media (max-width: 767px) {
+/* Responsive Styles */
+@media(max-width: 768px) {
+    .hero-section {
+        background: url('image\ 66.png') center center / cover no-repeat;
+        padding: 2rem 1rem 1rem 1rem;
+        text-align: center;
+    }
+
+    .aurum-program-row {
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .aurum-program-left-holder,
+    .aurum-program-right-holder {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 0;
+    }
+
+    .aurum-program-hero-title {
+        font-size: 2rem;
+        line-height: 1.2;
+        text-align: center;
+    }
+
+    .heading-registration-home-page {
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    .job-tag-container {
+        max-width: 90%;
+        /* justify-content: center; */
+        margin: 0 auto;
+    }
+
     .top-info-cards {
-        display: none !important;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        margin-top: 1rem;
+    }
+
+    .bottom-bar {
+        position: relative;
+        margin-top: 2rem;
+    }
+
+    .bottom-bar .d-flex {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .vertical-line {
+        display: none;
+    }
+
+    .program-info {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .info-box {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .form-box {
+        width: 100%;
+        margin-top: 1rem;
     }
 }

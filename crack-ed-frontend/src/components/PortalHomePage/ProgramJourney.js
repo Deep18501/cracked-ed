@@ -32,6 +32,7 @@ const ProgramJourney = () => {
         'Banking & finance essentials',
         'Excel, PowerPoint & number skills',
         'Communication & workplace readiness',
+        'Real-world business fundamentals',
       ],
       img: utthaanImg,
     },
@@ -41,6 +42,7 @@ const ProgramJourney = () => {
         'CASA Products & Use-Cases',
         'Cross-Selling Related Offerings',
         'Understanding Customer Needs',
+        'Ethical Sales & Compliance',
       ],
       img: aarohanImg,
     },
@@ -50,6 +52,7 @@ const ProgramJourney = () => {
         'Smart lead generation tactics',
         'Confident pitching & handling objections',
         'Effective cross-selling & upselling',
+        'Delivering standout service experiences',
       ],
       img: shikharImg,
     },
@@ -79,8 +82,8 @@ const ProgramJourney = () => {
       <h2 className="portal-section-title text-start">Your Program Journey</h2>
 
         {/* Classroom Training Header */}
-        <div className="journey-header mb-4 text-white px-3 py-3 rounded fw-semibold">
-          3 Months of Classroom Training
+        <div className="journey-header mb-4 text-white px-3 py-3 rounded fw-semibold text-center">
+          45 Days of Classroom Training
         </div>
 
         {/* Cards or Dropdowns */}
@@ -139,7 +142,7 @@ const ProgramJourney = () => {
 
         {/* On-the-Job Training Header */}
         <div className="journey-header my-5 text-center text-white px-3 py-3 rounded fw-semibold">
-          3 Months of Paid On-The-Job Training
+          60 Days of Paid On-The-Job Training
         </div>
 
         {/* Paragraph */}

@@ -3,19 +3,19 @@ import './ProgramFeatures.css'; // For custom colors like #F26B1D and #FFF3F0
 import aboutProgramImg from './about-program.jpg';
 const features = [
   {
-    title: '100% Assured Job',
+    title: 'Become Job Ready',
     description:
-      'Receive an offer letter before the program starts, with a competitive salary of Rs 3.5 LPA, plus incentives.',
+      'By the end of the program, you’ll be job-ready with the potential to earn up to ₹3.5 LPA, along with additional incentives. Selected students will receive a Letter of Intent.',
   },
   {
     title: 'Earn While You Learn',
     description:
-      'Get hands-on experience through a paid 3-month OJT, earning a stipend of Rs 10,000/month.',
+      'Gain the best of both worlds with structured classroom learning and hands-on on-the-job training — earn ₹20,000 during classroom training and ₹15,000 during OJT.',
   },
   {
     title: 'Post Graduate Certificate',
     description:
-      "Earn a recognized Post Graduate Certificate from IMT Ghaziabad’s CDL upon successful completion of the program.",
+      "Earn a recognized Post Graduate Certificate from IMT Ghaziabad's CDL upon successful completion of the program.",
   },
 ];
 const JobCard = ({title,description}) => {

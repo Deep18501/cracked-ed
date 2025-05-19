@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useContext } from 'react';
 import { DataContext } from '../context/DataContext';
 import DatePicker from "react-datepicker";
@@ -259,7 +258,6 @@ export const CustomFormInput = ({ field, formData, setFormData,currentStep }) =>
                 ) : inputType === "year" ? (
                     <DatePicker
                         key={name}
-
                         selected={value ? new Date(value, 0) : null}
                         onChange={(date) =>
                             onChange({ target: { name, value: date.getFullYear() } })
@@ -269,7 +267,11 @@ export const CustomFormInput = ({ field, formData, setFormData,currentStep }) =>
                         className="input-field"
                         disabled={disabled}
                         readOnly={readOnly}
+                        minDate={new Date(2000, 0, 1)}
+                        maxDate={new Date(new Date().getFullYear(), 11, 31)}
                     />
+
+
                 ) : (name == "district" || name == "state" || name == "ug_university_name" || name == "pg_university_name") ? (
                     <>
                         <input

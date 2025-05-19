@@ -58,31 +58,31 @@ import dropUpIcon from './dropup_icon.png'
 const faqs = [
   {
     question: "Is job placement truly guaranteed after joining the AURUM program?",
-    answer: "While we strive to provide the best opportunities, job placement depends on various factors including your performance and market conditions."
+    answer: "Yes! Upon successful completion of the program—including classroom training, on-the-job training (OJT), regular attendance, and internal evaluations—you are guaranteed a job placement with AU Small Finance Bank."
   },
   {
     question: "Do I need to pay the full ₹2 lakh fee upfront?",
-    answer: "No, we offer flexible payment plans to help you manage the course fee comfortably."
+    answer: "No, you don’t. We offer flexible EMI and installment options for up to 18 months, making it easier for you to invest in your future."
   },
   {
     question: "Will I earn back the course fee?",
-    answer: "Many of our graduates have successfully earned back their course fees through their placements and career growth."
+    answer: "Absolutely. If you continue working with AU Bank for 2 years, you'll receive a Retention Bonus of ₹80,000 after 12 months and ₹1,20,000 after 24 months). That’s equivalent to your total program fee—effectively making the course cost-neutral."
   },
   {
     question: "Do we receive any stipend during training?",
-    answer: "Yes, eligible candidates receive a stipend during the training period."
+    answer: "Yes. During your 3-month On-the-Job Training (OJT), you’ll receive a monthly stipend of ₹20,000 during your classroom training and ₹20,000 during your OJT, helping cover personal expenses while gaining hands-on experience."
   },
   {
     question: "What will my job involve after placement? Is it fieldwork-heavy?",
-    answer: "Job roles vary, but most involve a mix of fieldwork and office tasks depending on the position."
+    answer: "As a Bank Officer, you’ll open CASA accounts, talk to walk-in customers, and follow up on leads, with a mix of field and branch work depending on your location and targets."
   },
   {
     question: "Can I be placed in my home city or nearby location?",
-    answer: "We try to accommodate location preferences as much as possible, but placements depend on available opportunities."
+    answer: "Yes, here’s how it works: You’ll start with 3 months of classroom training at IMT Ghaziabad, followed by 3 months of on-the-job training at your home branch or a nearby AU Bank branch. After training, you’ll be placed in the same location."
   },
   {
     question: "What does the career growth path look like?",
-    answer: "Our program prepares you for progressive career growth with opportunities for advancement and skill development."
+    answer: "You’ll begin as a Bank Officer, with a clear path to grow into roles like Senior Sales Officer, Relationship Manager, and eventually Branch Manager. Top performers can get promoted faster and gain access to leadership programs and skill-building opportunities offered by the bank."
   }
 ];
 

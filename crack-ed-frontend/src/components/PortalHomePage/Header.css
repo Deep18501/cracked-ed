@@ -28,7 +28,6 @@
   width: 100%;
   justify-content: space-between;
   align-items: center;
-
 }
 
 /* === Top bar layout === */
@@ -69,7 +68,6 @@
   line-height: 1;
 }
 
-/* Hide toggle on larger screens */
 @media (min-width: 768px) {
   .menu-toggle {
     display: none;
@@ -92,7 +90,6 @@ nav {
   display: none;
 }
 
-/* Menu open state for mobile */
 nav.open {
   display: flex;
   flex-direction: column;
@@ -114,30 +111,45 @@ nav.open {
 }
 
 nav.open a,
-nav.open .btn-submit-login {
+nav.open .nav-auth-btn {
   color: white;
   font-size: 1rem;
   text-decoration: none;
   padding-left: 0.5rem;
 }
 
-/* Turn hamburger into ✕ icon */
+/* === Unified Auth Buttons === */
+.nav-auth-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
 
-
-/* === Button styles === */
-.btn-submit-login {
+.nav-auth-btn {
   background-color: #f26522;
   color: white;
   font-weight: 600;
-  padding: 5px 30px;
-  border-radius: 0.375rem;
+  padding: 5px 20px;
+  font-size: 0.95rem;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  white-space: nowrap;
 }
 
-.btn-submit-login:hover {
+.nav-auth-btn:hover {
   background-color: #d35400;
+}
+
+.nav-auth-btn.logout {
+    background-color: #f26522;
+
+  color: white;
+}
+
+.nav-auth-btn.logout:hover {
+  background-color: #ccc;
 }
 
 /* === Announcement bar === */
@@ -169,7 +181,7 @@ nav.open .btn-submit-login {
   }
 
   nav.open a,
-  nav.open .btn-submit-login {
+  nav.open .nav-auth-btn {
     padding: 0.25rem 1rem;
     font-size: 0.875rem;
   }
@@ -178,9 +190,8 @@ nav.open .btn-submit-login {
     display: none;
   }
 
-  .btn-submit-login {
-    width: 100px;
-    padding: 0.4rem 1rem;
-    font-size: 0.9rem;
+  .nav-auth-btn {
+    width: 100%;
+    text-align: center;
   }
 }

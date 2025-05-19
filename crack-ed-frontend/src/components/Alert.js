@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import '../styles/alert.css'; // Optional external styles
+import '../styles/alert.css';
 
 const Alert = ({ error, onClose, duration = 5000 }) => {
   useEffect(() => {
@@ -10,7 +10,7 @@ const Alert = ({ error, onClose, duration = 5000 }) => {
   }, [duration, onClose]);
 
   const getAlertClass = () => {
-    switch (error.type) {
+    switch (error?.type) {
       case "success":
         return "alert alert-success";
       case "error":
@@ -22,11 +22,18 @@ const Alert = ({ error, onClose, duration = 5000 }) => {
     }
   };
 
+  const message =
+    typeof error === "string"
+      ? error
+      : typeof error?.message === "string"
+      ? error.message
+      : "Something went wrong.";
+
   return (
-    <div className={getAlertClass()}>
-      <span>{error.message}</span>
+    <div className={getAlertClass()} role="alert" aria-live="assertive">
+      <span className="alert-message">{message}</span>
       {onClose && (
-        <button className="close-btn" onClick={onClose}>
+        <button className="close-btn" onClick={onClose} aria-label="Close alert">
           &times;
         </button>
       )}
