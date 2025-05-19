@@ -31,7 +31,7 @@ UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')  # full path to uploads/
 
 @app.route("/")
 def helloworld():
-    return "Hello Crack Ed!"
+    return "Hello Crack-ED!"
 
 def generate_hash_header():
     timestamp = str(int(time.time() * 1000))
@@ -302,44 +302,44 @@ def get_application_dict(application):
         "exp_current_company": {"label": "Experience at Current Company", "input_type": "text", "required": False},
         "total_experience": {"label": "Total Experience", "input_type": "text", "required": False},
 
-        # Documents
-        "passport_photo": {"label": "Passport Sized Photo", "input_type": "file", "required": True, "max_size_mb": 2},
-        "aadhar_front": {
-            "label": "Aadhar Card (Front)",
-            "input_type": "file",
-            "required": True,
-            "max_size_mb": 2
-        },
-        "aadhar_back": {
-            "label": "Aadhar Card (Back)",
-            "input_type": "file",
-            "required": True,
-            "max_size_mb": 2
-        },
-        "pan_card": {
-            "label": "PAN Card",
-            "input_type": "file",
-            "required": True,
-            "max_size_mb": 2
-        },
-        "ug_certificate": {
-            "label": "UG Degree Certificate",
-            "input_type": "file",
-            "required": True,
-            "max_size_mb": 2
-        },
-        "pg_certificate": {
-            "label": "PG Degree Certificate",
-            "input_type": "file",
-            "required": False,
-            "max_size_mb": 2
-        },
-        "resume": {
-            "label": "Resume",
-            "input_type": "file",
-            "required": True,
-            "max_size_mb": 5
-        }
+    #     # Documents
+    #     "passport_photo": {"label": "Passport Sized Photo", "input_type": "file", "required": True, "max_size_mb": 2},
+    #     "aadhar_front": {
+    #         "label": "Aadhar Card (Front)",
+    #         "input_type": "file",
+    #         "required": True,
+    #         "max_size_mb": 2
+    #     },
+    #     "aadhar_back": {
+    #         "label": "Aadhar Card (Back)",
+    #         "input_type": "file",
+    #         "required": True,
+    #         "max_size_mb": 2
+    #     },
+    #     "pan_card": {
+    #         "label": "PAN Card",
+    #         "input_type": "file",
+    #         "required": True,
+    #         "max_size_mb": 2
+    #     },
+    #     "ug_certificate": {
+    #         "label": "UG Degree Certificate",
+    #         "input_type": "file",
+    #         "required": True,
+    #         "max_size_mb": 2
+    #     },
+    #     "pg_certificate": {
+    #         "label": "PG Degree Certificate",
+    #         "input_type": "file",
+    #         "required": False,
+    #         "max_size_mb": 2
+    #     },
+    #     "resume": {
+    #         "label": "Resume",
+    #         "input_type": "file",
+    #         "required": True,
+    #         "max_size_mb": 5
+    #     }
     }
 
 
@@ -418,19 +418,6 @@ def get_application_dict(application):
             },
             {
                 "step": 2,
-                "title": "Documents",
-                "sections": [
-                    {
-                        "section": "Uploaded Documents",
-                        "fields": [field(k) for k in [
-                            "passport_photo", "aadhar_front", "aadhar_back", "pan_card",
-                            "ug_certificate", "pg_certificate", "resume"
-                        ]]
-                    }
-                ]
-            },
-            {
-                "step": 3,
                 "title": "Preview",
                 "sections": []
             },
