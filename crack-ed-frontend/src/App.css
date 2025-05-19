@@ -41,14 +41,14 @@
 
 @font-face {
   font-family: 'Gotham';
-  src: url(./font/Gotham/Gotham-Medium.otf) format('opentype');
+  src: url(./font/GothamRounded/gothamrnd_medium.otf) format('opentype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Gotham';
-  src: url(./font/Gotham/Gotham-Medium.otf) format('opentype');
+  src: url(./font/GothamRounded/gothamrnd_bold.otf) format('opentype');
   font-weight: 700;
   font-style: normal;
 }
@@ -60,14 +60,14 @@
 } */
 @font-face {
   font-family: 'Gotham';
-  src: url(./font/Gotham/Gotham-Light.otf) format('opentype');
+  src: url(./font/GothamRounded/GothamRoundedLight.ttf) format('truetype');
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Gotham Rounded';
-  src: url(./font/Gotham/gotham-rounded-medium.otf) format('opentype');
+  src: url(./font/GothamRounded/gothamrnd_medium.otf) format('opentype');
   font-weight: normal;
   font-style: normal;
 }
