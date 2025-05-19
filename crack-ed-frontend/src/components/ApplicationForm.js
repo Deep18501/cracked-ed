@@ -108,7 +108,7 @@ const ApplicationForm = () => {
           setDataError({ type: "error", message: field.error_message || `Invalid format for ${field.label}` });
           totalMissingFields++;
         }
-        if (field.input_type === "year" && (value < field.min_value || value > field.max_value)) {
+        if (field.input_type === "year" && (parseInt(value) < field.min_value || parseInt(value) > field.max_value)) {
           setDataError({ type: "error", message: "Enter a valid year" });
           totalMissingFields++;
         }
