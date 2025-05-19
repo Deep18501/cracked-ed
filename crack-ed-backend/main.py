@@ -83,7 +83,30 @@ def verify_otp_api(otp_txn_id, otp):
         print("Error sending OTP:", str(e))
         return jsonify({"error": "Failed to send OTP", "details": str(e)}), 500
     
-    
+def send_lead_to_crm(application):
+    url = "https://thirdpartyapi.extraaedge.com/api/SaveRequest"
+    payload = json.dumps({
+    "Source": "crack-ed",
+    "AuthToken": "crack-ed_29-01-2025",
+    "FirstName": application.first_name,
+    "LastName":  application.last_name,
+    "Email": application.email,
+    "MobileNumber": int(application.mobile_number),
+    "City":  application.city,
+    "Center": "AURUM Bankers Program",
+    "Course": "PG Program",
+    "Field5": "Microsite - AU",
+    "LeadSource": "Microsite",
+    })
+    headers = {
+    'Content-Type': 'application/json'
+    }
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    print(response.text)
+
+
+
 @app.route('/auth/registerOtp/', methods=['POST']) 
 def send_register_otp():
     data = request.get_json()
@@ -508,7 +531,9 @@ def update_application_data():
                     setattr(application, file_key, f"uploads/{user.id}/{application.application_id}/{filename}")
 
         db.session.commit()
-
+        if application.status == "Completed":
+                    print("Status is completed. Sending data to CRM...")
+                    send_lead_to_crm(application)
         return jsonify(get_application_dict(application)), 200
 
     except Exception as e:
