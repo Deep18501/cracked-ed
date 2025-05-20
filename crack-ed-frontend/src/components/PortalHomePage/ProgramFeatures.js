@@ -10,7 +10,7 @@ const features = [
   {
     title: 'Earn While You Learn',
     description:
-      'Gain the best of both worlds with structured classroom learning and hands-on on-the-job training — earn ₹20,000 during classroom training and ₹15,000 during OJT.',
+      'Gain the best of both worlds with structured classroom learning and hands-on on-the-job training — earn ₹20,000 during classroom training and ₹15,000/month during OJT.',
   },
   {
     title: 'Post Graduate Certificate',

@@ -30,7 +30,6 @@ const saveToken = async (data) => {
   localStorage.setItem("TOKEN", data.token);
   localStorage.setItem("USER_NAME", data.username);
   console.log("Saved data: ", data);
-
 }
 
 export const registerUser = async (name, email, mobile, otp) => {

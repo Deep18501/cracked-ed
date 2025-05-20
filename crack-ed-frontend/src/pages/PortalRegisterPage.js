@@ -17,9 +17,18 @@ const PortalRegisterPage = () => {
 
 
     useEffect(() => {
-        if (!authContext.loading) {
-            if (authContext.isAuthenticated) {
-                navigate("/portal/dashboard");
+        if (showOtp) {
+            if (!authContext.loading) {
+                if (authContext.isAuthenticated) {
+                    setShowOtp(false);
+                    navigate("/portal/dashboard", { state: { fromRegister: true } });
+                }
+            }
+        } else {
+            if (!authContext.loading) {
+                if (authContext.isAuthenticated) {
+                    navigate("/portal/dashboard");
+                }
             }
         }
     }, [authContext.isAuthenticated, authContext.loading]);
@@ -31,29 +40,29 @@ const PortalRegisterPage = () => {
 
     const sendLoginOtp = () => {
         const { name, email, phone } = formData;
-        let errors=[];
-        if(!name||!email || !phone){
-          authContext.setAuthError({"type":"error","message":"All Fields are Required."});
-          return;
+        let errors = [];
+        if (!name || !email || !phone) {
+            authContext.setAuthError({ "type": "error", "message": "All Fields are Required." });
+            return;
         }
-        if (!name.trim()) errors.push({"type":"error","message":"Name is required."});
-        if (!email.trim()) errors.push({"type":"error","message":"Email is required."});
-        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push({"type":"error","message":"Invalid email format."});
-      
-        if (!phone.trim()) errors.push({"type":"error","message":"Phone Number is required."});
-        else if (!/^\d{10}$/.test(phone)) errors.push({"type":"error","message":"Phone must be 10 digits."});
-      
+        if (!name.trim()) errors.push({ "type": "error", "message": "Name is required." });
+        if (!email.trim()) errors.push({ "type": "error", "message": "Email is required." });
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push({ "type": "error", "message": "Invalid email format." });
+
+        if (!phone.trim()) errors.push({ "type": "error", "message": "Phone Number is required." });
+        else if (!/^\d{10}$/.test(phone)) errors.push({ "type": "error", "message": "Phone must be 10 digits." });
+
         if (errors.length > 0) {
-          console.log("Errors ",errors);
-          authContext.setAuthError(errors[0]);
-          return;
+            console.log("Errors ", errors);
+            authContext.setAuthError(errors[0]);
+            return;
         }
-        
+
         authContext.sendRegisterOtp(formData.name, formData.email, formData.phone).then((response) => {
-            if(response){
+            if (response) {
                 console.log("OTP successfully:",);
                 setShowOtp(true);
-              }
+            }
         }).catch((error) => {
             console.error("Error sending OTP:", error);
         });
@@ -87,11 +96,11 @@ const PortalRegisterPage = () => {
         }
 
         authContext.register(formData.name, formData.email, formData.phone, otp).then((response) => {
-            if(response){
+            if (response) {
                 console.log("Register successfully:");
-                setShowOtp(false);
-                navigate('/portal/dashboard');
-              }
+                navigate('/portal/dashboard', { state: { fromRegister: true } });
+                
+            }
         }).catch((error) => {
             console.error("Register Failed:", error);
         });
@@ -113,8 +122,8 @@ const PortalRegisterPage = () => {
                     </div>
                     <div className="portal-form-card">
                         <form>
-                            <CustomTextField label="Full Name" name="name" type="text" onChange={handleFieldChange} readOnly={showOtp}/>
-                            <CustomTextField label="Email" name="email" type="email" onChange={handleFieldChange} readOnly={showOtp}/>
+                            <CustomTextField label="Full Name" name="name" type="text" onChange={handleFieldChange} readOnly={showOtp} />
+                            <CustomTextField label="Email" name="email" type="email" onChange={handleFieldChange} readOnly={showOtp} />
                             <CustomTextField
                                 label="Mobile Number"
                                 name="phone" type="text"
@@ -124,7 +133,7 @@ const PortalRegisterPage = () => {
                                 tailContent={<div className='sendOtpButton' onClick={sendLoginOtp}>GET OTP</div>}>
                             </CustomTextField>
 
-                           {showOtp && <div className='otp-container'>
+                            {showOtp && <div className='otp-container'>
                                 <div className='enter-otp-text'>Enter OTP sent to your mobile number</div>
 
                                 <OtpInput length={4} onChange={(val) => setOtp(val)} />

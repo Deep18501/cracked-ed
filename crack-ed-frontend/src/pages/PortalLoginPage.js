@@ -19,10 +19,20 @@ const PortalLoginPage = () => {
 
 
     useEffect(() => {
-        if (!authContext.loading) { 
-          if (authContext.isAuthenticated) {
-            navigate("/portal/dashboard");
-          }
+        console.log("States - ", showOtp, " ", !authContext.loading, " ", authContext.isAuthenticated);
+        if(showOtp){
+            if (!authContext.loading) { 
+              if (authContext.isAuthenticated) {
+                setShowOtp(false);
+                navigate("/portal/dashboard",{ state: { fromLogin: true } });
+              }
+            }
+        }else{
+            if (!authContext.loading) { 
+              if (authContext.isAuthenticated) {
+                navigate("/portal/dashboard");
+              }
+            }
         }
       }, [authContext.isAuthenticated, authContext.loading]);
       
@@ -84,8 +94,7 @@ const PortalLoginPage = () => {
         authContext.login(formData.phone, otp).then((response) => {
             if(response){
                 console.log("login successfully:", response);
-                setShowOtp(false);
-                navigate('/portal/dashboard');
+                navigate('/portal/dashboard',{ state: { fromLogin: true } });
             }
         }).catch((error) => {
             console.error("login Failed:", error);

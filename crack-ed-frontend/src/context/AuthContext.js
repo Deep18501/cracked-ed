@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
       const response = await loginUser(phone, otp); 
       setIsAuthenticated(true); 
       setLoading(false);
-      setAuthError({"type":"success","message":"Login Successfully"}); // Set the success state
+      // setAuthError({"type":"success","message":"Login Successfully"}); // Set the success state
       return true;
     } catch (error){
       setLoading(false);
@@ -83,7 +83,8 @@ export const AuthProvider = ({ children }) => {
       const resp=await registerUser(name,email,mobile,otp);
       setIsAuthenticated(true); 
       setLoading(false);
-      setAuthError({"type":"success","message":"Register Successfully"}); // Set the success state
+      console.log("sending auth success");
+      // setAuthError({"type":"success","message":"Register Successfully"}); // Set the success state
       return true;
     }catch(error){
       setLoading(false);

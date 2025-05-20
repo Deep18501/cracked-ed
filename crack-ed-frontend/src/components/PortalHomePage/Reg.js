@@ -94,7 +94,7 @@ const RegistrationForm = () => {
         if (response) {
           console.log("Registered successfully");
           setShowOtp(false);
-          navigate('/portal/dashboard');
+          navigate('/portal/dashboard',{ state: { fromRegister: true } });
         }
       })
       .catch((error) => {
