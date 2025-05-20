@@ -110,7 +110,7 @@ const HeroSection = () => {
                 </div>
                 <div className='vertical-line'></div>
                 <div>
-                  <div className="title">Rs 2,00,000</div>
+                  <div className="title">Rs 2,00,000<span style={{fontSize:'12px'}}>+GST</span></div>
                   <div className="small">Fees</div>
                 </div>
               </div>
@@ -129,7 +129,7 @@ const HeroSection = () => {
                   <p>Eligibility</p>
                 </div>
                 <div className="info-box">
-                  <h2>Rs 2,00,000</h2>
+                  <h2>Rs 2,00,000<span style={{fontSize:'10px'}}>+GST</span></h2>
                   <p>Fees</p>
                 </div>
               </div>

@@ -27,7 +27,7 @@ const WhyChooseUS = () => {
           Why Choose This Program?
           </div>
           <p className="about-text-secondary mb-3 lh-relaxed">
-          The Aurum Bankers Program is a 6-month course that offers a stipend of Rs 10,000 during your learning journey.
+          The Aurum Bankers Program is a 3.5 month course that offers a stipend during your learning journey.
           </p>
           <p className="about-text-secondary">
           With a focus on real-world experience, the program combines practical lessons and hands-on learning to help you grow.          
