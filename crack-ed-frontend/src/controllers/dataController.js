@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Create an axios instance with default configuration
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:8000",
 });
 
 // Add interceptor to include the Authorization header
@@ -91,7 +91,7 @@ export const update_application_data_api = async (data) => {
     
     console.log("FormData:", formData);
     const axiosInstanceMulti = axios.create({
-      baseURL: "http://localhost:8000",
+      baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:8000",
     });
     const response = await axiosInstanceMulti.post("/dataset/update-application-data/", formData, {
       headers: {

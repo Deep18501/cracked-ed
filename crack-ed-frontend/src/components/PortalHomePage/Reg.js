@@ -2,9 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import './Reg.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from "../../context/AuthContext.js";
-import { LoadingComponent } from '../../components/LoadingComponent.js';
+import { LoadingComponent } from '../LoadingComponent.js';
 import OtpInput from '../../utils/otp_input.js';
-import Alert from '../../components/Alert.js';
+import Alert from '../Alert.js';
+import Popup from './Popup.js';
 
 const RegistrationForm = () => {
   const [otp, setOtp] = useState("");
@@ -14,6 +15,7 @@ const RegistrationForm = () => {
   const authContext = useContext(AuthContext);
   const { authLoading, authError, setAuthError } = useContext(AuthContext);
   const [error, setError] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     if (authError) {
@@ -24,8 +26,14 @@ const RegistrationForm = () => {
 
   const handleFieldChange = ({ name, value }) => {
     setFormData(prev => ({ ...prev, [name]: value }));
-    console.log("Form Data:", formData);
+    // console.log("Form Data:", formData);
   };
+
+
+//   useEffect(() => {
+//   setShowPopup(true); // This will force popup to appear on load for test
+// }, []);
+
 
   const sendRegisterOtp = () => {
     const { name, email, phone } = formData;
@@ -76,7 +84,7 @@ const RegistrationForm = () => {
       City: city,
       Center: "AURUM Bankers Program",
       Course: "PG Program",
-      Field5: "Microsite - AU",
+      Field5: "Microsite - AU-Bank_Officer",
       LeadSource: "Microsite"
     };
 
@@ -120,28 +128,18 @@ const RegistrationForm = () => {
       return;
     }
 
-    authContext.register(name, email, phone, otp)
-      .then((response) => {
-        if (response) {
-          // console.log("Registered successfully");
-
-          // Send lead to CRM
-          sendLeadToCRM({ name, email, phone, city });
+       sendLeadToCRM({ name, email, phone, city });
 
           setShowOtp(false);
-          navigate('/portal/dashboard', { state: { fromRegister: true } });
-        }
-      })
-      .catch((error) => {
-        console.error("Register Failed:", error);
-        setAuthError({
-          type: "error",
-          message: `Registration failed: ${error?.message || "Something went wrong"}`
-        });
-      });
+          console.log("Popup should now appear");
+          // navigate('/', { state: { fromRegister: true } });
+          setShowPopup(true);
+
   };
 
   return (
+
+    <>
     <div className="registration-container">
       {authLoading && <LoadingComponent />}
       {error && <Alert error={error} onClose={() => setError(null)} />}
@@ -212,7 +210,17 @@ const RegistrationForm = () => {
           Request a callback
         </button>
       </form>
+
     </div>
+
+      {showPopup && (
+  <Popup
+    message="You have successfully registered!"
+    onClose={() => setShowPopup(false)}
+  />
+)}
+
+    </>
   );
 };
 

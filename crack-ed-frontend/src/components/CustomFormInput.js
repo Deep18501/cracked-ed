@@ -315,6 +315,7 @@ export const CustomFormInput = ({ field, formData, setFormData,currentStep }) =>
                         disabled={disabled}
                         readOnly={readOnly}
                         onChange={onChange}
+                        capture="environment"
                         maxLength={max_length}
                     />
                 )}

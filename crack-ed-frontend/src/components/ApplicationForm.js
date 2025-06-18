@@ -19,7 +19,7 @@ const ApplicationForm = () => {
 
   useEffect(() => {
     if (applicationData !== null) {
-      if (applicationData.current_application_step === 2) {
+      if (applicationData.current_application_step === 3) {
         let stepData = { sections: [] };
         for (let step of applicationData.steps) {
           for (let section of step.sections) {
@@ -78,7 +78,7 @@ const ApplicationForm = () => {
     e.preventDefault();
     let totalMissingFields = 0;
 
-    if (applicationData.current_application_step === 2) {
+    if (applicationData.current_application_step === 3) {
       for (let step of applicationData.steps) {
         for (let section of step.sections) {
           for (let field of section.fields) {
@@ -144,7 +144,7 @@ const ApplicationForm = () => {
               key={step.step}
               className={step.step === applicationData.current_application_step
                 ? "tab-active"
-                : (applicationData.status === "Completed" && step.step < 2) ? "tab-inactive" : "tab"}
+                : (applicationData.status === "Completed" && step.step < 3) ? "tab-inactive" : "tab"}
             >
               {step.title}
             </div>
@@ -176,13 +176,13 @@ const ApplicationForm = () => {
               <button type="button" className="back-button" onClick={handleBackStep}>Back</button>
             )}
             <button type="submit" className="submit-button" onClick={handleOnNext}>
-              {applicationData.current_application_step === 2 ? "Submit Application" : "Next"}
+              {applicationData.current_application_step === 3 ? "Submit Application" : "Next"}
             </button>
           </div>
         )}
       </form>
 
-      {showPaymentPopup && applicationData.current_application_step === 2 && (
+      {showPaymentPopup && applicationData.current_application_step === 3 && (
         <ConfirmPaymentPopup onClose={() => setPaymentPopup(false)} onConfirm={handleOnPayment} />
       )}
     </div>

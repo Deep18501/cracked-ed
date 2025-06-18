@@ -96,7 +96,7 @@ def send_lead_to_crm(application):
     "City":  application.city,
     "Center": "AURUM Bankers Program",
     "Course": "PG Program",
-    "Field5": "Microsite - AU",
+    "Field5": "Microsite - AU - Bank_Officer",
     "LeadSource": "Microsite",
     })
     headers = {
@@ -106,7 +106,28 @@ def send_lead_to_crm(application):
 
     print(response.text)
 
+def send_callback_lead_to_crm(application):
+    url = "https://thirdpartyapi.extraaedge.com/api/SaveRequest"
+    payload = json.dumps({
+    "Source": "crack-ed",
+    "AuthToken": "crack-ed_29-01-2025",
+    "FirstName": application.first_name,
+    "LastName":  application.last_name,
+    "Email": application.email,
+    "MobileNumber": int(application.mobile_number),
+    "City":  application.city,
+    "Center": "AURUM Bankers Program",
+    "Course": "PG Program",
+    "Field5": "Microsite - AU",
+    "LeadSource": "Microsite",
+    })
+    headers = {
+    'Content-Type': 'application/json'
+    }
+    response = requests.request("POST", url, headers=headers, data=payload)
 
+    print(response.text)
+    
 
 @app.route('/auth/registerOtp/', methods=['POST']) 
 def send_register_otp():
@@ -442,8 +463,21 @@ def get_application_dict(application):
                     }
                 ]
             },
-            {
+             {
                 "step": 2,
+                "title": "Documents",
+                "sections": [
+                    {
+                        "section": "Uploaded Documents",
+                        "fields": [field(k) for k in [
+                            "passport_photo", "aadhar_front", "aadhar_back", "pan_card",
+                            "ug_certificate", "pg_certificate", "resume"
+                        ]]
+                    }
+                ]
+            },
+            {
+                "step": 3,
                 "title": "Preview",
                 "sections": []
             },
