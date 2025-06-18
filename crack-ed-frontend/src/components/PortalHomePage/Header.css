@@ -19,8 +19,8 @@
 
 /* === Logo Styles === */
 .header-portal-main .logo {
-  height: 65px;
-  margin-right: 10px;
+  height: 40px;
+  margin-right: 8px;
 }
 
 .container-bar {
@@ -35,7 +35,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 10%;
+  padding: 0.75rem 39px;
 }
 
 .logo-section {
@@ -126,20 +126,41 @@ nav.open .nav-auth-btn {
 }
 
 .nav-auth-btn {
-  background-color: #f26522;
-  color: white;
   font-weight: 600;
-  padding: 5px 20px;
-  font-size: 0.95rem;
-  border: none;
+  padding: 5px 24px;
+  font-size: 1rem;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
   white-space: nowrap;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  outline: none;
+  border: 2px solid transparent;
 }
 
-.nav-auth-btn:hover {
-  background-color: #d35400;
+/* Log In Button */
+.nav-auth-btn.login {
+  background: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+  background-color: #6D3078;
+}
+
+.nav-auth-btn.login:hover {
+  background: #f3e6fa;
+  color: #702f8a;
+  border: 2px solid #702f8a;
+}
+
+/* Register Now Button */
+.nav-auth-btn.register {
+  background: #f26522;
+  color: #fff;
+  border: 2px solid transparent;
+}
+
+.nav-auth-btn.register:hover {
+  background: #d35400;
+  color: #fff;
 }
 
 .nav-auth-btn.logout {
@@ -175,6 +196,11 @@ nav.open .nav-auth-btn {
     height: 30px;
   }
 
+  .vertical-line {
+    height: 30px;
+    margin: 0 5px;
+  }
+
   nav.open {
     display: flex;
     flex-direction: column;
@@ -194,4 +220,20 @@ nav.open .nav-auth-btn {
     width: 100%;
     text-align: center;
   }
+
+  .nav-auth-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .nav-auth-btn.login,
+  .nav-auth-btn.register {
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: 0 !important;
+  }
+}
+
+.nav-link {
+  white-space: nowrap;
 }

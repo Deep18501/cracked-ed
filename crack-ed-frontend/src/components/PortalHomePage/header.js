@@ -50,7 +50,7 @@ const Header = () => {
             <div className="nav-auth-buttons">
               {isAuthenticated ? (
                 <>
-                  <button className="nav-auth-btn" onClick={() => navigate('/portal/dashboard')}>
+                  <button className="nav-auth-btn register" onClick={() => navigate('/portal/dashboard')}>
                     View Application
                   </button>
                   <button className="nav-auth-btn logout" onClick={handleLogout}>
@@ -58,7 +58,16 @@ const Header = () => {
                   </button>
                 </>
               ) : (
-                <button className="nav-auth-btn" onClick={handleLoginClick}>Log In</button>
+                <>
+                  <button className="nav-auth-btn login" onClick={handleLoginClick}>Log In</button>
+                  <a
+                    href="http://localhost:5000/portal/register"
+                    className="nav-auth-btn register"
+                    style={{ marginLeft: '2px', textDecoration: 'none' }}
+                  >
+                    Register Now
+                  </a>
+                </>
               )}
             </div>
           </nav>
@@ -71,7 +80,7 @@ const Header = () => {
             <div className="nav-auth-buttons">
               {isAuthenticated ? (
                 <>
-                  <button className="nav-auth-btn" onClick={() => navigate('/portal/dashboard')}>
+                  <button className="nav-auth-btn register" onClick={() => navigate('/portal/dashboard')}>
                     View Application
                   </button>
                   <button className="nav-auth-btn logout" onClick={handleLogout}>
@@ -79,7 +88,16 @@ const Header = () => {
                   </button>
                 </>
               ) : (
-                <button className="nav-auth-btn" onClick={handleLoginClick}>Log In</button>
+                <>
+                  <button className="nav-auth-btn login" onClick={handleLoginClick}>Log In</button>
+                  <a
+                    href="http://localhost:5000/portal/register"
+                    className="nav-auth-btn register"
+                    style={{ marginLeft: '8px', textDecoration: 'none' }}
+                  >
+                    Register Now
+                  </a>
+                </>
               )}
             </div>
           </nav>
@@ -88,7 +106,7 @@ const Header = () => {
 
       {/* Announcement Bar */}
       <div className="announcement-bar">
-        Applications are now open for the new batch starting in May 2025. Don’t miss out – seats are filling up quickly!
+        Applications are now open for the new batch starting in July 2025. Don't miss out – seats are filling up quickly!
       </div>
     </header>
   );

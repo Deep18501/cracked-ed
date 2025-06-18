@@ -20,7 +20,7 @@ const AboutProgram = () => {
             className="img-fluid about-img mobile-img1"
           />
         </div>
-
+  
         {/* Text Content */}
         <div className="text-container text-start">
           <div className="title-text-purple">

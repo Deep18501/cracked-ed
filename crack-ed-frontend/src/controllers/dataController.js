@@ -1,11 +1,9 @@
-
 import axios from "axios";
 
 // Create an axios instance with default configuration
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
+  baseURL: "http://localhost:8000",
 });
-
 
 // Add interceptor to include the Authorization header
 axiosInstance.interceptors.request.use(
@@ -15,7 +13,6 @@ axiosInstance.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
-
 
 export const get_application_data_api = async () => {
   try {
@@ -65,8 +62,6 @@ export const get_all_university_data = async () => {
   }
 };
 
-
-
 export const update_application_data_api = async (data) => {
   try {
     console.log("getting data");
@@ -96,7 +91,7 @@ export const update_application_data_api = async (data) => {
     
     console.log("FormData:", formData);
     const axiosInstanceMulti = axios.create({
-      baseURL: process.env.REACT_APP_BASE_URL,
+      baseURL: "http://localhost:8000",
     });
     const response = await axiosInstanceMulti.post("/dataset/update-application-data/", formData, {
       headers: {

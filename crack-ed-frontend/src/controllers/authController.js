@@ -2,11 +2,8 @@ import axios from "axios";
 
 // Create an axios instance with default configuration
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
+  baseURL: "http://localhost:8000",
 });
-
-
-
 
 // Add interceptor to include the Authorization header
 axiosInstance.interceptors.request.use(

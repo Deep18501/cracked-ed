@@ -1,9 +1,14 @@
-
 import uuid
+import random
 from extensions import db 
 
 def generate_application_id():
-    return str(uuid.uuid4())[:12].replace('-', '').upper()
+    prefix = "AUBO"
+    while True:
+        unique_digits = f"{random.randint(0, 99999999):08d}"
+        application_id = prefix + unique_digits
+        if not Application.query.filter_by(application_id=application_id).first():
+            return application_id
 
 
 class User(db.Model):

@@ -63,9 +63,40 @@ const RegistrationForm = () => {
       });
   };
 
+  const sendLeadToCRM = async ({ name, email, phone, city = "" }) => {
+    const url = "https://thirdpartyapi.extraaedge.com/api/SaveRequest";
+
+    const payload = {
+      Source: "crack-ed",
+      AuthToken: "crack-ed_29-01-2025",
+      FirstName: name,
+      LastName: "", // Optional: You can split name if needed
+      Email: email,
+      MobileNumber: parseInt(phone),
+      City: city,
+      Center: "AURUM Bankers Program",
+      Course: "PG Program",
+      Field5: "Microsite - AU",
+      LeadSource: "Microsite"
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+      console.log("CRM Lead Response:", data);
+    } catch (error) {
+      console.error("Error sending lead to CRM:", error);
+    }
+  };
+
   const handleRegister = (e) => {
     e.preventDefault();
-    const { name, email, phone } = formData;
+    const { name, email, phone, city } = formData;
     if (!name || !email || !phone) {
       setAuthError({ type: "error", message: "All Fields are Required." });
       return;
@@ -92,9 +123,13 @@ const RegistrationForm = () => {
     authContext.register(name, email, phone, otp)
       .then((response) => {
         if (response) {
-          console.log("Registered successfully");
+          // console.log("Registered successfully");
+
+          // Send lead to CRM
+          sendLeadToCRM({ name, email, phone, city });
+
           setShowOtp(false);
-          navigate('/portal/dashboard',{ state: { fromRegister: true } });
+          navigate('/portal/dashboard', { state: { fromRegister: true } });
         }
       })
       .catch((error) => {
@@ -134,6 +169,17 @@ const RegistrationForm = () => {
         </div>
 
         <div className="form-group">
+          <input
+            type="text"
+            placeholder="City"
+            className="form-control"
+            name="city"
+            readOnly={showOtp}
+            onChange={(e) => handleFieldChange({ name: "city", value: e.target.value })}
+          />
+        </div>
+
+        <div className="form-group">
           <div className="mobile-input-wrapper">
             <input
               type="text"
@@ -163,7 +209,7 @@ const RegistrationForm = () => {
         )}
 
         <button type="submit" className="btn-submit-createac" onClick={handleRegister}>
-          Create Account
+          Request a callback
         </button>
       </form>
     </div>

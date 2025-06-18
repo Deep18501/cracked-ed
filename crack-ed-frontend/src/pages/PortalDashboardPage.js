@@ -68,7 +68,7 @@ const PortalDashboardPage = () => {
       <PortalHeader >
         <nav className="nav-links">
           <a href="/portal" className="nav-link">Home</a>
-          <a href="/portal/dashboard" className="nav-link">Dashboard</a>
+          {/* <a href="/portal/dashboard" className="nav-link">Dashboard</a> */}
         </nav>
         <button className="logout-button" onClick={handleLogout}>Logout</button>
       </PortalHeader>

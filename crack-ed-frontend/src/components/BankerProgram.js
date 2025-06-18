@@ -46,7 +46,7 @@ export default function BankerProgram() {
     const handleRegister =() => {
         setLoading(true);
         authContext.register(formData.name, formData.email, formData.phone,otp).then((response) => {
-            console.log("Register successfully:", response);
+            console.log("Registration Successfully!", response);
             setLoading(false);
         }).catch((error) => {
             console.error("Register Failed:", error);

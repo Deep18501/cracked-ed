@@ -1,4 +1,9 @@
-/crack-ed-backend/uploads
 /crack-ed-backend/__pycache__
+__pycache__/
+*.pyc
+*.log
+nohup.out
+uploads/
 deploy.sh
 AURUM.pem
+

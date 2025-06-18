@@ -66,7 +66,7 @@ const faqs = [
   },
   {
     question: "Will I earn back the course fee?",
-    answer: "Absolutely. If you continue working with AU Bank for 2 years, you'll receive a Retention Bonus of ₹80,000 after 12 months and ₹1,20,000 after 24 months). That’s equivalent to your total program fee—effectively making the course cost-neutral."
+    answer: "Absolutely. If you continue working with AU Bank for 2 years, you'll receive a Retention Bonus of ₹60,000 after 12 months and ₹90,000 after 24 months. Combined with the stipend you earn during your course period and OJT this would make the course cost neutral."
   },
   {
     question: "Do we receive any stipend during training?",

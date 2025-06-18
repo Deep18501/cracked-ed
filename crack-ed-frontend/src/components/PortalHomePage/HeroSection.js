@@ -77,7 +77,7 @@ const HeroSection = () => {
   <div className={isMobile ? "col-12" : "aurum-program-right-holder"}>
     <div className={isMobile ? "bg-white text-dark p-4 rounded shadow-sm w-100 form-box form-box-mobile" : "bg-white text-dark p-4 rounded shadow-sm w-100 form-box"}>
       <div className="heading-registration-home-page">
-        Start your registration process today!
+        Talk to our counsellors to know more!
       </div>
       <RegistrationForm />
     </div>
@@ -95,7 +95,7 @@ const HeroSection = () => {
             {!isMobile ? (
               <div className="d-flex justify-content-around align-items-center px-3">
                 <div>
-                  <div className="title">26th May</div>
+                  <div className="title">1st July</div>
                   <div className="small">Start Date</div>
                 </div>
                 <div className='vertical-line'></div>
@@ -117,7 +117,7 @@ const HeroSection = () => {
             ) : (
               <div className="program-info bg-purple">
                 <div className="info-box">
-                  <h2>26th May</h2>
+                  <h2>1st July</h2>
                   <p>Start Date</p>
                 </div>
                 <div className="info-box">

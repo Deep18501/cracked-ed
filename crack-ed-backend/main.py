@@ -20,6 +20,7 @@ app = Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024 
 
 CUSTOMER_KEY = "362405"
 ORANGE_API_KEY = "RHFLK7kkQN4fGtNwnXOhvpXreO2hJxx1"
@@ -109,7 +110,9 @@ def send_lead_to_crm(application):
 
 @app.route('/auth/registerOtp/', methods=['POST']) 
 def send_register_otp():
+    print("Database path:", app.config['SQLALCHEMY_DATABASE_URI'])
     data = request.get_json()
+    print("Registration data received:", data)
     otp = generate_otp()
       # Split name into first name and last name (handle single-word name)
     name_parts = data['name'].split()
@@ -325,44 +328,44 @@ def get_application_dict(application):
         "exp_current_company": {"label": "Experience at Current Company", "input_type": "text", "required": False},
         "total_experience": {"label": "Total Experience", "input_type": "text", "required": False},
 
-    #     # Documents
-    #     "passport_photo": {"label": "Passport Sized Photo", "input_type": "file", "required": True, "max_size_mb": 2},
-    #     "aadhar_front": {
-    #         "label": "Aadhar Card (Front)",
-    #         "input_type": "file",
-    #         "required": True,
-    #         "max_size_mb": 2
-    #     },
-    #     "aadhar_back": {
-    #         "label": "Aadhar Card (Back)",
-    #         "input_type": "file",
-    #         "required": True,
-    #         "max_size_mb": 2
-    #     },
-    #     "pan_card": {
-    #         "label": "PAN Card",
-    #         "input_type": "file",
-    #         "required": True,
-    #         "max_size_mb": 2
-    #     },
-    #     "ug_certificate": {
-    #         "label": "UG Degree Certificate",
-    #         "input_type": "file",
-    #         "required": True,
-    #         "max_size_mb": 2
-    #     },
-    #     "pg_certificate": {
-    #         "label": "PG Degree Certificate",
-    #         "input_type": "file",
-    #         "required": False,
-    #         "max_size_mb": 2
-    #     },
-    #     "resume": {
-    #         "label": "Resume",
-    #         "input_type": "file",
-    #         "required": True,
-    #         "max_size_mb": 5
-    #     }
+        # Documents
+        "passport_photo": {"label": "Passport Sized Photo", "input_type": "file", "required": True, "max_size_mb": 2},
+        "aadhar_front": {
+            "label": "Aadhar Card (Front)",
+            "input_type": "file",
+            "required": True,
+            "max_size_mb": 2
+        },
+        "aadhar_back": {
+            "label": "Aadhar Card (Back)",
+            "input_type": "file",
+            "required": True,
+            "max_size_mb": 2
+        },
+        "pan_card": {
+            "label": "PAN Card",
+            "input_type": "file",
+            "required": True,
+            "max_size_mb": 2
+        },
+        "ug_certificate": {
+            "label": "UG Degree Certificate",
+            "input_type": "file",
+            "required": True,
+            "max_size_mb": 2
+        },
+        "pg_certificate": {
+            "label": "PG Degree Certificate",
+            "input_type": "file",
+            "required": False,
+            "max_size_mb": 2
+        },
+        "resume": {
+            "label": "Resume",
+            "input_type": "file",
+            "required": True,
+            "max_size_mb": 5
+        }
     }
 
 

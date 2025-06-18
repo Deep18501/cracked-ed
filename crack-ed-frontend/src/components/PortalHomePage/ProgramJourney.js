@@ -147,12 +147,12 @@ const ProgramJourney = () => {
 
         {/* Paragraph */}
         <div className="bg-light-pink p-4 rounded journey-header-desc">
-          Transition smoothly into the professional world with OJT, where you'll work on live projects, interact with customers, and get a firsthand experience of the roles and responsibilities that await you post- graduation. Participants will receive a stipend of Rs 15,000, further supporting their transition into the professional environment while allowing them to apply their learning to real-world projects.
+          Transition smoothly into the professional world with OJT, where you'll work on live projects, interact with customers, and get a firsthand experience of the roles and responsibilities that await you post- graduation. Participants will receive a stipend of Rs 15,000/month, further supporting their transition into the professional environment while allowing them to apply their learning to real-world projects.
         </div>
 
         {/* Outcomes */}
         <div className="BankAbsorptionCard">
-          <BankAbsorptionCard details="Upon successful completion of the initial 3-month period, the candidate will be absorbed into AU Small Finance Bank as a Bank Officer." children={<Briefcase className="text-purple" />}/>
+          <BankAbsorptionCard details="Upon successful completion of the initial 3.5-month period, the candidate will be absorbed into AU Small Finance Bank as a Bank Officer." children={<Briefcase className="text-purple" />}/>
           <BankAbsorptionCard details="After successfully completing the program, the candidate receives a Post Graduate Certificate from IMT Ghaziabad (CDL)." children={<GraduationCap className="text-purple" />}/>
         </div>
 
