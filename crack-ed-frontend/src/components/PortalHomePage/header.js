@@ -13,6 +13,9 @@ const Header = () => {
   const handleLoginClick = () => {
     navigate("/portal/login");
   };
+  const handleRegisterClick = () => {
+    navigate("/portal/register");
+  };
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -61,7 +64,7 @@ const Header = () => {
                 <>
                   <button className="nav-auth-btn login" onClick={handleLoginClick}>Log In</button>
                   <a
-                    href="http://localhost:5000/portal/register"
+                    href="/portal/register"
                     className="nav-auth-btn register"
                     style={{ marginLeft: '2px', textDecoration: 'none' }}
                   >
@@ -91,7 +94,7 @@ const Header = () => {
                 <>
                   <button className="nav-auth-btn login" onClick={handleLoginClick}>Log In</button>
                   <a
-                    href="http://localhost:5000/portal/register"
+                    href="/portal/register"
                     className="nav-auth-btn register"
                     style={{ marginLeft: '8px', textDecoration: 'none' }}
                   >

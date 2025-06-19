@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { loginUser,registerUser,logoutUser,sendLoginUserOtp,sendRegisterUserOtp,sendCallbackDetailAPI } from '../controllers/authController';
+import { loginUser,registerUser,logoutUser,sendLoginUserOtp,sendRegisterUserOtp,sendCallbackDetailAPI ,sendCallbackUserOtp,sendCallbackUser } from '../controllers/authController';
 
 export const AuthContext = createContext();
 
@@ -98,11 +98,52 @@ export const AuthProvider = ({ children }) => {
     }
   }; 
   
+  const addCallback = async (mobile,otp) => {
+    setLoading(true);
+    try{
+      const resp=await sendCallbackUser(mobile,otp);
+      setLoading(false);
+      console.log("sending auth success");
+      // setAuthError({"type":"success","message":"Register Successfully"}); // Set the success state
+      return true;
+    }catch(error){
+      setLoading(false);
+      if(error){
+        setAuthError({"type":"error","message":error}); // Set the error state
+      }else{
+        setAuthError({"type":"error","message":"Error in register "}); // Set the error state
+      }
+      console.log("Error in register",error);
+      return false;
+    }
+  }; 
+  
   const sendRegisterOtp = async (name,email,mobile) => {
 
     setLoading(true);
     try{
       const resp=await sendRegisterUserOtp(name,email,mobile);
+      setLoading(false);
+      setAuthError({"type":"success","message":"OTP Sent Successfully"}); 
+      return true;
+    }catch(error){
+      setLoading(false);
+      if(error){
+        setAuthError({"type":"error","message":error}); // Set the error state
+      }else{
+        setAuthError({"type":"error","message":"Error sending OTP!!"}); // Set the error state
+      }
+      console.log("Error in register otp",error);
+      return false;
+
+    }
+    setLoading(false);
+  }; 
+  
+  const sendCallbackOtp = async (name,email,city,mobile) => {
+    setLoading(true);
+    try{
+      const resp=await sendCallbackUserOtp(name,email,city,mobile);
       setLoading(false);
       setAuthError({"type":"success","message":"OTP Sent Successfully"}); 
       return true;
@@ -141,7 +182,7 @@ export const AuthProvider = ({ children }) => {
   // }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated,authLoading,login,logout,register,sendLoginOtp,sendRegisterOtp,sendCallbackDetails, authError, setAuthError}}>
+    <AuthContext.Provider value={{ isAuthenticated,authLoading,login,logout,register,sendLoginOtp,sendCallbackOtp,sendRegisterOtp,sendCallbackDetails,addCallback, authError, setAuthError}}>
       {children}
     </AuthContext.Provider>
   );

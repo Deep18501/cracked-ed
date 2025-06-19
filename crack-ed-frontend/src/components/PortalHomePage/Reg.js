@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './Reg.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from "../../context/AuthContext.js";
 import { LoadingComponent } from '../LoadingComponent.js';
 import OtpInput from '../../utils/otp_input.js';
@@ -10,52 +10,48 @@ import Popup from './Popup.js';
 const RegistrationForm = () => {
   const [otp, setOtp] = useState("");
   const [showOtp, setShowOtp] = useState(false);
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({});
-  const authContext = useContext(AuthContext);
-  const { authLoading, authError, setAuthError } = useContext(AuthContext);
-  const [error, setError] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+  const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
+  const { authLoading, authError, setAuthError } = authContext;
 
   useEffect(() => {
     if (authError) {
       setError(authError);
+      if (authError.message === 'We will reach out soon') {
+        setShowOtp(false);
+      }
     }
     setAuthError(null);
   }, [authError]);
 
   const handleFieldChange = ({ name, value }) => {
     setFormData(prev => ({ ...prev, [name]: value }));
-    // console.log("Form Data:", formData);
   };
 
 
-//   useEffect(() => {
-//   setShowPopup(true); // This will force popup to appear on load for test
-// }, []);
+  const sendRegisterOtp = async () => {
+  const { name, email, city ,phone } = formData;
+  let errors = [];
 
+  if (!name?.trim()) errors.push({ type: "error", message: "Name is required." });
+  if (!city?.trim()) errors.push({ type: "error", message: "City is required." });
+  if (!email?.trim()) errors.push({ type: "error", message: "Email is required." });
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push({ type: "error", message: "Invalid email format." });
+  if (!phone?.trim()) errors.push({ type: "error", message: "Phone Number is required." });
+  else if (!/^\d{10}$/.test(phone)) errors.push({ type: "error", message: "Phone must be 10 digits." });
 
-  const sendRegisterOtp = () => {
-    const { name, email, phone } = formData;
-    let errors = [];
-    if (!name || !email || !phone) {
-      setAuthError({ type: "error", message: "All Fields are Required." });
-      return;
-    }
-    if (!name.trim()) errors.push({ type: "error", message: "Name is required." });
-    if (!email.trim()) errors.push({ type: "error", message: "Email is required." });
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push({ type: "error", message: "Invalid email format." });
+  if (errors.length > 0) {
+    setAuthError(errors[0]);
+    return;
+  }
 
-    if (!phone.trim()) errors.push({ type: "error", message: "Phone Number is required." });
-    else if (!/^\d{10}$/.test(phone)) errors.push({ type: "error", message: "Phone must be 10 digits." });
-
-    if (errors.length > 0) {
-      console.log("Errors ", errors);
-      setAuthError(errors[0]);
-      return;
-    }
-
-    authContext.sendRegisterOtp(name, email, phone)
+  try {
+    
+      authContext.sendCallbackOtp(name, email,city, phone,)
       .then((response) => {
         if (response) {
           console.log("OTP successfully sent");
@@ -66,160 +62,141 @@ const RegistrationForm = () => {
         console.error("Register Failed:", error);
         setAuthError({
           type: "error",
-          message: `Registration OTP failed: ${error?.message || "Something went wrong"}`
+          message: `OTP failed: ${error?.message || "Something went wrong"}`
         });
       });
-  };
 
-  const sendLeadToCRM = async ({ name, email, phone, city = "" }) => {
-    const url = "https://thirdpartyapi.extraaedge.com/api/SaveRequest";
 
-    const payload = {
-      Source: "crack-ed",
-      AuthToken: "crack-ed_29-01-2025",
-      FirstName: name,
-      LastName: "", // Optional: You can split name if needed
-      Email: email,
-      MobileNumber: parseInt(phone),
-      City: city,
-      Center: "AURUM Bankers Program",
-      Course: "PG Program",
-      Field5: "Microsite - AU-Bank_Officer",
-      LeadSource: "Microsite"
-    };
+  } catch (error) {
+    console.error("OTP send error:", error);
+    setAuthError({ type: "error", message: "Failed to send OTP." });
+  }
+};
 
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
 
-      const data = await response.json();
-      console.log("CRM Lead Response:", data);
-    } catch (error) {
-      console.error("Error sending lead to CRM:", error);
-    }
-  };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     const { name, email, phone, city } = formData;
-    if (!name || !email || !phone) {
-      setAuthError({ type: "error", message: "All Fields are Required." });
-      return;
-    }
 
     let errors = [];
 
-    if (!name.trim()) errors.push({ type: "error", message: "Name is required." });
-    if (!email.trim()) errors.push({ type: "error", message: "Email is required." });
+    if (!name?.trim()) errors.push({ type: "error", message: "Name is required." });
+    if (!city?.trim()) errors.push({ type: "error", message: "City is required." });
+    if (!email?.trim()) errors.push({ type: "error", message: "Email is required." });
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push({ type: "error", message: "Invalid email format." });
 
-    if (!phone.trim()) errors.push({ type: "error", message: "Phone Number is required." });
+    if (!phone?.trim()) errors.push({ type: "error", message: "Phone Number is required." });
     else if (!/^\d{10}$/.test(phone)) errors.push({ type: "error", message: "Phone must be 10 digits." });
+    if (!otp.trim()) errors.push({ "type": "error", "message": "OTP is required." });
+    else if (otp.trim().length !== 4 || !/^\d{4}$/.test(otp.trim())) errors.push({ "type": "error", "message": "OTP must be 4 digits." });
 
-    if (!otp.trim()) errors.push({ type: "error", message: "OTP is required." });
-    else if (otp.trim().length !== 4 || !/^\d{4}$/.test(otp.trim())) errors.push({ type: "error", message: "OTP must be 4 digits." });
 
     if (errors.length > 0) {
-      console.log("Errors ", errors);
       setAuthError(errors[0]);
       return;
     }
 
-       sendLeadToCRM({ name, email, phone, city });
+    authContext.addCallback(formData.phone, otp).then((response) => {
+            if (response) {
+                console.log("Callback successfully:");
+                    setShowPopup(true);
+                    setShowOtp(false);
 
-          setShowOtp(false);
-          console.log("Popup should now appear");
-          // navigate('/', { state: { fromRegister: true } });
-          setShowPopup(true);
+            }
+        }).catch((error) => {
+            console.error("Callback Failed:", error);
+        });
 
   };
 
   return (
-
     <>
-    <div className="registration-container">
-      {authLoading && <LoadingComponent />}
-      {error && <Alert error={error} onClose={() => setError(null)} />}
-      <form className="registration-form">
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="Full Name"
-            className="form-control"
-            name="name"
-            readOnly={showOtp}
-            onChange={(e) => handleFieldChange({ name: "name", value: e.target.value })}
-          />
-        </div>
+      <div className="registration-container">
+        {authLoading && <LoadingComponent />}
+        {error && <Alert error={error} onClose={() => setError(null)} />}
 
-        <div className="form-group">
-          <input
-            type="email"
-            placeholder="Email"
-            className="form-control"
-            name="email"
-            readOnly={showOtp}
-            onChange={(e) => handleFieldChange({ name: "email", value: e.target.value })}
-          />
-        </div>
-
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="City"
-            className="form-control"
-            name="city"
-            readOnly={showOtp}
-            onChange={(e) => handleFieldChange({ name: "city", value: e.target.value })}
-          />
-        </div>
-
-        <div className="form-group">
-          <div className="mobile-input-wrapper">
+        <form className="registration-form">
+          <div className="form-group">
             <input
               type="text"
-              placeholder="Mobile Number"
-              className="form-control mobile-number-input"
-              name="phone"
+              placeholder="Full Name"
+              className="form-control"
+              name="name"
               readOnly={showOtp}
-              onChange={(e) => handleFieldChange({ name: "phone", value: e.target.value })}
+              onChange={(e) => handleFieldChange({ name: "name", value: e.target.value })}
             />
-            <button
-              type="button"
-              className="btn-get-otp-inside"
-              onClick={sendRegisterOtp}
-            >
-              GET OTP
-            </button>
           </div>
-        </div>
 
-        {showOtp && (
           <div className="form-group">
-            <p className="otp-instruction">Enter OTP sent to your mobile number</p>
-            <div className="otp-container">
-              <OtpInput length={4} onChange={(val) => setOtp(val)} />
+            <input
+              type="email"
+              placeholder="Email"
+              className="form-control"
+              name="email"
+              readOnly={showOtp}
+              onChange={(e) => handleFieldChange({ name: "email", value: e.target.value })}
+            />
+          </div>
+
+          <div className="form-group">
+            <input
+              type="text"
+              placeholder="City"
+              className="form-control"
+              name="city"
+              readOnly={showOtp}
+              onChange={(e) => handleFieldChange({ name: "city", value: e.target.value })}
+            />
+          </div>
+
+          <div className="form-group">
+            <div className="mobile-input-wrapper">
+              <input
+                type="text"
+                placeholder="Mobile Number"
+                className="form-control mobile-number-input"
+                name="phone"
+                readOnly={showOtp}
+                onChange={(e) => handleFieldChange({ name: "phone", value: e.target.value })}
+              />
+              <button
+                type="button"
+                className="btn-get-otp-inside"
+                onClick={sendRegisterOtp}
+                disabled={error && error.message === 'We will reach out soon'}
+              >
+                GET OTP
+              </button>
             </div>
           </div>
-        )}
 
-        <button type="submit" className="btn-submit-createac" onClick={handleRegister}>
-          Request a callback
-        </button>
-      </form>
+          {showOtp && (
+            <div className="form-group">
+              <p className="otp-instruction">Enter OTP sent to your mobile number</p>
+              <div className="otp-container">
+                <OtpInput length={4} onChange={(val) => setOtp(val)} />
+              </div>
+            </div>
+          )}
 
-    </div>
+          <button
+            type="submit"
+            className="btn-submit-createac"
+            onClick={handleRegister}
+            disabled={error && error.message === 'We will reach out soon'}
+          >
+            Request a callback
+          </button>
+        </form>
+      </div>
 
       {showPopup && (
-  <Popup
-    message="You have successfully registered!"
-    onClose={() => setShowPopup(false)}
-  />
-)}
-
+        <Popup
+          message="You have successfully registered!"
+          onClose={() => setShowPopup(false)}
+        />
+      )}
     </>
   );
 };

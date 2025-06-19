@@ -83,9 +83,9 @@ const PortalLoginPage = () => {
         if (!phone.trim()) errors.push({"type":"error","message":"Phone Number is required."});
         else if (!/^\d{10}$/.test(phone)) errors.push({"type":"error","message":"Phone must be 10 digits."});
         
-        if (!otp.trim()) errors.push({"type":"error","message":"OTP is required. Click on send OTP."});
+        if (!otp.trim()) errors.push({"type":"error","message":"OTP is required. Click on GET OTP."});
         else if (otp.trim().length !== 4 || !/^\d{4}$/.test(otp.trim()))  errors.push({"type":"error","message":"OTP must be 4 digits."});
-      
+    
         if (errors.length > 0) {
           console.log("Errors ",errors);
           authContext.setAuthError(errors[0]);

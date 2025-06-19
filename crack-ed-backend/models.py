@@ -1,6 +1,7 @@
 import uuid
 import random
-from extensions import db 
+from extensions import db, migrate
+from database import Base
 
 def generate_application_id():
     prefix = "AUBO"
@@ -12,6 +13,8 @@ def generate_application_id():
 
 
 class User(db.Model):
+    __tablename__ = "user"
+
     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     name = db.Column(db.String(120))
     email = db.Column(db.String(120))
@@ -24,13 +27,21 @@ class User(db.Model):
 
     
 class CallBackUsers(db.Model):
+    __tablename__ = "callback_users"
     id = db.Column(db.Integer, primary_key=True)
     fname = db.Column(db.String(120))
     lname = db.Column(db.String(120))
+    city = db.Column(db.String(120))
     email = db.Column(db.String(120), unique=True)
     mobile = db.Column(db.String(15), unique=True)
+    otp = db.Column(db.String(6))
+    otp_txn_id = db.Column(db.String(100))
+    verified = db.Column(db.Boolean, default=False)
 
+    
 class Application(db.Model):
+    __tablename__ = "application"
+
     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     application_id = db.Column(db.String(20), default=generate_application_id, unique=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -85,4 +96,27 @@ class Application(db.Model):
     status = db.Column(db.String(100), default="Started")
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
+
+    # Razorpay payment fields
+    razorpay_order_id = db.Column(db.String(100))
+    razorpay_payment_id = db.Column(db.String(100))
+    razorpay_payment_status = db.Column(db.String(50))
+    razorpay_payment_amount = db.Column(db.Float)
+    razorpay_payment_method = db.Column(db.String(50))
+    razorpay_payment_timestamp = db.Column(db.DateTime)
     
+    # Individual payment tracking fields
+    registration_fee_paid = db.Column(db.Boolean, default=False)
+    registration_fee_amount = db.Column(db.Float, default=500.0)
+    registration_fee_payment_id = db.Column(db.String(100))
+    registration_fee_payment_timestamp = db.Column(db.DateTime)
+    
+    first_installment_paid = db.Column(db.Boolean, default=False)
+    first_installment_amount = db.Column(db.Float, default=1000.0)
+    first_installment_payment_id = db.Column(db.String(100))
+    first_installment_payment_timestamp = db.Column(db.DateTime)
+    
+    second_installment_paid = db.Column(db.Boolean, default=False)
+    second_installment_amount = db.Column(db.Float, default=1500.0)
+    second_installment_payment_id = db.Column(db.String(100))
+    second_installment_payment_timestamp = db.Column(db.DateTime)

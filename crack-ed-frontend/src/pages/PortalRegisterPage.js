@@ -6,6 +6,7 @@ import OtpInput from '../utils/otp_input.js';
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from "../context/AuthContext.js";
 import { LoadingComponent } from '../components/LoadingComponent.js';
+import Alert from '../components/Alert.js';
 
 const PortalRegisterPage = () => {
     const [otp, setOtp] = useState("");
@@ -14,7 +15,7 @@ const PortalRegisterPage = () => {
     const authContext = useContext(AuthContext);
     const { authLoading } = useContext(AuthContext);  // Correctly access getApplicationData from DataContext
     const [showOtp, setShowOtp] = useState(false);
-
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         if (showOtp) {
@@ -31,16 +32,30 @@ const PortalRegisterPage = () => {
                 }
             }
         }
-    }, [authContext.isAuthenticated, authContext.loading]);
+    }, [authContext.isAuthenticated, authContext.loading, navigate, showOtp]);
+
+    useEffect(() => {
+        if (authContext.authError) {
+            setError(authContext.authError);
+            // Block OTP input if the error is 'We will reach out soon'
+            if (authContext.authError.message === 'We will reach out soon') {
+                setShowOtp(false);
+            }
+        }
+        authContext.setAuthError(null);
+    }, [authContext.authError, authContext]);
 
     const handleFieldChange = (name, value) => {
         setFormData(prev => ({ ...prev, [name]: value }));
-        console.log("Form Data:", formData);
+        setError(null);
     };
 
-    const sendLoginOtp = () => {
+   
+
+    const sendRegisterOtp = () => {
         const { name, email, phone } = formData;
         let errors = [];
+
         if (!name || !email || !phone) {
             authContext.setAuthError({ "type": "error", "message": "All Fields are Required." });
             return;
@@ -58,7 +73,7 @@ const PortalRegisterPage = () => {
             return;
         }
 
-        authContext.sendRegisterOtp(formData.name, formData.email, formData.phone).then((response) => {
+       authContext.sendRegisterOtp(formData.name, formData.email, formData.phone).then((response) => {
             if (response) {
                 console.log("OTP successfully:",);
                 setShowOtp(true);
@@ -66,10 +81,12 @@ const PortalRegisterPage = () => {
         }).catch((error) => {
             console.error("Error sending OTP:", error);
         });
-    }
+    };
+
+
+
 
     const handleRegister = () => {
-
 
         const { name, email, phone } = formData;
         if (!name || !email || !phone) {
@@ -99,7 +116,7 @@ const PortalRegisterPage = () => {
             if (response) {
                 console.log("Register successfully:");
                 navigate('/portal/dashboard', { state: { fromRegister: true } });
-                
+
             }
         }).catch((error) => {
             console.error("Register Failed:", error);
@@ -115,6 +132,7 @@ const PortalRegisterPage = () => {
                 <button className="logout-button" onClick={() => navigate('/portal/login')}>Login</button>
             </PortalHeader>
             {authLoading ? <LoadingComponent /> : null}
+            {/* {error && <Alert error={error} onClose={() => setError(null)} />} */}
             <div className="portal-container">
                 <div className="portal-form-container">
                     <div className='portal-form-title'>
@@ -122,22 +140,19 @@ const PortalRegisterPage = () => {
                     </div>
                     <div className="portal-form-card">
                         <form>
-                            <CustomTextField label="Full Name" name="name" type="text" onChange={handleFieldChange} readOnly={showOtp} />
-                            <CustomTextField label="Email" name="email" type="email" onChange={handleFieldChange} readOnly={showOtp} />
+                            <CustomTextField label="Full Name" name="name" type="text" onChange={handleFieldChange} />
+                            <CustomTextField label="Email" name="email" type="email" onChange={handleFieldChange} />
                             <CustomTextField
                                 label="Mobile Number"
                                 name="phone" type="text"
                                 onChange={handleFieldChange}
                                 tail={true}
-                                readOnly={showOtp}
-                                tailContent={<div className='sendOtpButton' onClick={sendLoginOtp}>GET OTP</div>}>
+                                tailContent={<div className='sendOtpButton' onClick={sendRegisterOtp} style={{ pointerEvents: (error && error.message === 'We will reach out soon') ? 'none' : 'auto', opacity: (error && error.message === 'We will reach out soon') ? 0.5 : 1 }}>GET OTP</div>}>
                             </CustomTextField>
 
                             {showOtp && <div className='otp-container'>
                                 <div className='enter-otp-text'>Enter OTP sent to your mobile number</div>
-
                                 <OtpInput length={4} onChange={(val) => setOtp(val)} />
-
                             </div>}
                             <div className='portal-btn' onClick={handleRegister} >Register</div>
                         </form>

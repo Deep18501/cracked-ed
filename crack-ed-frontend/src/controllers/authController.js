@@ -44,6 +44,18 @@ export const registerUser = async (name, email, mobile, otp) => {
   }
 };
 
+export const sendCallbackUser = async (mobile, otp) => {
+  try {
+    const response = await axiosInstance.post("/auth/callback/", {
+      "mobile": mobile,
+      "otp": otp,
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || "Callback failed";
+  }
+};
+
 export const sendRegisterUserOtp = async (name, email, mobile) => {
   try {
     const response = await axiosInstance.post("/auth/registerOtp/", {
@@ -51,6 +63,21 @@ export const sendRegisterUserOtp = async (name, email, mobile) => {
       "email": email,
       "mobile": mobile,
     });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || "Registration OTP failed";
+  }
+};
+
+export const sendCallbackUserOtp = async (name, email,city,mobile) => {
+  try {
+    const response = await axiosInstance.post("/auth/callbackOtp/", {
+      "name": name,
+      "email": email,
+      "city": city,
+      "mobile": mobile,
+    });
+    console.log("Response from sendCallbackUserOtp:", response.data);
     return response.data;
   } catch (error) {
     throw error.response?.data?.message || "Registration OTP failed";

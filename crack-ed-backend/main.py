@@ -13,7 +13,6 @@ from flask_migrate import Migrate
 from models import User,Application,CallBackUsers
 from extensions import db,migrate
 import json
-
 # $env:FLASK_APP="main:app" 
 
 app = Flask(__name__)
@@ -27,7 +26,7 @@ ORANGE_API_KEY = "RHFLK7kkQN4fGtNwnXOhvpXreO2hJxx1"
 SEND_URL = "https://login.xecurify.com/moas/api/auth/challenge" 
 VALIDATE_URL = "https://login.xecurify.com/moas/api/auth/validate" 
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')  # full path to uploads/
-
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 @app.route("/")
@@ -106,16 +105,16 @@ def send_lead_to_crm(application):
 
     print(response.text)
 
-def send_callback_lead_to_crm(application):
+def send_callback_lead_to_crm(user):
     url = "https://thirdpartyapi.extraaedge.com/api/SaveRequest"
     payload = json.dumps({
     "Source": "crack-ed",
     "AuthToken": "crack-ed_29-01-2025",
-    "FirstName": application.first_name,
-    "LastName":  application.last_name,
-    "Email": application.email,
-    "MobileNumber": int(application.mobile_number),
-    "City":  application.city,
+    "FirstName": user.fname,
+    "LastName":  user.lname,
+    "Email": user.email,
+    "MobileNumber": int(user.mobile),
+    "City":  user.city,
     "Center": "AURUM Bankers Program",
     "Course": "PG Program",
     "Field5": "Microsite - AU",
@@ -128,64 +127,107 @@ def send_callback_lead_to_crm(application):
 
     print(response.text)
     
+    
+@app.route('/auth/callbackOtp/', methods=['POST']) 
+def send_callback_otp():
+    data = request.get_json()
+    print("Registration data received:", data)
+    mobile = data.get("mobile")
+    print("Mobile number received:", mobile)
+    if not mobile:
+        return jsonify({"error": "Mobile number is required"}), 400
+
+    print("Generating OTP for mobile:", mobile)
+    otp = generate_otp()
+    name_parts = data['name'].split()
+    first_name = name_parts[0] 
+    last_name = name_parts[-1] if len(name_parts) > 1 else ""
+
+    try:
+        existing_user = CallBackUsers.query.filter_by(mobile=mobile).first()
+        user = None
+
+        if existing_user:
+            existing_user.otp = otp
+            user = existing_user
+            if user.verified:
+                return jsonify({"message": "Thanks! Your callback request is already in our system. We'll connect with you soon!"}), 400
+            else:
+                user.fname = first_name
+                user.lname = last_name
+                user.email = data['email']
+                user.city = data['city']   
+        else:
+            print("Creating new callback user with mobile:", mobile)
+            user = CallBackUsers(fname=first_name,lname=last_name, email=data['email'],city=data['city'], mobile=mobile, otp=otp)
+        db.session.add(user)
+        user.otp_txn_id = send_otp_api(user.mobile)
+        db.session.commit()
+
+        return jsonify({"message": "OTP sent"}), 200
+
+    except Exception as e:
+        print("OTP registration error:", str(e))
+        return jsonify({"error": "Internal Server Error"}), 500
+
 
 @app.route('/auth/registerOtp/', methods=['POST']) 
 def send_register_otp():
     print("Database path:", app.config['SQLALCHEMY_DATABASE_URI'])
     data = request.get_json()
     print("Registration data received:", data)
+
+    mobile = data.get("mobile")
+    if not mobile:
+        return jsonify({"error": "Mobile number is required"}), 400
+
     otp = generate_otp()
-      # Split name into first name and last name (handle single-word name)
     name_parts = data['name'].split()
-    first_name = name_parts[0]  # First part is always the first name
-    last_name = name_parts[-1] if len(name_parts) > 1 else ""  # Last part is the last name, if any
+    first_name = name_parts[0] 
+    last_name = name_parts[-1] if len(name_parts) > 1 else ""
+
     try:
-        # Check if the user already exists
-        existing_user = User.query.filter_by(mobile=data['mobile']).first()
-        user=None
+        existing_user = User.query.filter_by(mobile=mobile).first()
+        user = None
+
         if existing_user:
             existing_user.otp = otp
             user = existing_user
-            if(user.verified):
-                return jsonify({"message": "Already Registerd Please Login"}), 400
+            if user.verified:
+                return jsonify({"message": "Already Registered. Please login."}), 400
             else:
-                user.name=data['name']
-                user.email=data['email']
+                user.name = data['name']
+                user.email = data['email']
                 application = Application.query.filter_by(user_id=existing_user.id).first()
-                application.first_name=first_name
-                application.last_name=last_name
-                application.email=data['email']
-        
-            
+                if application:
+                    application.first_name = first_name
+                    application.last_name = last_name
+                    application.email = data['email']
         else:
-            # Create a new user
-            user = User(name=data['name'], email=data['email'], mobile=data['mobile'], otp=otp)
+            user = User(name=data['name'], email=data['email'], mobile=mobile, otp=otp)
             db.session.add(user)
-        db.session.commit()
-        
-        print("First name:", user.name)
-        print("Data received:", user.name)
-        # Create application details
-        application = Application(
-            user_id=user.id,  # Link the application to the user
-            first_name=first_name,
-            last_name=last_name,
-            mobile_number=data['mobile'],
-            email=data['email'],
-            status="Apply Now"  # Default status
-        )
-        
-        
+            db.session.flush()  # ensure user.id is available for application
+
+            # Create new application record
+            application = Application(
+                user_id=user.id,
+                first_name=first_name,
+                last_name=last_name,
+                mobile_number=mobile,
+                email=data['email'],
+                status="Apply Now"
+            )
+            db.session.add(application)
+
         user.otp_txn_id = send_otp_api(user.mobile)
-        db.session.add(application)
-        
-        # Commit both user and application records
         db.session.commit()
 
-        # Return the response
-        return jsonify({"message": "OTP sent",}), 200
+        return jsonify({"message": "OTP sent"}), 200
+
     except Exception as e:
+        print("OTP registration error:", str(e))
         return jsonify({"error": "Internal Server Error"}), 500
+
 
 
 @app.route('/auth/register/', methods=['POST'])
@@ -209,20 +251,44 @@ def register_user():
     db.session.commit()
     return jsonify({"token": user.token, "username": user.name}), 200
 
+
+
 @app.route('/auth/callback/', methods=['POST'])
 def add_callback_user():
     data = request.get_json()
-    print("Data received:", data)   
-    existing_user = CallBackUsers.query.filter_by(mobile=data['mobile']).first()
-
-    existing_user = CallBackUsers.query.filter_by(mobile=data['mobile'],).first()
-    if existing_user:
-        return jsonify({"message": "Detailes already added ",}), 200
+    user=None
+    print("Data received:", data)
+   
+    user = CallBackUsers.query.filter_by(mobile=data['mobile']).first()
+        
+    if not user:
+        return jsonify({"message": "mobile number not found"}), 400
     else:
-        new_user = CallBackUsers(fname=data['fname'],lname=data['lname'], email=data['email'], mobile=data['mobile'])
-        db.session.add(new_user)
+        status=verify_otp_api(user.otp_txn_id, data['otp'])
+        if status == "SUCCESS":
+            send_callback_lead_to_crm(user)
+            user.verified = True
+        else:
+            return jsonify({"message": "Invalid OTP"}), 400
+        
     db.session.commit()
-    return jsonify({"message": "Detailes added successfully",}), 200
+    return jsonify({"message":"We will contact you soon"}), 200
+
+
+@app.route('/auth/check-callback-user/', methods=['POST'])
+def check_callback_user():
+    data = request.get_json()
+    mobile = data.get("mobile")
+
+    if not mobile:
+        return jsonify({"error": "Mobile number is required"}), 400
+
+    existing_user = CallBackUsers.query.filter_by(mobile=mobile).first()
+    if existing_user:
+        return jsonify({"exists": True}), 200
+    else:
+        return jsonify({"exists": False}), 200
+
 
 @app.route('/auth/loginOtp/', methods=['POST'])
 def send_login_otp():
@@ -576,7 +642,6 @@ def update_application_data():
     except Exception as e:
         print("Error while updating application:", str(e))
         return jsonify({"error": "Internal server error"}), 500
-
 
 
 
