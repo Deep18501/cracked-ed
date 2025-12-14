@@ -7,3 +7,4 @@ uploads/
 deploy.sh
 AURUM.pem
 
+/crack-ed-backend/migrations

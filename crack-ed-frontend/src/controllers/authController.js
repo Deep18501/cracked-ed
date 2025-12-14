@@ -14,13 +14,7 @@ axiosInstance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-/**
- * Register a new user
- * @param {string} username - User's name
- * @param {string} role - User's role
- * @param {string} password - User's password
- * @returns {Promise<object>} Response data
- */
+
 
 const saveToken = async (data) => {
   console.log("Saving data: ", data);
